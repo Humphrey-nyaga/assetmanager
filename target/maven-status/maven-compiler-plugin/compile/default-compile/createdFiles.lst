@@ -1,1 +1,3 @@
 com/servlet/Hello.class
+com/servlet/HelloGenericServlet.class
+com/servlet/HelloHttpServlet.class

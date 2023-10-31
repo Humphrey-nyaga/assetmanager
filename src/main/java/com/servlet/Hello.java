@@ -1,8 +1,12 @@
 package com.servlet;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+/*Create a servlet by implementing the Servlet interface*/
+@WebServlet("/hello")
 
 public class Hello implements Servlet {
     @Override

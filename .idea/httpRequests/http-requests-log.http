@@ -1,0 +1,130 @@
+GET http://localhost:8080/assetmanager/http-hello
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-30T230911.200.txt
+
+###
+
+POST http://localhost:8080/assetmanager/http-hello
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-30T230903.200.txt
+
+###
+
+POST http://localhost:8080/assetmanager/http-hello
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-30T230653.405.html
+
+###
+
+GET http://localhost:8080/assetmanager/http-hello
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-30T230359.405.html
+
+###
+
+POST http://localhost:8080/assetmanager/http-hello
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-30T230141.405.html
+
+###
+
+GET http://localhost:8080/assetmanager/http-hello
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-30T230045.405.html
+
+###
+
+GET http://localhost:8080/assetmanager/hello-http
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-30T230030.404.html
+
+###
+
+GET http://localhost:8080/assetmanager/generic-hello
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-30T230019.200.txt
+
+###
+
+GET http://localhost:8080/assetmanager/generic-hello
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-30T223019.200.txt
+
+###
+
+POST http://localhost:8080/assetmanager/hello-http
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-30T222948.405.html
+
+###
+
+GET http://localhost:8080/assetmanager/hello-http
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-30T222939.405.html
+
+###
+
+GET http://localhost:8080/hello-http
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-30T222932.404.html
+
+###
+
+GET http://localhost:8080/assetmanager/hello-http
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-30T222038.405.html
+
+###
+
+GET http://localhost:8080/assetmanager/hello-http
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.8.1)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-10-30T222025.405.html
+
+###
+
