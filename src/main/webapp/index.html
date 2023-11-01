@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .gradient-custom {
+            background: white;
+        }
+        .login-form-container {
+            height: 100vh;
+        }
+        .form-group label {
+            display: block; 
+            text-align: left; 
+            margin-bottom: 10px;
+          }
+    </style>
+    <title>Login</title>
+</head>
+<body>
+<div class="login-form-container ">
+<form action="./login" method="POST">
+<section class="gradient-custom py-5">
+    <div class="container py-4"> 
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-8 text-center">
+
+                        <div class="mb-3"> 
+                            <h2 class="fw-bold mb-2 text-uppercase">LOGIN</h2>
+                           <!--- <p class="text-white mb-4">Please enter your username and password!</p> -->
+
+                            <div class="form-group">
+                                <label class="mb-2" for="username">Username</label>
+                                <input name="username" id="username" class="form-control" placeholder="Enter username"/>
+                            </div>
+        
+                              
+                            <div class="form-group">
+                                <label class="mb-2" for="password">Password</label>
+                                <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" />
+                            </div>
+
+                           <p class="medium mb-2"><a class="text-white" href="#!">Forgot password?</a></p>
+                            <button class="btn btn-info btn-lg btn-outline-light px-4" type="submit">LOGIN</button>
+                            <div class="d-flex justify-content-center text-center mt-2 pt-1">
+                                <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
+                                <a href="#!" class="text-white"><i class="fab fa-twitter fa-lg mx-2 px-2"></i></a> 
+                                <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>
+                            </div>
+                            
+
+                        </div>
+
+                        <div>
+                            <p class="mb-0">Don't have an account? <a href="#!" class="text-white fw-bold">Sign Up</a></p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

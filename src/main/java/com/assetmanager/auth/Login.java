@@ -25,8 +25,8 @@ public class Login extends HttpServlet {
         String username = servletRequest.getParameter("username");
         String password = servletRequest.getParameter("password");
         if (username.equals(getInitParameter("username")) && password.equals(getInitParameter("password"))) {
-            RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("/http-hello");
-            requestDispatcher.include(servletRequest, servletResponse);
+            //RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("/http-hello");
+           // requestDispatcher.include(servletRequest, servletResponse);
 
 //            RequestDispatcher requestDispatcher2 = servletRequest.getRequestDispatcher("/home");
 //            requestDispatcher2.forward(servletRequest, servletResponse);
