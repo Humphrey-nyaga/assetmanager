@@ -1,6 +1,7 @@
 package com.assetmanager.auth;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
@@ -24,10 +25,12 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter printWriter = servletResponse.getWriter();
 
-        String username = servletRequest.getParameter("username");
-        String password = servletRequest.getParameter("password");
-        System.out.println(username);
-        System.out.println(password);
+//        String username = servletRequest.getParameter("username");
+//        String password = servletRequest.getParameter("password");
+        ServletContext servletContext = getServletContext();
+        String username = servletContext.getInitParameter("username");
+        String password = servletContext.getInitParameter("password");
+        servletContext.setAttribute("username",username);
         if (username.equals(getInitParameter("username")) && password.equals(getInitParameter("password"))) {
             // RequestDispatcher requestDispatcher =
             // servletRequest.getRequestDispatcher("/http-hello");
