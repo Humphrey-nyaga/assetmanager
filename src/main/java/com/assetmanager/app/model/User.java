@@ -1,6 +1,7 @@
 package com.assetmanager.app.model;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 public class User implements Serializable {
@@ -10,7 +11,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String username, String password) {
+    public User(String username, String password){
         this.username = username;
         this.password = password;
     }
@@ -42,5 +43,13 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getUsername());
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

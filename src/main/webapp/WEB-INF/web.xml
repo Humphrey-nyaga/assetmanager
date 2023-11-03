@@ -4,13 +4,5 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  <context-param>
-  <param-name>username</param-name>
-  <param-value>admin</param-value>
-</context-param>
-  <context-param>
-    <param-name>password</param-name>
-    <param-value>admin</param-value>
-  </context-param>
 
 </web-app>

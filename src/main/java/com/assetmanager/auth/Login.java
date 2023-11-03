@@ -35,17 +35,12 @@ public class Login extends HttpServlet {
         httpSession.setAttribute("loggedInId", new Date().getTime()+"");
 
         PrintWriter printWriter = servletResponse.getWriter();
-
-//        String username = servletRequest.getParameter("username");
-//        String password = servletRequest.getParameter("password");
+        String username = servletRequest.getParameter("username");
+        String password = servletRequest.getParameter("password");
         ServletContext servletContext = getServletContext();
-        String username = servletContext.getInitParameter("username");
-        String password = servletContext.getInitParameter("password");
         servletContext.setAttribute("username", username);
         if (username.equals(getInitParameter("username")) && password.equals(getInitParameter("password"))) {
-            // RequestDispatcher requestDispatcher =
-            // servletRequest.getRequestDispatcher("/http-hello");
-            // requestDispatcher.include(servletRequest, servletResponse);
+
             RequestDispatcher requestDispatcher =
                     servletRequest.getRequestDispatcher("/home");
             System.out.println("Request fetched");
