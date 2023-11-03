@@ -1,28 +1,41 @@
 package com.assetmanager.app.view.toolbars;
 
+import com.assetmanager.app.model.view.MenuLink;
+import com.assetmanager.app.model.view.MenuLinkStatus;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Header implements Menu, Serializable {
+    private List<MenuLink> links = new ArrayList<>();
+
+    {
+        links.add(new MenuLink("./home", "Overview", MenuLinkStatus.NOT_ACTIVE));
+        links.add(new MenuLink("./assets", "Assets", MenuLinkStatus.NOT_ACTIVE));
+        links.add(new MenuLink("./assignee", "Assignees", MenuLinkStatus.NOT_ACTIVE));
+        links.add(new MenuLink("./maintenance", "Maintenance", MenuLinkStatus.NOT_ACTIVE));
+        links.add(new MenuLink("./reports", "Reports", MenuLinkStatus.NOT_ACTIVE));
+        links.add(new MenuLink("./requests", "Requests", MenuLinkStatus.NOT_ACTIVE));
+        links.add(new MenuLink("./valuation", "Valuation", MenuLinkStatus.NOT_ACTIVE));
+
+    }
+
     @Override
     public String menu() {
-        return  "  <header class=\"p-3 mb-3 border-bottom\">\n" + //
+        return "  <header class=\"p-3 mb-3 border-bottom\">\n" + //
                 "    <div class=\"container\">\n" + //
                 "      <div class=\"d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start\">\n"
                 + //
                 "        <a href=\"/\" class=\"d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none\">\n"
                 + //
                 "          <svg class=\"bi me-2\" width=\"40\" height=\"32\" role=\"img\" aria-label=\"Bootstrap\"><use xlink:href=\"#\"/></svg>\n"
-                + //
-                "        </a>\n" + //
-                "\n" + //
-                "        <ul class=\"nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0\">\n" + //
-                "            <li><a href=\"#\" class=\"nav-link px-2 link-secondary\">Overview</a></li>\n" + //
-                "            <li><a href=\"#\" class=\"nav-link px-2 link-dark\">Assets</a></li>\n" + //
-                "            <li><a href=\"#\" class=\"nav-link px-2 link-dark\">Customers</a></li>\n" + //
-                "            <li><a href=\"#\" class=\"nav-link px-2 link-dark\">Maintenance</a></li>\n" + //
-                "            <li><a href=\"#\" class=\"nav-link px-2 link-dark\">Reports</a></li>\n" + //
-                "            <li><a href=\"#\" class=\"nav-link px-2 link-dark\">Transactions</a></li>\n" + //
-                "          </ul>\n" + //
+                +
+                "        </a>\n" +
+                "\n"
+                +
+                        new Header().insertUrls()
+                +
                 "          \n" + //
                 "\n" + //
                 "        <form class=\"col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3\">\n" + //
@@ -48,6 +61,17 @@ public class Header implements Menu, Serializable {
                 "  </header>\n" + //
                 "\n" + //
                 "\n";
+    }
+    public String insertUrls(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<ul class=\"nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0\">\n");
+
+        for (MenuLink link: links) {
+            String url = "<li><a href=" + link.getUrl() + " class=\"nav-link px-2 link-dark\">" +link.getLabel()+"</a></li>\n";
+            stringBuilder.append(url);
+        }
+        stringBuilder.append("</ul>");
+        return stringBuilder.toString();
     }
 
 }
