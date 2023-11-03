@@ -1,7 +1,7 @@
-package com.assetmanager.bean;
+package com.assetmanager.app.bean;
 
-import com.assetmanager.model.Asset;
-import com.assetmanager.model.Category;
+import com.assetmanager.app.model.Asset;
+import com.assetmanager.app.model.Category;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

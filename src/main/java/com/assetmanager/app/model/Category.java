@@ -1,4 +1,4 @@
-package com.assetmanager.model;
+package com.assetmanager.app.model;
 
 import java.io.Serializable;
 

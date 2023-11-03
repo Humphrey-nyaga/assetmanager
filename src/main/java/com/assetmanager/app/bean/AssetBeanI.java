@@ -1,4 +1,4 @@
-package com.assetmanager.bean;
+package com.assetmanager.app.bean;
 
 public interface AssetBeanI {
     void addAsset();

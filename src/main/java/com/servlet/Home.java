@@ -1,14 +1,15 @@
 package com.servlet;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.assetmanager.bean.AssetBeanI;
-import com.assetmanager.bean.AssetBeanImpl;
+import com.assetmanager.app.bean.AssetBeanI;
+import com.assetmanager.app.bean.AssetBeanImpl;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,8 +18,12 @@ import java.io.PrintWriter;
 public class Home extends HttpServlet {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
+        HttpSession httpSession = servletRequest.getSession();
 
-    }
+        if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId")))
+            servletResponse.sendRedirect("./home");
+        else
+            servletResponse.sendRedirect("./");    }
 
     public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
@@ -93,9 +98,9 @@ public class Home extends HttpServlet {
                 "            <li><a class=\"dropdown-item\" href=\"#\">Settings</a></li>\n" + //
                 "            <li><a class=\"dropdown-item\" href=\"#\">Profile</a></li>\n" + //
                 "            <li><hr class=\"dropdown-divider\"></li>\n" + //
-                "            <li><a class=\"dropdown-item\" href=\"#logout\">Sign out</a></li>\n" + //
+                "            <li><a class=\"dropdown-item\" href=\"./logout\">Sign out</a></li>\n" + //
                 "          </ul>\n" + //
-                "        </div>\n" + //
+                "        </div>\n" + //log
                 "      </div>\n" + //
                 "    </div>\n" + //
                 "  </header>\n" + //
