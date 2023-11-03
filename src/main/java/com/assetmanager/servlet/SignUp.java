@@ -1,9 +1,7 @@
-package com.servlet;
+package com.assetmanager.servlet;
 
 import com.assetmanager.app.bean.UserBean;
 import com.assetmanager.app.bean.UserBeanI;
-import com.assetmanager.app.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,11 +26,7 @@ public class SignUp extends HttpServlet {
         String password = req.getParameter("password");
         String confirmPassword = req.getParameter("confirmPassword");
         if (password.equals(confirmPassword)) {
-            User user = userBeanI.registerUser(username, password);
-            System.out.println("*****************USER CREATED**********************");
-            System.out.println("");
-            System.out.println("User is: " + user.toString());
-            System.out.println("");
+            userBeanI.registerUser(username, password);
             resp.sendRedirect("./login");
         }
     }

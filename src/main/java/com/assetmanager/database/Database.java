@@ -1,20 +1,27 @@
-package com.assetmanager.app.database;
+package com.assetmanager.database;
+
+import com.assetmanager.app.model.Asset;
+import com.assetmanager.app.model.User;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Database implements Serializable {
-    private Database databaseInstance;
+    private List<User> usersList = new ArrayList<>();
+   private List<Asset> assetList  = new ArrayList<>();
+    private static Database databaseInstance;
     private LocalDateTime dateTimeCreatedAt;
 
     private Database() {
     }
 
-    public Database getDatabaseInstance() {
+    public static Database getDatabaseInstance() {
         if (databaseInstance == null) {
             databaseInstance = new Database();
             databaseInstance.setDateTimeCreatedAt(LocalDateTime.now());
-            System.out.println("Database created at: " + getDateTimeCreatedAt());
+            System.out.println("Database created at: " + databaseInstance.getDateTimeCreatedAt());
         }
         return databaseInstance;
     }
@@ -25,5 +32,13 @@ public class Database implements Serializable {
 
     public LocalDateTime getDateTimeCreatedAt() {
         return dateTimeCreatedAt;
+    }
+
+    public List<User> getUsersList() {
+        return usersList;
+    }
+
+    public List<Asset> getAssetList() {
+        return assetList;
     }
 }
