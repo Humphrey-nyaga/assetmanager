@@ -1,4 +1,4 @@
-package com.assetmanager.app.model;
+package com.assetmanager.app.model.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

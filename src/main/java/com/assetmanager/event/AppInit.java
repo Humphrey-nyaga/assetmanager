@@ -1,7 +1,6 @@
 package com.assetmanager.event;
 
 import com.assetmanager.app.bean.UserBean;
-import com.assetmanager.app.model.User;
 import com.assetmanager.database.Database;
 
 import javax.servlet.ServletContextEvent;

@@ -1,9 +1,8 @@
 package com.assetmanager.app.bean;
 
-import com.assetmanager.app.model.User;
+import com.assetmanager.app.model.entity.User;
 import com.assetmanager.util.security.PasswordEncoderI;
 import com.assetmanager.util.security.PasswordEncoderImpl;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.Serializable;
 

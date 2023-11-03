@@ -1,7 +1,7 @@
 package com.assetmanager.database;
 
-import com.assetmanager.app.model.Asset;
-import com.assetmanager.app.model.User;
+import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.app.model.entity.User;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

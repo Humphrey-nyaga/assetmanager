@@ -1,7 +1,6 @@
-package com.assetmanager.app.model;
+package com.assetmanager.app.model.entity;
 
 import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 public class User implements Serializable {

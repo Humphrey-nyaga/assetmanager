@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(urlPatterns = "/home")
+//@WebServlet(urlPatterns = "/home")
 public class Home extends HttpServlet {
 
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
@@ -116,7 +116,7 @@ public class Home extends HttpServlet {
                     "      \n" + //
                     "");
             printWriter.write(assetBeanI.getAllAssets());
-            //
+
             printWriter.write(
                     "      </tbody>\n" + //
                             "    </table>\n" + //

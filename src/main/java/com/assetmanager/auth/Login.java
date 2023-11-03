@@ -1,15 +1,11 @@
 package com.assetmanager.auth;
 
-import com.assetmanager.app.bean.UserBean;
-import com.assetmanager.app.bean.UserBeanI;
-import com.assetmanager.app.model.User;
+import com.assetmanager.app.model.entity.User;
 import com.assetmanager.database.Database;
 import com.assetmanager.util.security.PasswordEncoderI;
 import com.assetmanager.util.security.PasswordEncoderImpl;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
@@ -17,9 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.Data;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 
 @WebServlet(urlPatterns = "/login", initParams = {
