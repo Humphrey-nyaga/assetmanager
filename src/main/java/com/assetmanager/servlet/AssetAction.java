@@ -77,8 +77,8 @@ public class AssetAction extends HttpServlet {
             Category category = Category.valueOf(servletRequest.getParameter("category"));
             LocalDate dateAcquired = LocalDate.parse(servletRequest.getParameter("dateAcquired"));
             BigDecimal purchaseValue = new BigDecimal(servletRequest.getParameter("purchaseValue"));
-            Asset asset = new Asset(assetId,name,description,dateAcquired,category,purchaseValue);
-            database.getAssetList().add(asset);
+
+            database.getAssetList().add(new Asset(assetId,name,description,dateAcquired,category,purchaseValue));
         }
     }
 }
