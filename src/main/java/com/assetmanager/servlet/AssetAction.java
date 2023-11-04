@@ -1,9 +1,9 @@
 package com.assetmanager.servlet;
 
-import com.assetmanager.app.bean.AssetBeanI;
-import com.assetmanager.app.bean.AssetBeanImpl;
+import com.assetmanager.app.view.dropdowns.AssetCategoryDropdown;
 import com.assetmanager.app.view.html.BasePage;
 import org.apache.commons.lang3.StringUtils;
+import org.w3c.dom.html.HTMLTableCaptionElement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,36 +12,60 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.net.http.HttpClient;
 
-@WebServlet("/home")
+@WebServlet("/asset")
 public class AssetAction extends HttpServlet {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
         HttpSession httpSession = servletRequest.getSession();
 
         if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
-            AssetBeanI assetBeanI = new AssetBeanImpl();
 
-            PrintWriter printWriter = servletResponse.getWriter();
             new BasePage().renderHtml(servletRequest, servletResponse,
-                    "  <div>\n" +
-                            "    <table class=\"table table-striped\">\n" +
-                            "      <thead>\n" + //
-                            "      <tr>\n" + //
-                            "        <th scope=\"col\">ID</th>\n" +
-                            "        <th scope=\"col\">Name</th>\n" +
-                            "        <th scope=\"col\">Description</th>\n" +
-                            "        <th scope=\"col\">Date Added</th>\n" + //
-                            "        <th scope=\"col\">Category</th>\n" + //
-                            "        <th scope=\"col\">Value</th>\n" + //
-                            "      </tr>\n" + //
-                            "      </thead>\n" + //
-                            "      <tbody>\n" + //
-                            "      \n" + assetBeanI.getAllAssets()
-            );
-        } else
-            servletResponse.sendRedirect("./");
+                    " <div class=\"asset-container mx-auto\" style=\"max-height: 80vh;\">\n" +
+                            "    <form method=\"POST\" action=\"./asset\" class=\"col-6 border p-3 border-4\">\n" +
+                            "        <h4 class=\"text-center mb-0 mt-0\">Create New Asset</h4>\n" +
+                            "<!--      <div class=\"mb-1 mt-0 p-2\">-->\n" +
+                            "<!--        <label for=\"assetId\" class=\"form-label\">Asset ID</label>-->\n" +
+                            "<!--        <input type=\"text\" class=\"form-control\" id=\"assetId\" name=\"assetId\">-->\n" +
+                            "<!--      </div>-->\n" +
+                            "      <div class=\"mb-0 p-2\">\n" +
+                            "        <label for=\"name\" class=\"form-label\">Name</label>\n" +
+                            "        <input type=\"text\" class=\"form-control form-control-sm\" id=\"name\" name=\"name\">\n" +
+                            "      </div>\n" +
+                            "      <div class=\"mb-0 p-2\">\n" +
+                            "        <label for=\"description\" class=\"form-label\">Description</label>\n" +
+                            "        <textarea class=\"form-control  form-control-sm\" id=\"description\" name=\"description\"></textarea>\n" +
+                            "      </div>\n" +
+                            "      <div class=\"mb-0 p-2\">\n" +
+                            "        <label for=\"dateAcquired\" class=\"form-label \">Date Acquired</label>\n" +
+                            "        <input type=\"date\" class=\"form-control form-control-sm\" id=\"dateAcquired\" name=\"dateAcquired\">\n" +
+                            "      </div>\n" +
+                            "      <div class=\"mb-0 p-2\">\n" +
+
+                            new AssetCategoryDropdown().menu()
+                            +
+                            "      </div>\n" +
+                            "      <div class=\"mb-0 p-2\">\n" +
+                            "        <label for=\"purchaseValue\" class=\"form-label\">Purchase Value</label>\n" +
+                            "        <input type=\"number\" step=\"0.01\" class=\"form-control form-control-sm\" id=\"purchaseValue\" name=\"purchaseValue\">\n" +
+                            "      </div>\n" +
+                            "        <div class=\"d-grid gap-2 p-2\">\n" +
+                            "            <button class=\"btn btn-primary\" type=\"button\">Create Asset</button>\n" +
+                            "        </div>\n" +
+                            "    </form>\n" +
+                            "    </div>\n");
+        }
     }
 
+    public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
+            throws ServletException, IOException {
+        HttpSession httpSession = servletRequest.getSession();
+
+        if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
+
+
+        }
+    }
 }

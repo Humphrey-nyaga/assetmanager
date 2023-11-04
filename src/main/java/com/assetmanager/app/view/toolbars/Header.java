@@ -12,12 +12,12 @@ public class Header implements Menu, Serializable {
 
     {
         links.add(new MenuLink("./home", "Overview", MenuLinkStatus.NOT_ACTIVE));
-        links.add(new MenuLink("./assets", "Assets", MenuLinkStatus.NOT_ACTIVE));
+        links.add(new MenuLink("./asset", "Assets", MenuLinkStatus.NOT_ACTIVE));
         links.add(new MenuLink("./assignee", "Assignees", MenuLinkStatus.NOT_ACTIVE));
         links.add(new MenuLink("./maintenance", "Maintenance", MenuLinkStatus.NOT_ACTIVE));
-        links.add(new MenuLink("./reports", "Reports", MenuLinkStatus.NOT_ACTIVE));
-        links.add(new MenuLink("./requests", "Requests", MenuLinkStatus.NOT_ACTIVE));
-        links.add(new MenuLink("./valuation", "Valuation", MenuLinkStatus.NOT_ACTIVE));
+        links.add(new MenuLink("./report", "Reports", MenuLinkStatus.NOT_ACTIVE));
+        links.add(new MenuLink("./request", "Requests", MenuLinkStatus.NOT_ACTIVE));
+      //  links.add(new MenuLink("./valuation", "Valuation", MenuLinkStatus.NOT_ACTIVE));
 
     }
 
