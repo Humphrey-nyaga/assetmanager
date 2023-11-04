@@ -79,6 +79,7 @@ public class AssetAction extends HttpServlet {
             BigDecimal purchaseValue = new BigDecimal(servletRequest.getParameter("purchaseValue"));
 
             database.getAssetList().add(new Asset(assetId,name,description,dateAcquired,category,purchaseValue));
+            servletResponse.sendRedirect("./home");
         }
     }
 }
