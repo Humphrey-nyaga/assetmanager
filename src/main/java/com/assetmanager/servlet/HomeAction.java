@@ -15,19 +15,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/home")
-public class Home extends HttpServlet {
+public class HomeAction extends HttpServlet {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
         HttpSession httpSession = servletRequest.getSession();
+        AssetBeanI assetBeanI = new AssetBeanImpl();
 
         if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
-            AssetBeanI assetBeanI = new AssetBeanImpl();
 
-            PrintWriter printWriter = servletResponse.getWriter();
             new BasePage().renderHtml(servletRequest, servletResponse,
-                    "  <div>\n" +
-                            "    <table class=\"table table-striped\">\n" +
-                            "      <thead>\n" + //
+                    "  <div class=\"table-responsive-sm\">\n" +
+                            "    <table class=\"table table-bordered table-sm table-responsive\">\n" +
+                            "      <thead class=\"table-success\">\n" + //
                             "      <tr>\n" + //
                             "        <th scope=\"col\">ID</th>\n" +
                             "        <th scope=\"col\">Name</th>\n" +
@@ -38,7 +37,7 @@ public class Home extends HttpServlet {
                             "      </tr>\n" + //
                             "      </thead>\n" + //
                             "      <tbody>\n" + //
-                            "      \n" + assetBeanI.getAllAssets()
+                            "      \n" + assetBeanI.getAllAssets(),"./home"
             );
         } else
             servletResponse.sendRedirect("./");

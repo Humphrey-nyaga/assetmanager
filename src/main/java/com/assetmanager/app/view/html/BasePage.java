@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 public class BasePage implements Serializable {
     public void renderHtml(HttpServletRequest request, HttpServletResponse response,
-                           String content) throws IOException {
+                           String content,String activeUrl) throws IOException {
         HttpSession httpSession = request.getSession();
 
         if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
@@ -30,7 +30,7 @@ public class BasePage implements Serializable {
                     + new BaseCss().getStyle() +
                     "  </head>\n" +
                     "  <body>\n"
-                    + new Header().menu()
+                    + new Header().menu(activeUrl)
             );
             printWriter.write(content);
             printWriter.write(

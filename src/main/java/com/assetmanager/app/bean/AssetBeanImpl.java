@@ -39,8 +39,6 @@ public class AssetBeanImpl implements Serializable, AssetBeanI {
         for (Asset asset : database.getAssetList())
             trBuilder.append(asset.tableRow());
 
-        trBuilder.append("</table>");
-
         return trBuilder.toString();
     }
 }

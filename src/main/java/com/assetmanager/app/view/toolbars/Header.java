@@ -22,8 +22,8 @@ public class Header implements Menu, Serializable {
     }
 
     @Override
-    public String menu() {
-        return "  <header class=\"p-3 mb-3 border-bottom\">\n" + //
+    public String menu(String activeUrl) {
+        return "  <header class=\"p-3 mb-3 border-bottom navbar navbar-expand-lg navbar-light bg-light\n\">\n" + //
                 "    <div class=\"container\">\n" + //
                 "      <div class=\"d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start\">\n"
                 + //
@@ -34,7 +34,7 @@ public class Header implements Menu, Serializable {
                 "        </a>\n" +
                 "\n"
                 +
-                        new Header().insertUrls()
+                        new Header().insertUrls(activeUrl)
                 +
                 "          \n" + //
                 "\n" + //
@@ -62,16 +62,22 @@ public class Header implements Menu, Serializable {
                 "\n" + //
                 "\n";
     }
-    public String insertUrls(){
+    public String insertUrls(String activeLinkLabel) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<ul class=\"nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0\">\n");
+        stringBuilder.append("<ul class=\"nav navbar-nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0\">\n");
 
-        for (MenuLink link: links) {
-            String url = "<li><a href=" + link.getUrl() + " class=\"nav-link px-2 link-dark\">" +link.getLabel()+"</a></li>\n";
+        for (MenuLink link : links) {
+            String activeClass = link.getUrl().equals(activeLinkLabel) ? " active" : "";
+            String url = "<li class=\"nav-item\">\n" +
+                    "   <a class=\"nav-link px-2 link-dark" + activeClass + "\" href=" + link.getUrl() + ">" + link.getLabel() + "</a>\n" +
+                    "</li>\n";
             stringBuilder.append(url);
         }
+
         stringBuilder.append("</ul>");
         return stringBuilder.toString();
     }
+
+
 
 }

@@ -18,13 +18,11 @@ public class BaseCss implements Serializable {
             "          font-size: 3.5rem;\n" + //
             "        }\n" + //
             "      }\n" +
-            "        .asset-container {\n" +
-            "            margin-left: 5px;\n" +
-            "            margin-top: 1px;\n" +
-            "            margin-bottom: 0;\n" +
-            "            max-height: calc(100vh - 20px); /* Subtract 10px for top and bottom margins */\n" +
-            "            padding: 5px;\n" +
-            "        }\n" +
+            " .asset-container {\n" +
+            "    margin: 0;\n" +
+            "    padding: 2px;\n" +
+            "    max-height: calc(100vh - 4px); \n" +
+            "}\n" +
             "    </" +//
             "    </style>\n" ;
 

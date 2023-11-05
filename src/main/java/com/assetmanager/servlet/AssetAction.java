@@ -1,12 +1,13 @@
 package com.assetmanager.servlet;
 
+import com.assetmanager.app.bean.AssetBeanI;
+import com.assetmanager.app.bean.AssetBeanImpl;
 import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.Category;
 import com.assetmanager.app.view.dropdowns.AssetCategoryDropdown;
 import com.assetmanager.app.view.html.BasePage;
 import com.assetmanager.database.Database;
 import org.apache.commons.lang3.StringUtils;
-import org.w3c.dom.html.HTMLTableCaptionElement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,12 +25,16 @@ public class AssetAction extends HttpServlet {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
         HttpSession httpSession = servletRequest.getSession();
+        AssetBeanI assetBeanI = new AssetBeanImpl();
 
         if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
 
             new BasePage().renderHtml(servletRequest, servletResponse,
-                    " <div class=\"asset-container mx-auto\" style=\"max-height: 80vh;\">\n" +
-                            "    <form method=\"POST\" action=\"./asset\" class=\"col-6 border p-3 border-4\">\n" +
+                    " <div class=\"container\">\n" +
+                            "  <div class=\"row no-gutters\">\n" +
+                            "    <div class=\"col-md-4 p-0\">" +
+                            "<div class=\"asset-container mx-auto\" style=\"\">\n" +
+                            "    <form method=\"POST\" action=\"./asset\" class=\" border border-4\">\n" +
                             "        <h4 class=\"text-center mb-0 mt-0\">Create New Asset</h4>\n" +
                             "    <div class=\"mb-1 mt-0 p-2\">\n" +
                             "       <label for=\"assetId\" class=\"form-label\">Asset ID</label>\n" +
@@ -60,7 +65,32 @@ public class AssetAction extends HttpServlet {
                             "            <button class=\"btn btn-primary\" type=\"submit\">Create Asset</button>\n" +
                             "        </div>\n" +
                             "    </form>\n" +
-                            "    </div>\n");
+                            "    </div> </div> \n" +
+
+                            "   <div class=\"col-md-8 mr-0\">" +
+                            "<div class=\"table-responsive-sm\">\n" +
+                            "        <div style=\"max-height: 60vh; overflow: auto;\">"
+                            +
+                            "    <table class=\"table table-bordered\">\n" +
+                            "      <thead class=\"table-success\">\n" + //
+                            "      <tr>\n" + //
+                            "        <th scope=\"col\">ID</th>\n" +
+                            "        <th scope=\"col\">Name</th>\n" +
+                            "        <th scope=\"col\">Description</th>\n" +
+                            "        <th scope=\"col\">Category</th>\n" + //
+                            "        <th scope=\"col\">Date Added</th>\n" + //
+                            "        <th scope=\"col\">Value</th>\n" + //
+                            "      </tr>\n" + //
+                            "      </thead>\n" + //
+                            "      <tbody>\n </div> " +
+                             assetBeanI.getAllAssets()
+                            + "</tbody><table></div> " +
+                    "</div> " +
+                    "</div>" + //
+                    "      \n","./asset");
+
+        } else {
+            servletResponse.sendRedirect("./");
         }
     }
 
@@ -78,8 +108,11 @@ public class AssetAction extends HttpServlet {
             LocalDate dateAcquired = LocalDate.parse(servletRequest.getParameter("dateAcquired"));
             BigDecimal purchaseValue = new BigDecimal(servletRequest.getParameter("purchaseValue"));
 
-            database.getAssetList().add(new Asset(assetId,name,description,dateAcquired,category,purchaseValue));
-            servletResponse.sendRedirect("./home");
-        }
+            database.getAssetList().add(new Asset(assetId, name, description, dateAcquired, category, purchaseValue));
+            servletResponse.sendRedirect("./asset");
+        } else
+            servletResponse.sendRedirect("./");
     }
+
 }
+
