@@ -11,7 +11,7 @@ public class AssetCategoryDropdown implements OptionsMenu {
     {
         assetCategory.add(new Option<>(Category.HARDWARE, "Hardware"));
         assetCategory.add(new Option<>(Category.SOFTWARE, "Software"));
-        assetCategory.add(new Option<>(Category.DIGITAL_ASSET, "Digital Asset"));
+        assetCategory.add(new Option<>(Category.DIGITAL, "Digital Asset"));
         assetCategory.add(new Option<>(Category.ART, "Art"));
     }
     @Override

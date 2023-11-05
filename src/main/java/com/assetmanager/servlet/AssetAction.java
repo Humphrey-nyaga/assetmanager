@@ -30,9 +30,9 @@ public class AssetAction extends HttpServlet {
         if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
 
             new BasePage().renderHtml(servletRequest, servletResponse,
-                    " <div class=\"container\">\n" +
+
                             "  <div class=\"row no-gutters\">\n" +
-                            "    <div class=\"col-md-4 p-0\">" +
+                            "    <div class=\"col-md-4 p-2 ml-2\">" +
                             "<div class=\"asset-container mx-auto\" style=\"\">\n" +
                             "    <form method=\"POST\" action=\"./asset\" class=\" border border-4\">\n" +
                             "        <h4 class=\"text-center mb-0 mt-0\">Create New Asset</h4>\n" +
@@ -85,9 +85,7 @@ public class AssetAction extends HttpServlet {
                             "      <tbody>\n </div> " +
                              assetBeanI.getAllAssets()
                             + "</tbody><table></div> " +
-                    "</div> " +
-                    "</div>" + //
-                    "      \n","./asset");
+                    "</div> ","./asset");
 
         } else {
             servletResponse.sendRedirect("./");

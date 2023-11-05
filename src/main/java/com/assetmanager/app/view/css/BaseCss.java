@@ -3,28 +3,62 @@ package com.assetmanager.app.view.css;
 import java.io.Serializable;
 
 public class BaseCss implements Serializable {
-    private String style = "    " +
-            "<style>\n" + //
-            "      .bd-placeholder-img {\n" + //
-            "        font-size: 1.125rem;\n" + //
-            "        text-anchor: middle;\n" + //
-            "        -webkit-user-select: none;\n" + //
-            "        -moz-user-select: none;\n" + //
-            "        user-select: none;\n" + //
-            "      }\n" + //
-            "\n" + //
-            "      @media (min-width: 768px) {\n" + //
-            "        .bd-placeholder-img-lg {\n" + //
-            "          font-size: 3.5rem;\n" + //
-            "        }\n" + //
-            "      }\n" +
-            " .asset-container {\n" +
-            "    margin: 0;\n" +
-            "    padding: 2px;\n" +
-            "    max-height: calc(100vh - 4px); \n" +
-            "}\n" +
-            "    </" +//
-            "    </style>\n" ;
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    private String style = """
+                <style>
+                  .bd-placeholder-img {
+                    font-size: 1.125rem;
+                    text-anchor: middle;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    user-select: none;
+                  }
+
+                  @media (min-width: 768px) {
+                    .bd-placeholder-img-lg {
+                      font-size: 3.5rem;
+                    }
+                  }
+             .asset-container {
+                margin: 0;
+                padding: 2px;
+                max-height: calc(100vh - 4px);\s
+            }
+              .logo {
+                        text-align: left;
+                        background-color: #343a40; */
+                        color: white;\s
+                        padding: 2px;
+                    }
+
+                    .tm {
+                        font-size: 8px;
+                        vertical-align: left;
+                    }
+                       
+                    .card {
+                           border-radius: 10px;
+                           height: 200px;
+              }
+               body{
+               background-color: #f5f5f5;
+               }
+         
+               </style>
+            """;
 
     public void setStyle(String style) {
         this.style = style;

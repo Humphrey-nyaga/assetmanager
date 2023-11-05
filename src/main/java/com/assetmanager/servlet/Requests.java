@@ -19,7 +19,80 @@ public class Requests extends HttpServlet {
 
         if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
             new BasePage().renderHtml(servletRequest, servletResponse,
-                    "","./request");
+                    """
+                            <div class="row">
+                                       <div class="col-sm-6">
+                                           <div class="card h-100">
+                                               <div class="card-header bg-secondary">
+                                                   In Progress Asset Requests
+                                               </div>
+                                               <div class="card-body d-flex">
+                                                   <table class="table">
+                                                       <thead>
+                                                           <tr>
+                                                               <th>Asset Name</th>
+                                                               <th>Requester</th>
+                                                               <th>Status</th>
+                                                           </tr>
+                                                       </thead>
+                                                       <tbody>
+                                                           <tr>
+                                                               <td>MacBook Pro (13-inch, M2, 2022)</td>
+                                                               <td>Humphrey</td>
+                                                               <td><button class="btn btn-warning">In Progress</button></td>
+                                                           </tr>
+                                                           <tr>
+                                                               <td>ASUS PA329Q Monitor</td>
+                                                               <td>John Doe</td>
+                                                               <td><button class="btn btn-warning">In Progress</button></td>
+                                                           </tr>
+                                                           <tr>
+                                                               <td>Cisco 4000S Router</td>
+                                                               <td>Jane Doe</td>
+                                                               <td><button class="btn btn-warning">In Progress</button></td>
+                                                           </tr>
+                                                       </tbody>
+                                                   </table>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div class="col-sm-6">
+                                           <div class="card h-100">
+                                               <div class="card-header bg-secondary">
+                                                   Pending Asset Requests
+                                               </div>
+                                               <div class="card-body d-flex">
+                                                   <table class="table">
+                                                       <thead>
+                                                           <tr>
+                                                               <th>Asset Name</th>
+                                                               <th>Requester</th>
+                                                               <th>Status</th>
+                                                           </tr>
+                                                       </thead>
+                                                       <tbody>
+                                                           <tr>
+                                                               <td>Tesla Model S</td>
+                                                               <td>Humphrey</td>
+                                                               <td><button class="btn btn-danger">Pending</button></td>
+                                                           </tr>
+                                                           <tr>
+                                                               <td>JavaMaster 2000 Coffee Machine</td>
+                                                               <td>Developer Whoami</td>
+                                                               <td><button class="btn btn-danger">Pending</button></td>
+                                                           </tr>
+                                                           <tr>
+                                                               <td>Ford F-150 Truck</td>
+                                                               <td>Driver Joe</td>
+                                                               <td><button class="btn btn-danger">Pending</button></td>
+                                                           </tr>
+                                                       </tbody>
+                                                   </table>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                            ""","./request");
 
         } else {
             servletResponse.sendRedirect("./");

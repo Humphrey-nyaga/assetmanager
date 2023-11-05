@@ -1,6 +1,7 @@
 package com.assetmanager.event;
 
 import com.assetmanager.app.bean.UserBean;
+import com.assetmanager.app.businesslogic.AssetsValuation;
 import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.Category;
 import com.assetmanager.database.Database;
@@ -12,6 +13,7 @@ import javax.servlet.annotation.WebListener;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import static com.assetmanager.database.Database.getDatabaseInstance;
 
@@ -38,8 +40,24 @@ public class AppInit implements ServletContextListener {
         database.getAssetList().add(new Asset("004", "Operating System", "Windows 10", LocalDate.of(2020, 3, 2), Category.SOFTWARE,
                 new BigDecimal("119.99")));
         database.getAssetList().add(new Asset("005", "Digital Artwork", "Abstract Painting", LocalDate.of(2023, 2, 18),
-                Category.DIGITAL_ASSET, new BigDecimal("299.99")));
+                Category.DIGITAL, new BigDecimal("299.99")));
 
         System.out.println("Context Initialized");
+
+        AssetsValuation assetsValuation = new AssetsValuation();
+        Map<Category,BigDecimal> map = assetsValuation.totalAssetValueByCategory(database.getAssetList());
+        System.out.println("" +
+                "" +
+                "" +
+                "map = " + map +"" +
+                "" +
+                "");
+        System.out.println(" " +
+                "" +
+                "Total Assets Value = " + assetsValuation.totalAssetsValue(database.getAssetList()));
+        Map<Category, Long> assetCount =  assetsValuation.countAssetsByCategory(database.getAssetList());
+        System.out.println("assetCount = " + assetCount);
+
     }
+
 }

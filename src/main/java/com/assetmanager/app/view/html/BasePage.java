@@ -4,6 +4,7 @@ import com.assetmanager.app.view.css.BaseCss;
 import com.assetmanager.app.view.toolbars.Header;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ public class BasePage implements Serializable {
     public void renderHtml(HttpServletRequest request, HttpServletResponse response,
                            String content,String activeUrl) throws IOException {
         HttpSession httpSession = request.getSession();
+        ServletContext ctx = request.getServletContext();
 
         if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
             PrintWriter printWriter = response.getWriter();
@@ -31,6 +33,8 @@ public class BasePage implements Serializable {
                     "  </head>\n" +
                     "  <body>\n"
                     + new Header().menu(activeUrl)
+                    + "<h3>" + ctx.getInitParameter("AppName") + "</h3>"
+                     +"<p> Welcome " + httpSession.getAttribute("username") + "</p>"
             );
             printWriter.write(content);
             printWriter.write(
