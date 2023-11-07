@@ -1,19 +1,23 @@
 package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.Asset;
-import com.assetmanager.app.model.entity.Category;
 import com.assetmanager.database.Database;
+import com.assetmanager.event.AppInit;
+import com.assetmanager.util.logger.FileLogger;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
+import java.util.logging.Logger;
+
 
 public class AssetBeanImpl implements Serializable, AssetBeanI {
+    private static final Logger LOGGER = FileLogger.getLogger();
+
     Database database = Database.getDatabaseInstance();
     @Override
     public Asset createAsset(Asset asset) {
         database.getAssetList().add(asset);
+        LOGGER.info("******Asset created******");
+
         return asset;
     }
 
@@ -37,6 +41,7 @@ public class AssetBeanImpl implements Serializable, AssetBeanI {
         Database database = Database.getDatabaseInstance();
 
         StringBuilder trBuilder = new StringBuilder();
+        LOGGER.info("Retrieving All assets");
 
         for (Asset asset : database.getAssetList())
             trBuilder.append(asset.tableRow());

@@ -7,6 +7,7 @@ import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.Category;
 import com.assetmanager.app.model.entity.User;
 import com.assetmanager.database.Database;
+import com.assetmanager.util.logger.FileLogger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -14,20 +15,24 @@ import javax.servlet.annotation.WebListener;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.logging.Logger;
 
 import static com.assetmanager.database.Database.getDatabaseInstance;
 
 @WebListener
 public class AppInit implements ServletContextListener {
+    private static final Logger LOGGER = FileLogger.getLogger();
 
     UserBean userBean = new UserBean();
     AssetBeanI assetBean = new AssetBeanImpl();
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        System.out.println("*************** Asset Manager database Initialized *************");
+
+        FileLogger.getLogger();
+        LOGGER.info("*************** Asset Manager database Initialized *************");
         Database database = getDatabaseInstance();
-        System.out.println("*************** Creating Default Users *************");
+        LOGGER.info("*************** Creating Default Users *************");
 
           User registerUser = new User();
           registerUser.setPassword("root");
@@ -36,7 +41,7 @@ public class AppInit implements ServletContextListener {
           userBean.registerUser(registerUser);
 
 
-        System.out.println("*************** Creating Default Assets *************");
+        LOGGER.info("*************** Creating Default Assets *************");
         database.getAssetList().add(assetBean.createAsset(new Asset("001", "Laptop", "Dell Laptop", LocalDate.of(2022, 5, 10), Category.HARDWARE,
                 new BigDecimal("99999.99"))));
         database.getAssetList().add(assetBean.createAsset(new Asset("002", "Software License", "Microsoft Office", LocalDate.of(2021, 8, 15), Category.SOFTWARE,
@@ -48,12 +53,14 @@ public class AppInit implements ServletContextListener {
         database.getAssetList().add(assetBean.createAsset(new Asset("005", "Digital Artwork", "Abstract Painting", LocalDate.of(2023, 2, 18),
                 Category.DIGITAL, new BigDecimal("3999.99"))));
 
-        System.out.println("Context Initialized");
+        LOGGER.info("Context Initialized");
+
+
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce){
-        System.out.println("Context has been destroyed");
+        LOGGER.info("Context has been destroyed");
     }
 
 }

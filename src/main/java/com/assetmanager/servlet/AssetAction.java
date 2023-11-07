@@ -6,6 +6,7 @@ import com.assetmanager.app.bean.AssetBeanImpl;
 import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.view.dropdowns.AssetCategoryDropdown;
 import com.assetmanager.app.view.html.BasePage;
+import com.assetmanager.util.logger.FileLogger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,10 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 
 @WebServlet("/asset")
 public class AssetAction extends BaseAction {
+    private static final Logger LOGGER = FileLogger.getLogger();
     AssetBeanI assetBean = new AssetBeanImpl();
 
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
@@ -97,7 +100,7 @@ public class AssetAction extends BaseAction {
         //database.getAssetList().add(new Asset(assetId, name, description, dateAcquired, category, purchaseValue));
 
         Asset createAsset = new Asset();
-        System.out.println(" Proceeding to serialize Asset");
+        LOGGER.info(" Proceeding to serialize Asset");
         serializeForm(createAsset, servletRequest.getParameterMap());
         assetBean.createAsset(createAsset);
         servletResponse.sendRedirect("./asset");
