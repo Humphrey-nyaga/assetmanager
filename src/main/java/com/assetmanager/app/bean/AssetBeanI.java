@@ -1,7 +1,9 @@
 package com.assetmanager.app.bean;
 
+import com.assetmanager.app.model.entity.Asset;
+
 public interface AssetBeanI {
-    void addAsset();
+    Asset addAsset(Asset asset);
 
     void updateAsset();
 

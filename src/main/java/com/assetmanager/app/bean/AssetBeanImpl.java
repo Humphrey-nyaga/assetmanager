@@ -11,8 +11,8 @@ import java.util.List;
 
 public class AssetBeanImpl implements Serializable, AssetBeanI {
     @Override
-    public void addAsset() {
-
+    public Asset addAsset(Asset asset) {
+        return asset;
     }
 
     @Override

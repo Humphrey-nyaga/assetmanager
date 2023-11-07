@@ -33,7 +33,7 @@ public class BasePage implements Serializable {
                     "  </head>\n" +
                     "  <body>\n"
                     + new Header().menu(activeUrl)
-                    + "<h3>" + ctx.getInitParameter("AppName") + "</h3>"
+                  //  + "<h5>" + ctx.getInitParameter("AppName") + "</h3>"
                      +"<p> Welcome " + httpSession.getAttribute("username") + "</p>"
             );
             printWriter.write(content);

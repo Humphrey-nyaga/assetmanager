@@ -2,6 +2,7 @@ package com.assetmanager.servlet;
 
 import com.assetmanager.app.bean.UserBean;
 import com.assetmanager.app.bean.UserBeanI;
+import com.assetmanager.database.Database;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,7 @@ import java.io.IOException;
 @WebServlet("/signup")
 public class SignUp extends HttpServlet {
 
-
+    Database database = Database.getDatabaseInstance();
     UserBeanI userBeanI = new UserBean();
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,7 +27,7 @@ public class SignUp extends HttpServlet {
         String password = req.getParameter("password");
         String confirmPassword = req.getParameter("confirmPassword");
         if (password.equals(confirmPassword)) {
-            userBeanI.registerUser(username, password);
+            database.getUsersList().add(userBeanI.registerUser(username, password));
             resp.sendRedirect("./login");
         }
     }

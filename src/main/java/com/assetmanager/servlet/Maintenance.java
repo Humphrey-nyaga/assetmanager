@@ -15,14 +15,9 @@ import java.io.IOException;
 public class Maintenance extends HttpServlet {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
-        HttpSession httpSession = servletRequest.getSession();
 
-        if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
             new BasePage().renderHtml(servletRequest, servletResponse,
-                    "","./maintenance");
+                    "<h2>Maintenance Schedule Page Coming Soon</b>","./maintenance");
 
-        } else {
-            servletResponse.sendRedirect("./");
-        }
     }
 }

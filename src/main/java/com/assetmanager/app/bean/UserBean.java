@@ -2,12 +2,10 @@ package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.User;
 import com.assetmanager.util.security.PasswordEncoderI;
-import com.assetmanager.util.security.PasswordEncoderImpl;
-
+import com.assetmanager.util.security.PasswordEncoder;
 import java.io.Serializable;
-
 public class UserBean implements UserBeanI, Serializable {
-    PasswordEncoderI passwordEncoder = new PasswordEncoderImpl();
+    PasswordEncoderI passwordEncoder = new PasswordEncoder();
     @Override
     public User registerUser(String username, String password) {
         System.out.println("User object received for registration");
@@ -19,6 +17,5 @@ public class UserBean implements UserBeanI, Serializable {
     public User findUserByUsername() {
         return null;
     }
-
 
 }

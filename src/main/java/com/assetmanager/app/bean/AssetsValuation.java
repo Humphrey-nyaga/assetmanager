@@ -1,4 +1,4 @@
-package com.assetmanager.app.businesslogic;
+package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.Category;

@@ -15,9 +15,7 @@ import java.io.IOException;
 public class Reports extends HttpServlet {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
-        HttpSession httpSession = servletRequest.getSession();
 
-        if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
             new BasePage().renderHtml(servletRequest, servletResponse,
                     """
                             <div class="container">
@@ -57,8 +55,5 @@ public class Reports extends HttpServlet {
                                    </div>
                                    ""","./report");
 
-        } else {
-            servletResponse.sendRedirect("./");
-        }
     }
 }

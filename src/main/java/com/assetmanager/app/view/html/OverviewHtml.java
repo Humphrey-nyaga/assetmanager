@@ -1,15 +1,17 @@
 package com.assetmanager.app.view.html;
 
-import com.assetmanager.app.businesslogic.AssetsValuation;
+import com.assetmanager.app.bean.AssetsValuation;
 import com.assetmanager.app.model.entity.Category;
 import com.assetmanager.database.Database;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Map;
 
 public class OverviewHtml implements Serializable {
     Database database = Database.getDatabaseInstance();
+    DecimalFormat df = new DecimalFormat("#,###.00");
     AssetsValuation assetsValuation = new AssetsValuation();
     private final String pageHtml = "<div class=\"container\">\n"
             + "<div class=\"row\">\n" +
@@ -45,7 +47,7 @@ public class OverviewHtml implements Serializable {
     public String listAssetsValueByCategory() {
         Map<Category, BigDecimal> map = assetsValuation.totalAssetValueByCategory(database.getAssetList());
         StringBuilder stringBuilder = new StringBuilder().append(
-                "    <div class=\"card\">" +
+                "    <div class=\"card hover-zoom\">" +
                         "        <div class=\"card-header bg-secondary\">" +
                         "            Asset Value Per Category" +
                         "        </div>\n" +
@@ -56,7 +58,7 @@ public class OverviewHtml implements Serializable {
                             + "<li class=\"list-group-item\">"
                             + "<div class=\"row\">\n"
                             + " <div class=\"col-6\">").append(entry.getKey()).append(":</div>\n")
-                    .append("<div class=\"col-6\">").append(entry.getValue()).append("</div>\n")
+                    .append("<div class=\"col-6\">").append(df.format(entry.getValue())).append("</div>\n")
                     .append("</div>\n").append("</li>");
         }
         stringBuilder.append("</ul>" +
@@ -68,7 +70,7 @@ public class OverviewHtml implements Serializable {
     public String listAssetCountByCategory() {
         Map<Category, Long> map = assetsValuation.countAssetsByCategory(database.getAssetList());
         StringBuilder stringBuilder = new StringBuilder().append(
-                "    <div class=\"card \">" +
+                "    <div class=\"card hover-zoom\">" +
                         "        <div class=\"card-header bg-secondary \">" +
                         "            Asset Count Per Category" +
                         "        </div>\n" +
@@ -89,6 +91,7 @@ public class OverviewHtml implements Serializable {
     }
 
     public String totalAssetsValue() {
+
         return """
                 <div class="card">
                 <h5 class="card-header bg-secondary text-center">
@@ -101,7 +104,7 @@ public class OverviewHtml implements Serializable {
                         </svg>
                         <div class="display-4 text-center mt-0">
                         """ +
-                assetsValuation.totalAssetsValue(database.getAssetList()) +
+                df.format(assetsValuation.totalAssetsValue(database.getAssetList())) +
                 """ 
                         </div>
                          </div>

@@ -1,4 +1,4 @@
-package com.assetmanager.app.model.view;
+package com.assetmanager.app.model.entity;
 
 public enum MenuLinkStatus {
     ACTIVE,

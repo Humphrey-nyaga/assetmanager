@@ -3,7 +3,7 @@ package com.assetmanager.auth;
 import com.assetmanager.app.model.entity.User;
 import com.assetmanager.database.Database;
 import com.assetmanager.util.security.PasswordEncoderI;
-import com.assetmanager.util.security.PasswordEncoderImpl;
+import com.assetmanager.util.security.PasswordEncoder;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletException;
@@ -22,7 +22,7 @@ import java.util.Date;
 })
 public class Login extends HttpServlet {
     Database database = Database.getDatabaseInstance();
-    PasswordEncoderI passwordEncoder = new PasswordEncoderImpl();
+    PasswordEncoderI passwordEncoder = new PasswordEncoder();
 
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {

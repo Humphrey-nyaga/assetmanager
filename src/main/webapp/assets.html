@@ -49,53 +49,148 @@
 
 
 <main>
+    <div class="navbar-menu-wrapper d-flex align-items-stretch justify-content-between">
+        <a class="navbar-brand brand-logo-mini align-self-center d-lg-none" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo"></a>
+        <button class="navbar-toggler navbar-toggler align-self-center mr-2" type="button" data-toggle="minimize">
+            <i class="mdi mdi-menu"></i>
+        </button>
 
-      <header class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container ">
-          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start ">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-              <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="https://i.pinimg.com/originals/f2/6f/3b/f26f3bd33f8655f1ff4b1b512e65ca72.jpg"/></svg>
-            </a>
-
-            <ul class="nav navbar-nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-item nav-link px-2 link-secondary">Overview</a></li>
-                <li><a href="#" class="nav-item nav-link px-2 link-dark active">Assets</a></li>
-                <li><a href="#" class="nav-item nav-link px-2 link-dark">Customers</a></li>
-                <li><a href="#" class="nav-item nav-link px-2 link-dark">Maintenance</a></li>
-                <li><a href="#" class="nav-item nav-link px-2 link-dark">Reports</a></li>
-                <li><a href="#" class="nav-item nav-link px-2 link-dark active">Transactions</a></li>
-              </ul>
-
-
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-              <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-            </form>
-
-            <div class="dropdown text-end">
-              <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" alt="mdo" width="32" height="32" class="rounded-circle">
-              </a>
-              <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#logout">Sign out</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </header>
-    <div class="col-sm-4">
-        <div class="card">
-            <div class="card-body text-center">
-                <h5 class="card-title">Card Title</h5>
-                <div class="circle ratio ratio-1x1">
-                    <div class="circle-text">Ksh 100,000</div>
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                    <i class="mdi mdi-bell-outline"></i>
+                    <span class="count count-varient1">2</span>
+                </a>
+                <div class="dropdown-menu navbar-dropdown navbar-dropdown-large preview-list" aria-labelledby="notificationDropdown">
+                    <h6 class="p-3 mb-0">Notifications</h6>
+                    <a class="dropdown-item preview-item">
+                        <div class="preview-thumbnail">
+                            <img src="assets/images/faces/face4.jpg" alt="" class="profile-pic">
+                        </div>
+                        <div class="preview-item-content">
+                            <p class="mb-0"> Mark Mwima <span class="text-small text-muted">Registered for training</span>
+                            </p>
+                        </div>
+                    </a>
+                    <a class="dropdown-item preview-item">
+                        <div class="preview-thumbnail">
+                            <img src="assets/images/faces/face3.jpg" alt="" class="profile-pic">
+                        </div>
+                        <div class="preview-item-content">
+                            <p class="mb-0"> James Korir <span class="text-small text-muted">Enrolled for training</span>
+                            </p>
+                        </div>
+                    </a>
+                    <a class="dropdown-item preview-item">
+                        <div class="preview-thumbnail">
+                            <img src="assets/images/faces/face2.jpg" alt="" class="profile-pic">
+                        </div>
+                        <div class="preview-item-content">
+                            <p class="mb-0"> Mercy Bore <span class="text-small text-muted">Completed one training</span>
+                            </p>
+                        </div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <p class="p-3 mb-0">View all activities</p>
                 </div>
-                <p class="card-text">This is some card content.</p>
-            </div>
-        </div>
+            </li>
+            <li class="nav-item dropdown d-none d-sm-flex">
+                <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown">
+                    <i class="mdi mdi-email-outline"></i>
+                    <span class="count count-varient2">5</span>
+                </a>
+                <div class="dropdown-menu navbar-dropdown navbar-dropdown-large preview-list" aria-labelledby="messageDropdown">
+                    <h6 class="p-3 mb-0">Messages</h6>
+                    <a class="dropdown-item preview-item">
+                        <div class="preview-item-content flex-grow">
+                            <span class="badge badge-pill badge-success">Request</span>
+                            <p class="text-small text-muted ellipsis mb-0"> Suport needed for this user </p>
+                        </div>
+                        <p class="text-small text-muted align-self-start"> 4:10 PM </p>
+                    </a>
+                    <a class="dropdown-item preview-item">
+                        <div class="preview-item-content flex-grow">
+                            <span class="badge badge-pill badge-warning">Competencies</span>
+                            <p class="text-small text-muted ellipsis mb-0"> Most of the users are Scoring high </p>
+                        </div>
+                        <p class="text-small text-muted align-self-start"> 4:10 PM </p>
+                    </a>
+                    <a class="dropdown-item preview-item">
+                        <div class="preview-item-content flex-grow">
+                            <span class="badge badge-pill badge-danger">Training</span>
+                            <p class="text-small text-muted ellipsis mb-0"> Two trainings are scheduled to end tomorrow </p>
+                        </div>
+                        <p class="text-small text-muted align-self-start"> 4:10 PM </p>
+                    </a>
+                    <h6 class="p-3 mb-0">See all activity</h6>
+                </div>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav navbar-nav-right ml-lg-auto">
+
+            <li class="nav-item nav-profile dropdown border-0">
+                <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                    <img class="nav-profile-img mr-2" alt="" src="../assets/images/faces/face1.jpg">
+                    <span class="profile-name">johndoe@example.com</span>
+                </a>
+                <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
+                    <a class="dropdown-item" href="../logout">
+                        <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
+                </div>
+            </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="mdi mdi-menu">dd</span>
+        </button>
     </div>
+
+<!--      <header class="navbar navbar-expand-lg navbar-light bg-light">-->
+<!--        <div class="container ">-->
+<!--          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start ">-->
+<!--            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">-->
+<!--              <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="https://i.pinimg.com/originals/f2/6f/3b/f26f3bd33f8655f1ff4b1b512e65ca72.jpg"/></svg>-->
+<!--            </a>-->
+
+<!--            <ul class="nav navbar-nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">-->
+<!--                <li><a href="#" class="nav-item nav-link px-2 link-secondary">Overview</a></li>-->
+<!--                <li><a href="#" class="nav-item nav-link px-2 link-dark active">Assets</a></li>-->
+<!--                <li><a href="#" class="nav-item nav-link px-2 link-dark">Customers</a></li>-->
+<!--                <li><a href="#" class="nav-item nav-link px-2 link-dark">Maintenance</a></li>-->
+<!--                <li><a href="#" class="nav-item nav-link px-2 link-dark">Reports</a></li>-->
+<!--                <li><a href="#" class="nav-item nav-link px-2 link-dark active">Transactions</a></li>-->
+<!--              </ul>-->
+
+
+<!--            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">-->
+<!--              <input type="search" class="form-control" placeholder="Search..." aria-label="Search">-->
+<!--            </form>-->
+
+<!--            <div class="dropdown text-end">-->
+<!--              <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                <img src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" alt="mdo" width="32" height="32" class="rounded-circle">-->
+<!--              </a>-->
+<!--              <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">-->
+<!--                <li><a class="dropdown-item" href="#">Settings</a></li>-->
+<!--                <li><a class="dropdown-item" href="#">Profile</a></li>-->
+<!--                <li><hr class="dropdown-divider"></li>-->
+<!--                <li><a class="dropdown-item" href="#logout">Sign out</a></li>-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </header>-->
+<!--    <div class="col-sm-4">-->
+<!--        <div class="card">-->
+<!--            <div class="card-body text-center">-->
+<!--                <h5 class="card-title">Card Title</h5>-->
+<!--                <div class="circle ratio ratio-1x1">-->
+<!--                    <div class="circle-text">Ksh 100,000</div>-->
+<!--                </div>-->
+<!--                <p class="card-text">This is some card content.</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 
 
     <!--  <div>-->

@@ -53,9 +53,29 @@ public class BaseCss implements Serializable {
                            border-radius: 10px;
                            height: 200px;
               }
+              .card:hover {
+                transform: scale(1.1);
+                transition: transform 0.3s ease;
+                background-color: #f2f2f2;
+                color: #000;
+              }
+              .card:hover ul {
+                background-color: #f2f2f2;
+                color: #000;
+              }
+              
+              
                body{
                background-color: #f5f5f5;
                }
+               .profile-dropdown-menu {
+                       max-height: 100px;
+                       overflow-y: auto;
+                   }
+                   
+               .profile-dropdown-menu .dropdown-item {
+                               font-size: 14px;
+                               padding: 4px 10px;
          
                </style>
             """;
