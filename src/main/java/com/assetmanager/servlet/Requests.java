@@ -17,7 +17,6 @@ public class Requests extends HttpServlet {
             throws ServletException, IOException {
         HttpSession httpSession = servletRequest.getSession();
 
-        if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
             new BasePage().renderHtml(servletRequest, servletResponse,
                     """
                             <div class="row">
@@ -94,8 +93,5 @@ public class Requests extends HttpServlet {
                                    </div>
                             ""","./request");
 
-        } else {
-            servletResponse.sendRedirect("./");
-        }
     }
 }

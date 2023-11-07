@@ -10,7 +10,7 @@ import java.io.IOException;
 import org.apache.commons.lang3.StringUtils;
 
 
-//@WebFilter(urlPatterns = "/*")
+@WebFilter(urlPatterns = "/*")
 public class SessionFilter implements Filter {
 
     @Override
@@ -30,9 +30,10 @@ public class SessionFilter implements Filter {
         if (session.isNew()) {
             session.invalidate();
 
-            if (requestPath.equals("/login") || requestPath.equals("/signup")||requestPath.equals("/")) {
+            if (requestPath.equals("/login") || requestPath.equals("/index.html") || requestPath.equals("/signup.html") || requestPath.equals("/signup") || requestPath.equals("/")) {
                 filterChain.doFilter(servletRequest, servletResponse);
-            } else {
+            }
+            else {
                 httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/");
                 servletResponse.getWriter().flush();
             }

@@ -23,14 +23,10 @@ public class HomeAction extends HttpServlet {
         AssetBeanI assetBeanI = new AssetBeanImpl();
         OverviewHtml overviewHtml = new OverviewHtml();
 
-        if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
 
             new BasePage().renderHtml(servletRequest, servletResponse, overviewHtml.getPageHtml()
                     ,"./home"
             );
-        } else
-            servletResponse.sendRedirect("./");
     }
-
 
 }

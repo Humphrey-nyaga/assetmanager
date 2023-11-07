@@ -16,7 +16,6 @@ public class AssetAssignee extends HttpServlet {
             throws ServletException, IOException {
         HttpSession httpSession = servletRequest.getSession();
 
-        if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
             new BasePage().renderHtml(servletRequest, servletResponse,
 
                     """
@@ -66,8 +65,5 @@ public class AssetAssignee extends HttpServlet {
                             </div></div>
                             ""","./assignee");
 
-        }else {
-            servletResponse.sendRedirect("./");
-        }
     }
 }

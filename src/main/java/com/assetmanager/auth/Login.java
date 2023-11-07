@@ -27,12 +27,10 @@ public class Login extends HttpServlet {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
         HttpSession httpSession = servletRequest.getSession();
-
-        if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
+        if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId")))
             servletResponse.sendRedirect("./home");
-        }
-        servletResponse.sendRedirect("./");
-    }
+        else
+            servletResponse.sendRedirect("./");    }
 
     public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {

@@ -27,7 +27,6 @@ public class AssetAction extends HttpServlet {
         HttpSession httpSession = servletRequest.getSession();
         AssetBeanI assetBeanI = new AssetBeanImpl();
 
-        if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
 
             new BasePage().renderHtml(servletRequest, servletResponse,
 
@@ -87,9 +86,6 @@ public class AssetAction extends HttpServlet {
                             + "</tbody><table></div> " +
                     "</div> ","./asset");
 
-        } else {
-            servletResponse.sendRedirect("./");
-        }
     }
 
     public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)

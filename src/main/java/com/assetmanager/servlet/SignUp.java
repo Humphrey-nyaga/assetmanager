@@ -28,7 +28,7 @@ public class SignUp extends HttpServlet {
         String confirmPassword = req.getParameter("confirmPassword");
         if (password.equals(confirmPassword)) {
             database.getUsersList().add(userBeanI.registerUser(username, password));
-            resp.sendRedirect("./login");
+            resp.sendRedirect("./");
         }
     }
 
