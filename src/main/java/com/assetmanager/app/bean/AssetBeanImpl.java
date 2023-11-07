@@ -10,8 +10,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class AssetBeanImpl implements Serializable, AssetBeanI {
+    Database database = Database.getDatabaseInstance();
     @Override
-    public Asset addAsset(Asset asset) {
+    public Asset createAsset(Asset asset) {
+        database.getAssetList().add(asset);
         return asset;
     }
 

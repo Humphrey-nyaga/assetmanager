@@ -53,7 +53,7 @@ public class Login extends HttpServlet {
         if (userFound) {
             servletResponse.sendRedirect("./home");
         } else {
-            servletResponse.sendRedirect("./");
+            servletResponse.sendRedirect("./index.html");
         }
 
     }

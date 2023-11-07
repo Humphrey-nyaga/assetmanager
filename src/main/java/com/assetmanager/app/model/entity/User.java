@@ -16,6 +16,8 @@ public class User implements Serializable {
     private String username;
     @NotNull
     private String password;
+    @Transient
+    private String confirmPassword;
 
     public User() {
     }
@@ -23,6 +25,14 @@ public class User implements Serializable {
     public User(String username, String password){
         this.username = username;
         this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public String getUsername() {
