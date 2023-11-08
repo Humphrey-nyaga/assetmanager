@@ -1,15 +1,19 @@
 package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.app.view.html.HtmlComponent;
 import com.assetmanager.database.Database;
 import com.assetmanager.util.logger.FileLogger;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Logger;
 
 
 public class AssetBeanImpl implements Serializable, AssetBeanI {
     private static final Logger LOGGER = FileLogger.getLogger();
+    HtmlComponent<Asset> assetHtmlComponent = new HtmlComponent<>();
+
 
     Database database = Database.getDatabaseInstance();
     @Override
@@ -38,15 +42,8 @@ public class AssetBeanImpl implements Serializable, AssetBeanI {
     @Override
     public String getAllAssets() {
         Database database = Database.getDatabaseInstance();
-
-        StringBuilder trBuilder = new StringBuilder();
+        List<Asset> assets = database.getAssetList();
         LOGGER.info("Retrieving All assets");
-
-        for (Asset asset : database.getAssetList()) {
-            trBuilder.append(asset.tableRow());
-            System.out.println(trBuilder.toString());
-        }
-
-        return trBuilder.toString();
+        return assetHtmlComponent.table(assets);
     }
 }
