@@ -1,11 +1,13 @@
 package com.assetmanager.app.model.entity;
 
+import com.assetmanager.app.view.html.HtmlForm;
+
 import javax.persistence.*;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
-
+@HtmlForm(label = "Asset Assignee", url = "./assignee")
 public class Assignee implements Serializable {
 
     private String id;

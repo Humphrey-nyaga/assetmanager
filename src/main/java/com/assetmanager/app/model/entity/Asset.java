@@ -5,14 +5,29 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 
+import com.assetmanager.app.view.html.HtmlForm;
+import com.assetmanager.app.view.html.HtmlFormField;
+import com.assetmanager.app.view.html.TableColumnHeader;
 import org.apache.commons.lang3.StringUtils;
-
+@HtmlForm(label = "Asset", url = "./asset")
 public class Asset implements Serializable {
+    @TableColumnHeader(header = "Asset ID")
+    @HtmlFormField(label = "Asset ID")
     private String assetId;
+    @TableColumnHeader(header = "Name of Asset")
+    @HtmlFormField(label = "Name")
     private String name;
+    @TableColumnHeader(header = "Description")
+    @HtmlFormField(label = "Description")
     private String description;
+    @TableColumnHeader(header = "Date Acquired")
+    @HtmlFormField(label = "Date Acquired")
     private LocalDate dateAcquired;
+    @TableColumnHeader(header = "Category")
+    @HtmlFormField(label = "Category")
     private Category category;
+    @TableColumnHeader(header = "Value")
+    @HtmlFormField(label = "Purchase Value")
     private BigDecimal purchaseValue;
 
     public Asset() {
