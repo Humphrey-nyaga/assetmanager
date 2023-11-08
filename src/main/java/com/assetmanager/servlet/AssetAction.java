@@ -7,6 +7,7 @@ import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.view.dropdowns.AssetCategoryDropdown;
 import com.assetmanager.app.view.html.BasePage;
 import com.assetmanager.app.view.html.HtmlComponent;
+import com.assetmanager.database.Database;
 import com.assetmanager.util.logger.FileLogger;
 
 import javax.servlet.ServletException;
@@ -21,6 +22,8 @@ import java.util.logging.Logger;
 public class AssetAction extends BaseAction {
     private static final Logger LOGGER = FileLogger.getLogger();
     AssetBeanI assetBean = new AssetBeanImpl();
+    Database database = Database.getDatabaseInstance();
+
 
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
@@ -29,22 +32,7 @@ public class AssetAction extends BaseAction {
         HtmlComponent<Asset> assetHtmlComponent = new HtmlComponent<>();
         new BasePage().renderHtml(servletRequest, servletResponse,
 
-                assetHtmlComponent.form(new Asset()) + "<div class=\"col-md-8 mr-0\">" +
-                        "<div class=\"table-responsive-sm\">\n" +
-                        "        <div style=\"max-height: 60vh; overflow: auto;\">"
-                        +
-                        "    <table class=\"table table-bordered\">\n" +
-                        "      <thead class=\"table-success\">\n" + //
-                        "      <tr>\n" + //
-                        "        <th scope=\"col\">ID</th>\n" +
-                        "        <th scope=\"col\">Name</th>\n" +
-                        "        <th scope=\"col\">Description</th>\n" +
-                        "        <th scope=\"col\">Category</th>\n" + //
-                        "        <th scope=\"col\">Date Added</th>\n" + //
-                        "        <th scope=\"col\">Value</th>\n" + //
-                        "      </tr>\n" + //
-                        "      </thead>\n" + //
-                        "      <tbody>\n </div> " +
+                assetHtmlComponent.form(new Asset()) +
                         assetBean.getAllAssets()
                         + "</tbody><table></div> " +
                         "</div> ", "./asset");

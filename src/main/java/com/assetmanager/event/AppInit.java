@@ -39,6 +39,9 @@ public class AppInit implements ServletContextListener {
         registerUser.setConfirmPassword("root");
         registerUser.setUsername("root");
         userBean.registerUser(registerUser);
+        userBean.registerUser(new User("hum.admin","root","root"));
+        userBean.registerUser(new User("test","root","root"));
+
 
 
         LOGGER.info("*************** Creating Default Assets *************");

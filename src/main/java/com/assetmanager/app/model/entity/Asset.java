@@ -19,7 +19,7 @@ public class Asset implements Serializable {
     }
 
     public Asset(String assetId, String name, String description, LocalDate dateAcquired, Category category,
-            BigDecimal purchaseValue) {
+                 BigDecimal purchaseValue) {
         this.assetId = assetId;
         this.name = name;
         this.description = description;
@@ -76,19 +76,4 @@ public class Asset implements Serializable {
         this.purchaseValue = purchaseValue;
     }
 
-    public String tableRow() {
-
-        String trBuilder = "<tr>" +
-                "<td>" + StringUtils.trimToEmpty(getAssetId()) + "</td>" +
-                "<td>" + StringUtils.trimToEmpty(getName()) + "</td>" +
-                "<td>" + StringUtils.trimToEmpty(getDescription()) + "</td>" +
-                "<td>" + getCategory() + "</td>" +
-                "<td>" + getDateAcquired() + "</td>" +
-                "<td>" + (getPurchaseValue() == null ? ""
-                : new DecimalFormat("#,###.##").format(getPurchaseValue())) +
-                "</td>" +
-                "<tr>";
-
-        return trBuilder;
-    }
 }
