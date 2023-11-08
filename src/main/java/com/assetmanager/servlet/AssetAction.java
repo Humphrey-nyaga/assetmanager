@@ -6,6 +6,7 @@ import com.assetmanager.app.bean.AssetBeanImpl;
 import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.view.dropdowns.AssetCategoryDropdown;
 import com.assetmanager.app.view.html.BasePage;
+import com.assetmanager.app.view.html.HtmlComponent;
 import com.assetmanager.util.logger.FileLogger;
 
 import javax.servlet.ServletException;
@@ -25,45 +26,10 @@ public class AssetAction extends BaseAction {
             throws ServletException, IOException {
 
 
+        HtmlComponent<Asset> assetHtmlComponent = new HtmlComponent<>();
         new BasePage().renderHtml(servletRequest, servletResponse,
 
-                "  <div class=\"row no-gutters\">\n" +
-                        "    <div class=\"col-md-4 p-2 ml-2\">" +
-                        "<div class=\"asset-container mx-auto\" style=\"\">\n" +
-                        "    <form method=\"POST\" action=\"./asset\" class=\" border border-4\">\n" +
-                        "        <h4 class=\"text-center mb-0 mt-0\">Create New Asset</h4>\n" +
-                        "    <div class=\"mb-1 mt-0 p-2\">\n" +
-                        "       <label for=\"assetId\" class=\"form-label\">Asset ID</label>\n" +
-                        "       <input type=\"text\" class=\"form-control form-control-sm\" id=\"assetId\" name=\"assetId\">\n" +
-                        "     </div>\n" +
-                        "      <div class=\"mb-0 p-2\">\n" +
-                        "        <label for=\"name\" class=\"form-label\">Name</label>\n" +
-                        "        <input type=\"text\" class=\"form-control form-control-sm\" id=\"name\" name=\"name\">\n" +
-                        "      </div>\n" +
-                        "      <div class=\"mb-0 p-2\">\n" +
-                        "        <label for=\"description\" class=\"form-label\">Description</label>\n" +
-                        "        <textarea class=\"form-control  form-control-sm\" id=\"description\" name=\"description\"></textarea>\n" +
-                        "      </div>\n" +
-                        "      <div class=\"mb-0 p-2\">\n" +
-                        "        <label for=\"dateAcquired\" class=\"form-label \">Date Acquired</label>\n" +
-                        "        <input type=\"date\" class=\"form-control form-control-sm\" id=\"dateAcquired\" name=\"dateAcquired\">\n" +
-                        "      </div>\n" +
-                        "      <div class=\"mb-0 p-2\">\n" +
-
-                        new AssetCategoryDropdown().menu()
-                        +
-                        "      </div>\n" +
-                        "      <div class=\"mb-0 p-2\">\n" +
-                        "        <label for=\"purchaseValue\" class=\"form-label\">Purchase Value</label>\n" +
-                        "        <input type=\"number\" step=\"0.01\" class=\"form-control form-control-sm\" id=\"purchaseValue\" name=\"purchaseValue\">\n" +
-                        "      </div>\n" +
-                        "        <div class=\"d-grid gap-2 p-2\">\n" +
-                        "            <button class=\"btn btn-primary\" type=\"submit\">Create Asset</button>\n" +
-                        "        </div>\n" +
-                        "    </form>\n" +
-                        "    </div> </div> \n" +
-
-                        "   <div class=\"col-md-8 mr-0\">" +
+                assetHtmlComponent.form(new Asset()) + "<div class=\"col-md-8 mr-0\">" +
                         "<div class=\"table-responsive-sm\">\n" +
                         "        <div style=\"max-height: 60vh; overflow: auto;\">"
                         +
