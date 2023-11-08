@@ -1,7 +1,6 @@
 package com.assetmanager.servlet;
 
 import com.assetmanager.app.view.html.BasePage;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

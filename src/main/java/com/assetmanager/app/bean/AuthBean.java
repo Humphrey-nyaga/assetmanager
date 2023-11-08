@@ -4,10 +4,7 @@ import com.assetmanager.app.model.entity.User;
 import com.assetmanager.database.Database;
 import com.assetmanager.util.security.PasswordEncoder;
 import com.assetmanager.util.security.PasswordEncoderI;
-
-import javax.servlet.http.HttpSession;
 import java.io.Serializable;
-import java.util.Date;
 
 public class AuthBean implements AuthBeanI, Serializable {
     Database database = Database.getDatabaseInstance();
