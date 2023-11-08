@@ -1,6 +1,9 @@
 package com.assetmanager.servlet;
 
+import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.app.view.html.BasePage;
+import com.assetmanager.app.view.html.HtmlComponent;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,10 +18,11 @@ public class AssetAssignee extends HttpServlet {
             throws ServletException, IOException {
         HttpSession httpSession = servletRequest.getSession();
 
-            new BasePage().renderHtml(servletRequest, servletResponse,
+        HtmlComponent<Assignee> assigneeHtmlComponent = new HtmlComponent<>();
+         new BasePage().renderHtml(servletRequest, servletResponse,
 
-                    """
-                            <div class=col-md-12 justify-content-center>
+                  """
+                            <div class=col-md-8 justify-content-center>
                             <div class="d-flex justify-content-center">
                             <table class="table table-striped table-bordered ">  
                             <thead  class="thead-dark">  <tr>  
@@ -61,8 +65,9 @@ public class AssetAssignee extends HttpServlet {
                               </tr>
                               </tbody>
                             </table>
-                            </div></div>
-                            ""","./assignee");
+                            </div></div> 
+                            """ + assigneeHtmlComponent.form(new Assignee()),
+                 "./assignee");
 
     }
 }

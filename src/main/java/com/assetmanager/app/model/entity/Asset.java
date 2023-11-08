@@ -78,18 +78,17 @@ public class Asset implements Serializable {
 
     public String tableRow() {
 
-        StringBuilder trBuilder = new StringBuilder();
+        String trBuilder = "<tr>" +
+                "<td>" + StringUtils.trimToEmpty(getAssetId()) + "</td>" +
+                "<td>" + StringUtils.trimToEmpty(getName()) + "</td>" +
+                "<td>" + StringUtils.trimToEmpty(getDescription()) + "</td>" +
+                "<td>" + getCategory() + "</td>" +
+                "<td>" + getDateAcquired() + "</td>" +
+                "<td>" + (getPurchaseValue() == null ? ""
+                : new DecimalFormat("#,###.##").format(getPurchaseValue())) +
+                "</td>" +
+                "<tr>";
 
-        trBuilder.append("<tr>");
-        trBuilder.append("<td>").append(StringUtils.trimToEmpty(getAssetId())).append("</td>");
-        trBuilder.append("<td>").append(StringUtils.trimToEmpty(getName())).append("</td>");
-        trBuilder.append("<td>").append(StringUtils.trimToEmpty(getDescription())).append("</td>");
-        trBuilder.append("<td>").append(getCategory()).append("</td>");
-        trBuilder.append("<td>").append(getDateAcquired()).append("</td>");
-        trBuilder.append("<td>").append(getPurchaseValue() == null ? ""
-                : new DecimalFormat("#,###.##").format(getPurchaseValue())).append("</td>");
-        trBuilder.append("<tr>");
-
-        return trBuilder.toString();
+        return trBuilder;
     }
 }

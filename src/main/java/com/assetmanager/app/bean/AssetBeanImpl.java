@@ -42,8 +42,10 @@ public class AssetBeanImpl implements Serializable, AssetBeanI {
         StringBuilder trBuilder = new StringBuilder();
         LOGGER.info("Retrieving All assets");
 
-        for (Asset asset : database.getAssetList())
+        for (Asset asset : database.getAssetList()) {
             trBuilder.append(asset.tableRow());
+            System.out.println(trBuilder.toString());
+        }
 
         return trBuilder.toString();
     }

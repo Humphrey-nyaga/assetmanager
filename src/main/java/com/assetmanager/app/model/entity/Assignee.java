@@ -6,12 +6,9 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-@Entity
 public class Assignee implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Long id;
+
+    private String id;
     @NotNull
     private String firstName;
     @NotNull
@@ -24,7 +21,7 @@ public class Assignee implements Serializable {
     public Assignee() {
     }
 
-    public Assignee(Long id, String firstName, String lastName, LocalDate dateOfBirth, String identificationNumber) {
+    public Assignee(String id, String firstName, String lastName, LocalDate dateOfBirth, String identificationNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,11 +29,11 @@ public class Assignee implements Serializable {
         this.identificationNumber = identificationNumber;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
