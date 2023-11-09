@@ -16,12 +16,10 @@ import java.util.logging.Logger;
 @WebServlet("/signup")
 public class SignUp extends BaseAction {
     private static final Logger LOGGER = FileLogger.getLogger();
-
-    Database database = Database.getDatabaseInstance();
     UserBeanI userBean = new UserBean();
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("./signup.html");
+        resp.sendRedirect("./signup.jsp");
     }
 
 

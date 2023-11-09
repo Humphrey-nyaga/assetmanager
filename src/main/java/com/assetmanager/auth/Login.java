@@ -52,7 +52,7 @@ public class Login extends BaseAction {
             servletResponse.sendRedirect("./home");
             LOGGER.info("User Logged In Sucessfully");
         } else {
-            servletResponse.sendRedirect("./index.html");
+            servletResponse.sendRedirect("./index.jsp");
         }
 
     }

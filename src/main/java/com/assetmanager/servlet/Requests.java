@@ -1,22 +1,17 @@
 package com.assetmanager.servlet;
 
-import com.assetmanager.app.view.html.BasePage;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 @WebServlet("/request")
 
-public class Requests extends HttpServlet {
+public class Requests extends BaseAction {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
-        HttpSession httpSession = servletRequest.getSession();
 
-            new BasePage().renderHtml(servletRequest, servletResponse,
+            renderPage(servletRequest, servletResponse,
                     """
                             <div class="row">
                                        <div class="col-sm-6">

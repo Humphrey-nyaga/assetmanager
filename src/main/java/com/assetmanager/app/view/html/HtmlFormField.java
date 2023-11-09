@@ -11,5 +11,6 @@ public @interface HtmlFormField {
     String label() default "";
 
     String name() default "";
+    String id() default "";
 
 }

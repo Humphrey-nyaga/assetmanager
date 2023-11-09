@@ -42,7 +42,6 @@
 
                                     <div class="mb-3">
                                         <h2 class="fw-bold mb-2 text-uppercase">LOGIN</h2>
-                                        <!--- <p class="text-white mb-4">Please enter your username and password!</p> -->
 
                                         <div class="form-group">
                                             <label class="mb-2" for="username">Username</label>
@@ -61,15 +60,6 @@
                                         <button class="btn btn-primary btn-lg btn-outline-light px-4 mt-3 mb-3"
                                                 type="submit">LOGIN
                                         </button>
-                                        <!--                                        <div class="d-flex justify-content-center text-center mt-2 pt-1">-->
-                                        <!--                                            <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>-->
-                                        <!--                                            <a href="#!" class="text-white"><i-->
-                                        <!--                                                    class="fab fa-twitter fa-lg mx-2 px-2"></i></a>-->
-                                        <!--                                            <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>-->
-                                        <!--                                        </div>-->
-
-
-                                        <!--                                    </div>-->
                                         <div>
                                             <p class="mb-0">Don't have an account? <a href="./signup"
                                                                                       class="text-white fw-bold">Sign
