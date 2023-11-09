@@ -69,12 +69,6 @@
                                             </button>
                                             <p class="medium mb-0 text-secondary"><a class="text-white" href="./login">Already
                                                 have account? Sign In</a></p>
-<!--                                            <div class="d-flex justify-content-center text-center mt-2 pt-1">-->
-<!--                                                <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>-->
-<!--                                                <a href="#!" class="text-white"><i-->
-<!--                                                        class="fab fa-twitter fa-lg mx-2 px-2"></i></a>-->
-<!--                                                <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>-->
-<!--                                            </div>-->
 
                                         </div>
                                     </div>

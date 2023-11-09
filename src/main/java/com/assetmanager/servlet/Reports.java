@@ -1,23 +1,20 @@
 package com.assetmanager.servlet;
 
-import com.assetmanager.app.view.html.BasePage;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 @WebServlet("/report")
 
-public class Reports extends HttpServlet {
+public class Reports extends BaseAction {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
 
-            new BasePage().renderHtml(servletRequest, servletResponse,
+            renderPage(servletRequest, servletResponse,
                     """
                             <div class="container">
-                                       <div class="row">
+                                        <div class="row">
                                            <div class="col-md-4">
                                                <div class="card text-center">
                                                    <div class="card-body">

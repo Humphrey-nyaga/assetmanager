@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Header implements Menu, Serializable {
-    private List<MenuLink> links = new ArrayList<>();
+    private final List<MenuLink> links = new ArrayList<>();
 
     {
         links.add(new MenuLink("./home", "Overview", MenuLinkStatus.NOT_ACTIVE));
@@ -24,14 +24,17 @@ public class Header implements Menu, Serializable {
     @Override
     public String menu(String activeUrl) {
         return """
-                <header class="p-2 mb-3 border-bottom navbar navbar-expand-lg navbar-light bg-light">
+                <nav class="p-2 mb-3 border-bottom navbar navbar-expand-md navbar-light bg-light">
                 <a class="navbar-brand" href="#">
                             <img src="https://i.etsystatic.com/13930112/r/il/299b7a/4866387148/il_1140xN.4866387148_7oh3.jpg" width="35" height="35" class="d-inline-block align-top" alt="">
                             <b>Asset Manager</b>
                         </a>
+                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                     <span class="navbar-toggler-icon"></span>
+                   </button>
                    <div class="container">
-                       <div class="d-flex justify-content-between align-items-center">
-                                           
+                <div class=" collapse navbar-collapse justify-content-between align-items-center style="font-size-14px;" id="collapsibleNavbar">
+                                                                                        
                 """ +
 
         new Header().insertUrls(activeUrl) +
@@ -50,7 +53,7 @@ public class Header implements Menu, Serializable {
                                                   <li><a class="dropdown-item" href="./logout">Sign out</a></li>
                                               </ul>
                                           </div>  
-                             </header>
+                             </nav>
 
                              """;
     }

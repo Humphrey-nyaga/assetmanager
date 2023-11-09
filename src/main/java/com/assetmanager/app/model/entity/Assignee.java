@@ -1,42 +1,61 @@
 package com.assetmanager.app.model.entity;
 
 import com.assetmanager.app.view.html.HtmlForm;
+import com.assetmanager.app.view.html.HtmlFormField;
+import com.assetmanager.app.view.html.TableColumnHeader;
 
-import javax.persistence.*;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
-@HtmlForm(label = "Asset Assignee", url = "./assignee")
-public class Assignee implements Serializable {
 
-    private String id;
-    @NotNull
+@HtmlForm(label = "Assignee", url = "./assignee")
+public class Assignee implements Serializable {
+    @TableColumnHeader(header = "ID")
+    private Long id;
+    @TableColumnHeader(header = "Staff Number")
+    @HtmlFormField(label = "Staff Number")
+    private String staffNumber;
+    @TableColumnHeader(header = "First Name")
+    @HtmlFormField(label = "First Name")
     private String firstName;
-    @NotNull
+    @TableColumnHeader(header = "Last Name")
+    @HtmlFormField(label = "Last Name")
     private String lastName;
-    @NotNull
+    @TableColumnHeader(header = "Email")
+    @HtmlFormField(label = "Email")
+    private String email;
+    @TableColumnHeader(header = "Date of Birth")
+    @HtmlFormField(label = "Date of Birth")
     private LocalDate dateOfBirth;
-    @NotNull
+    @TableColumnHeader(header = "National ID")
+    @HtmlFormField(label = "ID Number")
     private String identificationNumber;
 
     public Assignee() {
     }
 
-    public Assignee(String id, String firstName, String lastName, LocalDate dateOfBirth, String identificationNumber) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.identificationNumber = identificationNumber;
-    }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getStaffNumber() {
+        return staffNumber;
+    }
+
+    public void setStaffNumber(String staffNumber) {
+        this.staffNumber = staffNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getFirstName() {

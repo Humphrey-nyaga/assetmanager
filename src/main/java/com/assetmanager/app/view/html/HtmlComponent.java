@@ -7,6 +7,8 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+
 
 public class HtmlComponent<T> implements Serializable {
     public String table(List<T> models) {
@@ -17,6 +19,10 @@ public class HtmlComponent<T> implements Serializable {
         List<Field> fields = List.of(models.get(0).getClass().getDeclaredFields());
         StringBuilder stringBuilder = new StringBuilder()
                 .append("<div class=\"col-md-8 mr-0\">")
+//                .append(
+//                        "    <div class=\"btn-toolbar\">\n" +
+//                        "        <button class=\"btn btn-primary rounded-2\">New Asset</button>\n" +
+//                        "    </div>")
                 .append("<div class=\"table-responsive-sm\">")
                 .append("<div style=\"max-height: 60vh; overflow: auto;\">")
                 .append("<table class=\"table table-bordered border-4\">")
@@ -30,16 +36,17 @@ public class HtmlComponent<T> implements Serializable {
             TableColumnHeader columnHeader = field.getAnnotation(TableColumnHeader.class);
             field.setAccessible(true);
             stringBuilder.append("<th scope=\"col\">")
-                    .append(StringUtils.isBlank(columnHeader.header())?fieldName : columnHeader.header())
+                    .append(StringUtils.isBlank(columnHeader.header()) ? fieldName : columnHeader.header())
                     .append("</th>");
 
         }
 
+        stringBuilder.append(" <th scope=\"col\">Actions</th>\n");
         stringBuilder.append("</tr></thead>");
 
-        for(T model: models){
+        for (T model : models) {
             stringBuilder.append("<tr>");
-            for(Field field: fields){
+            for (Field field : fields) {
                 field.setAccessible(true);
                 try {
                     stringBuilder.append("<td>")
@@ -49,42 +56,52 @@ public class HtmlComponent<T> implements Serializable {
                     throw new RuntimeException(e);
                 }
             }
+            stringBuilder.append("""
+                    <td>
+                    <button type="button" class="btn btn-sm btn-success">Update</button>
+                    <button type="button" class="btn btn-sm btn-danger">Delete</button>
+                                        </td>""");
             stringBuilder.append("</tr>");
         }
 
         stringBuilder.append(
-        """
-        <tbody></table>
-        </div></div></div></div>
-        """);
+                """
+                        <tbody></table>
+                        </div></div></div></div>
+                        """);
 
-       return stringBuilder.toString();
+        return stringBuilder.toString();
     }
 
 
     public String form(T t) {
+
+        @SuppressWarnings("ignore")
         String className = t.getClass().getSimpleName();
 
         HtmlForm htmlForm = t.getClass().getAnnotation(HtmlForm.class);
 
         StringBuilder htmlFormBuilder = new StringBuilder().append(
                 " <div class=\"row no-gutters\">\n" +
-                " <div class=\"col-md-4 p-2 ml-2\">\n" +
-                " <div class=\"asset-container mx-auto\" style=\"\">\n" +
-                " <form method=" + htmlForm.httpMethod()+
-                " action= "+ htmlForm.url() + " ");
-                htmlFormBuilder.append("class=\"border border-4\">\n" +
+                        " <div class=\"col-md-4 p-2 ml-2\">\n" +
+                        " <div class=\"asset-container mx-auto\" style=\"\">\n" +
+                        " <form method=" + htmlForm.httpMethod() +
+                        " action= " + htmlForm.url() + " ");
+        htmlFormBuilder.append("class=\"border border-4\">\n" +
                 " <h4 class=\"text-center mb-0 mt-0\">" +
-                "Create New " + htmlForm.label()+"</h4>");
+                "Create New " + htmlForm.label() + "</h4>");
 
 
         List<Field> fields = List.of(t.getClass().getDeclaredFields());
         for (Field field : fields) {
 
-            String fieldName = field.getName();
             if (!field.isAnnotationPresent(HtmlFormField.class))
                 continue;
             HtmlFormField htmlFormField = field.getAnnotation(HtmlFormField.class);
+
+            String fieldName = field.getName();
+            String id = StringUtils.isBlank(htmlFormField.id()) ? field.getName() : htmlFormField.id();
+            String label = StringUtils.isBlank(htmlFormField.label()) ? fieldName : htmlFormField.label();
 
             String fieldType = "text";
             if (field.getType().isAssignableFrom(LocalDate.class)) {
@@ -92,11 +109,11 @@ public class HtmlComponent<T> implements Serializable {
             } else if (field.getType().isAssignableFrom(BigDecimal.class)) {
                 fieldType = "number";
             } else if (field.getType().isEnum()) {
-                htmlFormBuilder.append(generateEnumField(StringUtils.isBlank(htmlFormField.label())?fieldName: htmlFormField.label(), field.getType()));
+                htmlFormBuilder.append(generateEnumField(label, fieldName, id, field.getType()));
                 continue;
             }
 
-            htmlFormBuilder.append(generateInputField(StringUtils.isBlank(htmlFormField.label())?fieldName: htmlFormField.label(), fieldType));
+            htmlFormBuilder.append(generateInputField(label, fieldName, id, fieldType));
         }
         htmlFormBuilder.append("""
                         <div class="d-grid gap-2 p-2">
@@ -111,18 +128,18 @@ public class HtmlComponent<T> implements Serializable {
         return htmlFormBuilder.toString();
     }
 
-    private String generateInputField(String label, String type) {
+    private String generateInputField(String label, String fieldName, String id, String type) {
         return "<div class=\"mb-1 mt-0 p-2\">\n" +
                 " <label for=\"" + label + "\" class=\"form-label\">" + label + "</label>\n" +
-                " <input type=\"" + type + "\" class=\"form-control form-control-sm\" id=\"" + label + "\" name=\"" + label + "\">\n" +
+                " <input type=\"" + type + "\" class=\"form-control form-control-sm\" id=\"" + id + "\" name=\"" + fieldName + "\">\n" +
                 "</div>";
     }
 
-    private String generateEnumField(String label, Class<?> enumClass) {
+    private String generateEnumField(String label, String fieldName, String id, Class<?> enumClass) {
         StringBuilder htmlForm = new StringBuilder();
         htmlForm.append("<div class=\"mb-1 mt-0 p-2\">\n")
                 .append(" <label for=\" " + label + "\" class=\"form-label\">" + label + "</label>\n")
-                .append("<select class=\"form-select form-select-sm\" id=\"" + label + "\" name=\"" + label + "\">\n");
+                .append("<select class=\"form-select form-select-sm\" id=\"" + id + "\" name=\"" + fieldName + "\">\n");
 
         for (Object enumConstant : enumClass.getEnumConstants()) {
             htmlForm.append("<option value=\"")

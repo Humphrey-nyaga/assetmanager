@@ -1,6 +1,11 @@
 package com.assetmanager.servlet;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -38,5 +43,14 @@ public class BaseAction extends HttpServlet {
         } catch (IllegalAccessException | InvocationTargetException e) {
             LOGGER.warning("Serialization Error" + e);
         }
+    }
+    public void renderPage(HttpServletRequest request, HttpServletResponse response,
+                           String content, String activeUrl) throws IOException, ServletException {
+
+        request.setAttribute("activeUrl", activeUrl);
+        request.setAttribute("content", content);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("./app/index.jsp");
+        requestDispatcher.forward(request, response);
+
     }
 }

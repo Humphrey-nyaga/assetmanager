@@ -29,7 +29,7 @@ public class SessionFilter implements Filter {
         if (session.isNew()) {
             session.invalidate();
 
-            if (requestPath.equals("/login") || requestPath.equals("/index.html") || requestPath.equals("/signup.html") || requestPath.equals("/signup") || requestPath.equals("/")) {
+            if (requestPath.equals("/login") || requestPath.equals("/index.jsp") || requestPath.equals("/signup.jsp") || requestPath.equals("/signup") || requestPath.equals("/")) {
                 filterChain.doFilter(servletRequest, servletResponse);
             }
             else {
