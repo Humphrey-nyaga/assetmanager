@@ -67,8 +67,8 @@
                                             <button class="btn btn-primary btn-lg btn-outline-light px-4 mt-4"
                                                     type="submit">SIGN UP
                                             </button>
-                                            <p class="medium mb-0 text-secondary"><a class="text-white" href="./login">Already
-                                                have account? Sign In</a></p>
+                                            <p class="medium mb-0 text-secondary text-white">Already
+                                                have account? <a href="./index.jsp"> Sign In </a></p>
 
                                         </div>
                                     </div>

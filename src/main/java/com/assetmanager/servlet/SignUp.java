@@ -6,6 +6,7 @@ import com.assetmanager.app.model.entity.User;
 import com.assetmanager.database.Database;
 import com.assetmanager.util.logger.FileLogger;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,14 +20,15 @@ public class SignUp extends BaseAction {
     UserBeanI userBean = new UserBean();
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("./signup.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("./signup.jsp");
+        requestDispatcher.include(req, resp);
     }
 
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         User registerUser = new User();
-        serializeForm(registerUser,req.getParameterMap());
+        serializeForm(registerUser, req.getParameterMap());
         userBean.registerUser(registerUser);
 
         resp.sendRedirect("./");

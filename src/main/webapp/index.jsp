@@ -61,7 +61,7 @@
                                                 type="submit">LOGIN
                                         </button>
                                         <div>
-                                            <p class="mb-0">Don't have an account? <a href="./signup"
+                                            <p class="mb-0">Don't have an account? <a href="./signup.jsp"
                                                                                       class="text-white fw-bold">Sign
                                                 Up</a>
                                             </p>
