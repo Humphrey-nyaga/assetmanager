@@ -43,17 +43,21 @@
                                     <div class="mb-3">
                                         <h2 class="fw-bold mb-2 text-uppercase">LOGIN</h2>
 
+                                        <jsp:useBean id="loginForm" class="com.assetmanager.app.UserBean.UserBean">
+                                            <jsp:setProperty name="loginForm" property="usernameLabel" value="Enter Unique Username"/>
+                                                <jsp:setProperty name="loginForm" property="passwordLabel" value="Enter Unique Password"/>
+                                        </jsp:useBean>
                                         <div class="form-group">
                                             <label class="mb-2" for="username">Username</label>
                                             <input name="username" id="username" class="form-control"
-                                                   placeholder="Enter username"/>
+                                                   placeholder="<jsp:getProperty name="loginForm" property="usernameLabel"/>"/>
                                         </div>
 
 
                                         <div class="form-group">
                                             <label class="mb-2" for="password">Password</label>
                                             <input type="password" id="password" name="password" class="form-control"
-                                                   placeholder="Enter Password"/>
+                                                   placeholder="<jsp:getProperty name="loginForm" property="passwordLabel"/>" />
                                         </div>
 
                                         <p class="medium mb-2"><a class="text-white" href="#!">Forgot password?</a></p>
@@ -61,7 +65,7 @@
                                                 type="submit">LOGIN
                                         </button>
                                         <div>
-                                            <p class="mb-0">Don't have an account? <a href="./signup"
+                                            <p class="mb-0">Don't have an account? <a href="./signup.jsp"
                                                                                       class="text-white fw-bold">Sign
                                                 Up</a>
                                             </p>
