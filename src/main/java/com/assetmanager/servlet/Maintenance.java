@@ -14,7 +14,7 @@ public class Maintenance extends BaseAction {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
 
-            renderPage(servletRequest, servletResponse,
+        renderPageWithoutTables(servletRequest, servletResponse,
                     "<h2>Maintenance Schedule Page Coming Soon</b>" 
                             ,"./maintenance");
 

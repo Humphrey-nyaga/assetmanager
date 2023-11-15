@@ -2,12 +2,14 @@ package com.assetmanager.app.model.entity;
 
 import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
+import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.app.view.html.TableColumnHeader;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 @HtmlForm(label = "Assignee", url = "./assignee")
+@HtmlTable(name = "Assignee Table", label = "Assignee",addUrl = "./assignee?action=add")
 public class Assignee implements Serializable {
     @TableColumnHeader(header = "ID")
     private Long id;
@@ -33,6 +35,15 @@ public class Assignee implements Serializable {
     public Assignee() {
     }
 
+    public Assignee(Long id, String staffNumber, String firstName, String lastName, String email, LocalDate dateOfBirth, String identificationNumber) {
+        this.id = id;
+        this.staffNumber = staffNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.dateOfBirth = dateOfBirth;
+        this.identificationNumber = identificationNumber;
+    }
 
     public Long getId() {
         return id;

@@ -26,12 +26,12 @@ public class SignUp extends BaseAction {
 
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        System.out.println("WEB FORM USER>>>>>>>>>>>>>>>>>>>");
         User registerUser = new User();
         serializeForm(registerUser, req.getParameterMap());
-        userBean.registerUser(registerUser);
-
-        resp.sendRedirect("./");
+        System.out.println("WEB FORM USER>>>>>>>>>>>>>>>>>>>" + registerUser);
+        if(userBean.registerUser(registerUser))
+           resp.sendRedirect("./");
     }
 
 

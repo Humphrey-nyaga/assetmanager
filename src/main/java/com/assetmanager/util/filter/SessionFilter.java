@@ -32,7 +32,7 @@ public class SessionFilter implements Filter {
             System.out.println("1.New Session");
             httpSession.invalidate();
 
-            if (servletPath.equals("/login") || servletPath.equals("/user") || servletPath.equals("/index.jsp") || servletPath.equals("/signup.jsp")) {
+            if (servletPath.equals("/login") || servletPath.equals("/signup") || servletPath.equals("/index.jsp") || servletPath.equals("/signup.jsp")) {
                 filterChain.doFilter(servletRequest, servletResponse);
 
             } else {

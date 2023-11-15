@@ -2,18 +2,19 @@ package com.assetmanager.app.model.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 
 import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
+import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.app.view.html.TableColumnHeader;
-import org.apache.commons.lang3.StringUtils;
+
 @HtmlForm(label = "Asset", url = "./asset")
+@HtmlTable(name = "Asset Table" ,label = "Asset", addUrl = "./asset?action=add")
 public class Asset implements Serializable {
     @TableColumnHeader(header = "Asset ID")
     @HtmlFormField(label = "Asset ID")
-    private String assetId;
+    private String id;
     @TableColumnHeader(header = "Name of Asset")
     @HtmlFormField(label = "Name")
     private String name;
@@ -33,9 +34,9 @@ public class Asset implements Serializable {
     public Asset() {
     }
 
-    public Asset(String assetId, String name, String description, LocalDate dateAcquired, Category category,
+    public Asset(String id, String name, String description, LocalDate dateAcquired, Category category,
                  BigDecimal purchaseValue) {
-        this.assetId = assetId;
+        this.id = id;
         this.name = name;
         this.description = description;
         this.dateAcquired = dateAcquired;
@@ -43,12 +44,12 @@ public class Asset implements Serializable {
         this.purchaseValue = purchaseValue;
     }
 
-    public String getAssetId() {
-        return assetId;
+    public String getId() {
+        return id;
     }
 
-    public void setAssetId(String assetId) {
-        this.assetId = assetId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

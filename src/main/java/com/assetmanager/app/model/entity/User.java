@@ -1,22 +1,19 @@
 package com.assetmanager.app.model.entity;
 
+import com.assetmanager.app.view.html.HtmlTable;
+
 import javax.persistence.*;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
-@Entity
-@Table(name = "user")
+
+@HtmlTable(name = "Users")
 public class User implements Serializable {
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    @Id
+
     private Long id;
-    @NotNull
     private String username;
-    @NotNull
     private String password;
-    @Transient
     private String confirmPassword;
 
     public User() {

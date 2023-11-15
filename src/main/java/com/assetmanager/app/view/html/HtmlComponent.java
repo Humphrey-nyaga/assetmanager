@@ -10,29 +10,32 @@ import java.util.List;
 import java.util.Map;
 
 
-public class HtmlComponent<T> implements Serializable {
-    public String table(List<T> models) {
+public class HtmlComponent implements Serializable {
+    public static <T> String table(List<T> data, Class<T> dataClass) {
 
-        if (models == null || models.isEmpty()) {
+        if (!dataClass.isAnnotationPresent(HtmlTable.class))
             return StringUtils.EMPTY;
-        }
-        List<Field> fields = List.of(models.get(0).getClass().getDeclaredFields());
+
+        HtmlTable htmlTableLabel = dataClass.getAnnotation(HtmlTable.class);
+        List<Field> fields = List.of(dataClass.getDeclaredFields());
         StringBuilder stringBuilder = new StringBuilder()
-                .append("<div class=\"col-md-8 mr-0\">")
-//                .append(
-//                        "    <div class=\"btn-toolbar\">\n" +
-//                        "        <button class=\"btn btn-primary rounded-2\">New Asset</button>\n" +
-//                        "    </div>")
-                .append("<div class=\"table-responsive-sm\">")
-                .append("<div style=\"max-height: 60vh; overflow: auto;\">")
-                .append("<table class=\"table table-bordered border-4\">")
-                .append("<thead class=\"table-success\">")
+                .append("<div class=\"row justify-content-center\">\n")
+                .append("<div class=\"col-md-10 mr-0\">\n")
+                .append("<div class=\"btn-toolbar\"><a href=\"" + htmlTableLabel.addUrl() + "\"><button class=\"btn btn-primary rounded-2\">Add " + htmlTableLabel.label() + "</button></a></div>\n")
+                .append("<div class=\"\">\n")
+                .append("<div style=\"max-height: 60vh; overflow: auto;\">\n")
+                .append("<table class=\"table table-bordered border-4 table-striped table-responsive-sm \">\n")
+                .append("<thead class=\"table-success\">\n")
                 .append("<tr>\n");
+
+
 
         for (Field field : fields) {
             String fieldName = field.getName();
+
             if (!field.isAnnotationPresent(TableColumnHeader.class))
                 continue;
+
             TableColumnHeader columnHeader = field.getAnnotation(TableColumnHeader.class);
             field.setAccessible(true);
             stringBuilder.append("<th scope=\"col\">")
@@ -40,11 +43,10 @@ public class HtmlComponent<T> implements Serializable {
                     .append("</th>");
 
         }
-
         stringBuilder.append(" <th scope=\"col\">Actions</th>\n");
         stringBuilder.append("</tr></thead>");
 
-        for (T model : models) {
+        for (T model : data) {
             stringBuilder.append("<tr>");
             for (Field field : fields) {
                 field.setAccessible(true);
@@ -59,30 +61,29 @@ public class HtmlComponent<T> implements Serializable {
             stringBuilder.append("""
                     <td>
                     <button type="button" class="btn btn-sm btn-success">Update</button>
-                    <button type="button" class="btn btn-sm btn-danger">Delete</button>
+                    <button type = "button" class="btn btn-sm btn-danger" onclick = "confirmDelete(this)"> Delete </button>
                                         </td>""");
             stringBuilder.append("</tr>");
         }
-
-        stringBuilder.append(
-                """
-                        <tbody></table>
-                        </div></div></div></div>
-                        """);
+        stringBuilder.append("""
+        <tbody></table>
+        </div></div></div></div>
+        """);
 
         return stringBuilder.toString();
     }
 
 
-    public String form(T t) {
+
+    public static<T> String form(Class<T> t) {
 
         @SuppressWarnings("ignore")
-        String className = t.getClass().getSimpleName();
+        String className = t.getSimpleName();
 
-        HtmlForm htmlForm = t.getClass().getAnnotation(HtmlForm.class);
+        HtmlForm htmlForm = t.getAnnotation(HtmlForm.class);
 
-        StringBuilder htmlFormBuilder = new StringBuilder().append(
-                " <div class=\"row no-gutters\">\n" +
+        StringBuilder htmlFormBuilder = new StringBuilder()
+                .append(" <div class=\"row justify-content-center\">\n" +
                         " <div class=\"col-md-4 p-2 ml-2\">\n" +
                         " <div class=\"asset-container mx-auto\" style=\"\">\n" +
                         " <form method=" + htmlForm.httpMethod() +
@@ -92,7 +93,7 @@ public class HtmlComponent<T> implements Serializable {
                 "Create New " + htmlForm.label() + "</h4>");
 
 
-        List<Field> fields = List.of(t.getClass().getDeclaredFields());
+        List<Field> fields = List.of(t.getDeclaredFields());
         for (Field field : fields) {
 
             if (!field.isAnnotationPresent(HtmlFormField.class))
@@ -106,6 +107,7 @@ public class HtmlComponent<T> implements Serializable {
             String fieldType = "text";
             if (field.getType().isAssignableFrom(LocalDate.class)) {
                 fieldType = "date";
+                htmlFormBuilder.append("<c:if test='${empty " + fieldName + " or " + fieldName + " le today}'>");
             } else if (field.getType().isAssignableFrom(BigDecimal.class)) {
                 fieldType = "number";
             } else if (field.getType().isEnum()) {
@@ -114,28 +116,32 @@ public class HtmlComponent<T> implements Serializable {
             }
 
             htmlFormBuilder.append(generateInputField(label, fieldName, id, fieldType));
+            if (field.getType().isAssignableFrom(LocalDate.class)) {
+                htmlFormBuilder.append("</c:if>");
+            }
         }
         htmlFormBuilder.append("""
-                        <div class="d-grid gap-2 p-2">
-                                <button class="btn btn-primary" type="submit">Create\s""").append(htmlForm.label())
-                .append("""
-                            </button>
-                            </div>
-                            </form>
-                            </div>
-                            </div>
-                        """);
+        <div class="d-grid gap-2 p-2">
+            <button class="btn btn-primary" type="submit">Create""")
+                .append(htmlForm.label()).append("""
+            </button>
+        </div>
+    </form>
+</div> </div>
+</div>
+""");
+
         return htmlFormBuilder.toString();
     }
 
-    private String generateInputField(String label, String fieldName, String id, String type) {
+    private static String generateInputField(String label, String fieldName, String id, String type) {
         return "<div class=\"mb-1 mt-0 p-2\">\n" +
                 " <label for=\"" + label + "\" class=\"form-label\">" + label + "</label>\n" +
                 " <input type=\"" + type + "\" class=\"form-control form-control-sm\" id=\"" + id + "\" name=\"" + fieldName + "\">\n" +
                 "</div>";
     }
 
-    private String generateEnumField(String label, String fieldName, String id, Class<?> enumClass) {
+    private static String generateEnumField(String label, String fieldName, String id, Class<?> enumClass) {
         StringBuilder htmlForm = new StringBuilder();
         htmlForm.append("<div class=\"mb-1 mt-0 p-2\">\n")
                 .append(" <label for=\" " + label + "\" class=\"form-label\">" + label + "</label>\n")
@@ -155,13 +161,14 @@ public class HtmlComponent<T> implements Serializable {
 
 
 
+
 /*String htmlForm = """
-                <div class="row">
-                <div class="col-md-4 p-2">
-                <div class="asset-container mx-auto center" style="">
-                <form method="POST" action="./asset" class="border border-4">
+                < div class="row" >
+                <div class="col-md-4 p-2" >
+                <div class="asset-container mx-auto center" style = "" >
+                <form method = "POST" action = "./asset" class="border border-4" >
                 <h4 class=\"text-center mb-0 mt-0\">Create New Asset</h4>
-                """;
+        """;
 
         for (Field field: fields) {
             String fieldName = field.getName();
@@ -191,12 +198,12 @@ public class HtmlComponent<T> implements Serializable {
                     "</div>";
         }
         htmlForm += """
-                <div class="d-grid gap-2 p-2">
-                        <button class="btn btn-primary" type="submit">Create Asset</button>
-                    </div>
-                   </form>
-                  </div>
-                  </div>
+                < div class="d-grid gap-2 p-2" >
+                        <button class="btn btn-primary" type = "submit" > Create Asset </button >
+                    </div >
+                   </form >
+                  </div >
+                  </div >
                 """;
 
          return htmlForm; */

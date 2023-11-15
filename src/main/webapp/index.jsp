@@ -1,3 +1,5 @@
+<%@ page isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 <head>
@@ -24,7 +26,12 @@
     <title>Login</title>
 </head>
 <body>
-<nav class="navbar navbar-light">
+<c:choose>
+    <c:when test='${sessionScope.loggedInId ne null}' >
+        <c:redirect url="./home" />
+    </c:when>
+    <c:otherwise>
+    <nav class="navbar navbar-light">
         <a class="navbar-brand" href="#">
             <img src="https://i.etsystatic.com/13930112/r/il/299b7a/4866387148/il_1140xN.4866387148_7oh3.jpg" width="35" height="35" class="d-inline-block align-top" alt="">
             <b>Asset Manager</b>
@@ -32,6 +39,8 @@
     </nav>
 <div class="container h-100">
     <div class="row h-100 justify-content-center align-items-center">
+    <div>
+    </div>
         <form class=" form-group w-75 justify-content-center" action="./login" method="POST">
             <section class="py-5">
                 <div class="container py-4">
@@ -84,5 +93,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+    </c:otherwise>
+</c:choose>
 </body>
 </html>

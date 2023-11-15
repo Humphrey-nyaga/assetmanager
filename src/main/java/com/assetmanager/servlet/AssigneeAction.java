@@ -16,10 +16,8 @@ public class AssigneeAction extends BaseAction {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
 
-        HtmlComponent<Assignee> assigneeHtmlComponent = new HtmlComponent<>();
-        renderPage(servletRequest,servletResponse,assigneeHtmlComponent.form(new Assignee())
-                        + assigneeBean.getAllAssignees(),
-                "./assignee");
+        renderPage(servletRequest,servletResponse,
+                "./assignee", Assignee.class,assigneeBean.getAllAssignees());
 
     }
     public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
@@ -27,5 +25,6 @@ public class AssigneeAction extends BaseAction {
         Assignee assignee = new Assignee();
         serializeForm(assignee, servletRequest.getParameterMap());
         assigneeBean.createAssignee(assignee);
+        servletResponse.sendRedirect("./asssignee");
     }
 }
