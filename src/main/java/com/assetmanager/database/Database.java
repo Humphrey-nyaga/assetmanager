@@ -1,5 +1,8 @@
 package com.assetmanager.database;
 
+import com.assetmanager.app.bean.AssetBeanI;
+import com.assetmanager.app.bean.AssetBeanImpl;
+import com.assetmanager.app.bean.UserBeanI;
 import com.assetmanager.app.model.entity.*;
 
 import java.io.Serializable;
@@ -17,7 +20,10 @@ public class Database implements Serializable {
     private static Database databaseInstance;
     private LocalDateTime dateTimeCreatedAt;
 
+
+
     private Database() {
+
     }
 
     public static Database getDatabaseInstance() {
@@ -56,4 +62,5 @@ public class Database implements Serializable {
     public List<Maintenance> getMaintenanceList() {
         return maintenanceList;
     }
+    //public List<T>
 }

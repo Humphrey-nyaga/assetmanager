@@ -30,7 +30,7 @@ public class AssetAction extends BaseAction {
                 servletResponse,
                 "./asset",
                 Asset.class,
-                assetBean.getAllAssets());
+                assetBean.list());
     }
 
     public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
@@ -40,7 +40,7 @@ public class AssetAction extends BaseAction {
         LOGGER.info(" Proceeding to serialize Asset");
         serializeForm(createAsset, servletRequest.getParameterMap());
 
-        assetBean.createAsset(createAsset);
+        assetBean.create(createAsset);
         servletResponse.sendRedirect("./asset");
 
 

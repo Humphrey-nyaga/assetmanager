@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.assetmanager.app.bean.GenericBean;
 import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.app.view.html.HtmlTable;
@@ -11,7 +12,7 @@ import com.assetmanager.app.view.html.TableColumnHeader;
 
 @HtmlForm(label = "Asset", url = "./asset")
 @HtmlTable(name = "Asset Table" ,label = "Asset", addUrl = "./asset?action=add")
-public class Asset implements Serializable {
+public class Asset  implements Serializable {
     @TableColumnHeader(header = "Asset ID")
     @HtmlFormField(label = "Asset ID")
     private String id;

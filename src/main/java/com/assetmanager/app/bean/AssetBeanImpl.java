@@ -12,40 +12,14 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 
-public class AssetBeanImpl implements Serializable, AssetBeanI {
+public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
     private static final Logger LOGGER = FileLogger.getLogger();
 
 
     Database database = Database.getDatabaseInstance();
     List<Asset> assets = database.getAssetList();
 
-    @Override
-    public Asset createAsset(Asset asset) {
-        database.getAssetList().add(asset);
-        LOGGER.info("******Asset created******");
 
-        return asset;
-    }
-
-    @Override
-    public void updateAsset() {
-
-    }
-
-    @Override
-    public void disposeAsset() {
-
-    }
-
-    @Override
-    public void transferAsset() {
-
-    }
-
-    public List<Asset> getAllAssets() {
-        Database database = Database.getDatabaseInstance();
-        return database.getAssetList();
-    }
     @Override
     public void delete(Asset assetToDelete) {
         Optional<Asset> optionalAsset = findAssetById(assetToDelete.getId());
@@ -56,7 +30,7 @@ public class AssetBeanImpl implements Serializable, AssetBeanI {
         }
     }
 
-    public Optional<Asset> findAssetById(String id){
+    public Optional<Asset> findAssetById(String id) {
         return Optional.ofNullable(assets.stream()
                 .filter(asset -> asset.getId().equals(id))
                 .findFirst().orElseThrow(() -> new AssetNotFoundException("Asset with ID " + id + " not found")));

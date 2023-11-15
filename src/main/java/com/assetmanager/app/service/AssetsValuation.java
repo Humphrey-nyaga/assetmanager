@@ -1,4 +1,4 @@
-package com.assetmanager.app.bean;
+package com.assetmanager.app.service;
 
 import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.Category;
@@ -28,5 +28,8 @@ public class AssetsValuation implements Serializable {
                         Asset::getCategory,
                         Collectors.counting()
                 ));
+    }
+    public Integer totalAssets(List<Asset> assetList) {
+        return assetList.size();
     }
 }

@@ -5,11 +5,7 @@ import com.assetmanager.app.model.entity.Assignee;
 import java.util.List;
 import java.util.Optional;
 
-public interface AssigneeBeanI {
+public interface AssigneeBeanI extends GenericBeanI<Assignee> {
     Assignee createAssignee(Assignee newAssignee);
-    Assignee updateAssignee(Assignee newAssignee);
-    void deleteAssignee(Assignee newAssignee);
-    List<Assignee> getAllAssignees();
     Optional<Assignee> getAssigneeByStaffId(String staffID);
-    Assignee getAssigneeByEmail();
 }

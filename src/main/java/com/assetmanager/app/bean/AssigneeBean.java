@@ -7,7 +7,7 @@ import com.assetmanager.exceptions.AssigneeDoesNotExistException;
 import java.util.List;
 import java.util.Optional;
 
-public class AssigneeBean implements AssigneeBeanI {
+public class AssigneeBean extends GenericBean<Assignee> implements AssigneeBeanI {
     Database database = Database.getDatabaseInstance();
     List<Assignee> assignees = database.getAssigneeList();
 
@@ -19,33 +19,11 @@ public class AssigneeBean implements AssigneeBeanI {
     }
 
     @Override
-    public Assignee updateAssignee(Assignee newAssignee) {
-        return null;
-    }
-
-    @Override
-    public void deleteAssignee(Assignee newAssignee) {
-
-    }
-
-    @Override
     public Optional<Assignee> getAssigneeByStaffId(String staffID) {
         return Optional.ofNullable(assignees.stream()
                 .filter(assignee -> assignee.getStaffNumber().equals(staffID))
                 .findFirst().orElseThrow(
-                        () -> new AssigneeDoesNotExistException("Staff with id " + staffID + "does not exist")));
-    }
-
-
-    @Override
-    public Assignee getAssigneeByEmail() {
-        return null;
-    }
-
-    @Override
-    public List<Assignee> getAllAssignees() {
-
-        return database.getAssigneeList();
+                        () -> new AssigneeDoesNotExistException("Staff with id " + staffID + " does not exist")));
     }
 
 }
