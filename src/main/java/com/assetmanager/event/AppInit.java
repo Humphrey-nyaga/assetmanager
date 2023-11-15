@@ -54,7 +54,6 @@ public class AppInit implements ServletContextListener {
         assetBean.create(new Asset("005", "Digital Artwork", "Abstract Painting", LocalDate.of(2023, 2, 18),
                 Category.DIGITAL, new BigDecimal("3999.99")));
 
-        database.getAssetList().addAll(assetBean.list());
 
         /*Create some default assignees*/
         assigneeBean.create(new Assignee(1L, "SN001", "Hans", "Schmidt", "hans@gmail.com",
@@ -66,48 +65,48 @@ public class AppInit implements ServletContextListener {
                 LocalDate.of(1982, 11, 7), "ES876543210"));
 
 
-//        assetRequestBean.createAssetRequest(new AssetRequest("ASR001", "SN001", "MacBook M1", "M2 2022 Grey", LocalDate.now(), 2, RequestStatusEnum.PENDING));
-//        assetRequestBean.createAssetRequest(new AssetRequest("ASR002", "SN002", "MacBook M2", "M2 2021 Silver", LocalDate.now(), 1, RequestStatusEnum.APPROVED));
-//
-//        assetRequestBean.createAssetRequest(new AssetRequest(
-//                "ASR002",
-//                "SN003",
-//                "HP Laptop",
-//                "EliteBook Intel Core i7.",
-//                LocalDate.now(),
-//                2,
-//                RequestStatusEnum.PENDING
-//        ));
-//
-//        assetRequestBean.createAssetRequest(new AssetRequest(
-//                "ASR003",
-//                "SN002",
-//                "HP Laptop",
-//                "HP Spectre x360, Intel Core i5",
-//                LocalDate.now(),
-//                1,
-//                RequestStatusEnum.REJECTED
-//        ));
-//
-//        assetRequestBean.createAssetRequest(new AssetRequest(
-//                "ASR005",
-//                "SN002",
-//                "Pickup Truck",
-//                "Ford F-150 Pickup.",
-//                LocalDate.now(),
-//                1,
-//                RequestStatusEnum.APPROVED
-//        ));
-//
-//        assetRequestBean.createAssetRequest(new AssetRequest(
-//                "ASR006",
-//                "SN001",
-//                "Pickup Truck",
-//                "Chevrolet Silverado 1500 Pickup.",
-//                LocalDate.now(),
-//                1,
-//                RequestStatusEnum.PENDING
-//        ));
+        assetRequestBean.createAssetRequest(new AssetRequest("ASR001", "SN001", "MacBook M1", "M2 2022 Grey", LocalDate.now(), 2, RequestStatusEnum.PENDING));
+        assetRequestBean.createAssetRequest(new AssetRequest("ASR002", "SN002", "MacBook M2", "M2 2021 Silver", LocalDate.now(), 1, RequestStatusEnum.APPROVED));
+
+        assetRequestBean.createAssetRequest(new AssetRequest(
+                "ASR002",
+                "SN003",
+                "HP Laptop",
+                "EliteBook Intel Core i7.",
+                LocalDate.now(),
+                2,
+                RequestStatusEnum.PENDING
+        ));
+
+        assetRequestBean.createAssetRequest(new AssetRequest(
+                "ASR003",
+                "SN002",
+                "HP Laptop",
+                "HP Spectre x360, Intel Core i5",
+                LocalDate.now(),
+                1,
+                RequestStatusEnum.REJECTED
+        ));
+
+        assetRequestBean.createAssetRequest(new AssetRequest(
+                "ASR005",
+                "SN002",
+                "Pickup Truck",
+                "Ford F-150 Pickup.",
+                LocalDate.now(),
+                1,
+                RequestStatusEnum.APPROVED
+        ));
+
+        assetRequestBean.createAssetRequest(new AssetRequest(
+                "ASR006",
+                "SN001",
+                "Pickup Truck",
+                "Chevrolet Silverado 1500 Pickup.",
+                LocalDate.now(),
+                1,
+                RequestStatusEnum.PENDING
+        ));
 
     }
 
