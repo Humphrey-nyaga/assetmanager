@@ -1,6 +1,6 @@
 package com.assetmanager.app.view.html;
 
-import com.assetmanager.app.bean.AssetsValuation;
+import com.assetmanager.app.service.AssetsValuation;
 import com.assetmanager.app.model.entity.Category;
 import com.assetmanager.database.Database;
 
@@ -17,8 +17,8 @@ public class OverviewHtml implements Serializable {
             + "<div class=\"row\">\n" +
 
             "    <!-- Total Assets Value -->\n" +
-            "    <div class=\"col-sm-4\"> "
-            +
+            "    <div class=\"col-sm-4\"> " +
+
             totalAssetsValue()
             +
 
@@ -37,6 +37,13 @@ public class OverviewHtml implements Serializable {
             +
             "</div>\n" +
             "\n" +
+            "    <!-- Total Assets -->\n" +
+            "    <div class=\"col-sm-4\"> "
+            +
+            totalAssetCount()
+            +
+            "</div>\n" +
+
             "</div>";
 
 
@@ -47,7 +54,7 @@ public class OverviewHtml implements Serializable {
     public String listAssetsValueByCategory() {
         Map<Category, BigDecimal> map = assetsValuation.totalAssetValueByCategory(database.getAssetList());
         StringBuilder stringBuilder = new StringBuilder().append(
-                "    <div class=\"card hover-zoom\">" +
+                "    <div class=\"card hover-zoom mb-3\">" +
                         "        <div class=\"card-header bg-secondary\">" +
                         "            Asset Value Per Category" +
                         "        </div>\n" +
@@ -70,7 +77,7 @@ public class OverviewHtml implements Serializable {
     public String listAssetCountByCategory() {
         Map<Category, Long> map = assetsValuation.countAssetsByCategory(database.getAssetList());
         StringBuilder stringBuilder = new StringBuilder().append(
-                "    <div class=\"card hover-zoom\">" +
+                "    <div class=\"card hover-zoom mb-3\">" +
                         "        <div class=\"card-header bg-secondary \">" +
                         "            Asset Count Per Category" +
                         "        </div>\n" +
@@ -93,7 +100,7 @@ public class OverviewHtml implements Serializable {
     public String totalAssetsValue() {
 
         return """
-                <div class="card">
+                <div class="card mb-3">
                 <h5 class="card-header bg-secondary text-center">
                 """ +
                 """
@@ -105,6 +112,27 @@ public class OverviewHtml implements Serializable {
                         <div class="display-4 text-center mt-0">
                         """ +
                 df.format(assetsValuation.totalAssetsValue(database.getAssetList())) +
+                """ 
+                        </div>
+                         </div>
+                          </div>
+                          """;
+
+
+
+    }
+    public String totalAssetCount() {
+
+        return """
+                <div class="card mb-3">
+                <h5 class="card-header bg-secondary text-center">
+                """ +
+                """
+                        Total Assets Count </h5>
+                        <div class="d-flex align-items-center flex-column">
+                        <div class="display-4 text-center mt-0">
+                        """ +
+                assetsValuation.totalAssets(database.getAssetList()) +
                 """ 
                         </div>
                          </div>

@@ -40,27 +40,28 @@ public class AppInit implements ServletContextListener {
         userBean.registerUser(new User("hum.admin", "root", "root"));
         userBean.registerUser(new User("test", "root", "root"));
 
+        AssetBeanI assetBean = new AssetBeanImpl();
 
         LOGGER.info("*************** Creating Default Assets *************");
-        assetBean.createAsset(new Asset("001", "Laptop", "Dell Laptop", LocalDate.of(2022, 5, 10), Category.ELECTRONICS,
+        assetBean.create(new Asset("001", "Laptop", "Dell Laptop", LocalDate.of(2022, 5, 10), Category.ELECTRONICS,
                 new BigDecimal("99999.99")));
-        assetBean.createAsset(new Asset("002", "Software License", "Microsoft Office", LocalDate.of(2021, 8, 15), Category.SOFTWARE,
+        assetBean.create(new Asset("002", "Software License", "Microsoft Office", LocalDate.of(2021, 8, 15), Category.SOFTWARE,
                 new BigDecimal("14999.99")));
-        assetBean.createAsset(new Asset("003", "Server", "HP ProLiant Server", LocalDate.of(2021, 12, 5), Category.ELECTRONICS,
+        assetBean.create(new Asset("003", "Server", "HP ProLiant Server", LocalDate.of(2021, 12, 5), Category.ELECTRONICS,
                 new BigDecimal("25000.00")));
-        assetBean.createAsset(new Asset("004", "Operating System", "Windows 10", LocalDate.of(2020, 3, 2), Category.SOFTWARE,
+        assetBean.create(new Asset("004", "Operating System", "Windows 10", LocalDate.of(2020, 3, 2), Category.SOFTWARE,
                 new BigDecimal("11000.50")));
-        assetBean.createAsset(new Asset("005", "Digital Artwork", "Abstract Painting", LocalDate.of(2023, 2, 18),
+        assetBean.create(new Asset("005", "Digital Artwork", "Abstract Painting", LocalDate.of(2023, 2, 18),
                 Category.DIGITAL, new BigDecimal("3999.99")));
 
 
         /*Create some default assignees*/
-        assigneeBean.createAssignee(new Assignee(1L, "SN001", "Hans", "Schmidt", "hans@gmail.com",
+        assigneeBean.create(new Assignee(1L, "SN001", "Hans", "Schmidt", "hans@gmail.com",
                 LocalDate.of(1985, 5, 15), "DE123456789"));
 
-        assigneeBean.createAssignee(new Assignee(2L, "SN002", "Henry", "Müller", "henry@gmail.com",
+        assigneeBean.create(new Assignee(2L, "SN002", "Henry", "Müller", "henry@gmail.com",
                 LocalDate.of(1990, 8, 22), "DE987654321"));
-        assigneeBean.createAssignee(new Assignee(3L, "SN003", "Pablo", "Kevo", "kevo@gmail.com",
+        assigneeBean.create(new Assignee(3L, "SN003", "Pablo", "Kevo", "kevo@gmail.com",
                 LocalDate.of(1982, 11, 7), "ES876543210"));
 
 
