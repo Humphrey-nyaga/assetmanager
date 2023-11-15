@@ -26,9 +26,11 @@ public class AssetAction extends BaseAction {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
 
-        HtmlComponent<Asset> assetHtmlComponent = new HtmlComponent<>();
-        renderPage(servletRequest,servletResponse,assetHtmlComponent.form(new Asset()) +
-                assetBean.getAllAssets(),"./asset");
+        renderPage(servletRequest,
+                servletResponse,
+                "./asset",
+                Asset.class,
+                assetBean.getAllAssets());
     }
 
     public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)

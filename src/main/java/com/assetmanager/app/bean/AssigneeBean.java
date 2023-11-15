@@ -1,15 +1,14 @@
 package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.Assignee;
-import com.assetmanager.app.view.html.HtmlComponent;
 import com.assetmanager.database.Database;
 
 import java.util.List;
+import java.util.Optional;
 
 public class AssigneeBean implements AssigneeBeanI {
     Database database = Database.getDatabaseInstance();
     List<Assignee> assignees = database.getAssigneeList();
-    HtmlComponent<Assignee> assigneeHtmlComponent = new HtmlComponent<>();
 
     @Override
     public Assignee createAssignee(Assignee newAssignee) {
@@ -28,10 +27,11 @@ public class AssigneeBean implements AssigneeBeanI {
 
     }
 
-
     @Override
-    public Assignee getAssigneeByNationalId() {
-        return null;
+    public Optional<Assignee> getAssigneeByStaffId(String staffID) {
+        return assignees.stream()
+                .filter(assignee -> assignee.getStaffNumber().equals(staffID))
+                .findFirst();
     }
 
     @Override
@@ -40,8 +40,9 @@ public class AssigneeBean implements AssigneeBeanI {
     }
 
     @Override
-    public String getAllAssignees() {
-        return assigneeHtmlComponent.table(assignees);
+    public List<Assignee> getAllAssignees() {
+
+        return database.getAssigneeList();
     }
 
 }

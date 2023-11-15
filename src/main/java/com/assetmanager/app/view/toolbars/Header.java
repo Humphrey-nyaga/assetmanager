@@ -7,8 +7,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Header implements Menu, Serializable {
+public class Header implements  Serializable {
     private final List<MenuLink> links = new ArrayList<>();
+    private String activeUrl;
+    private String menu;
+
 
     {
         links.add(new MenuLink("./home", "Overview", MenuLinkStatus.NOT_ACTIVE));
@@ -17,12 +20,13 @@ public class Header implements Menu, Serializable {
         links.add(new MenuLink("./maintenance", "Maintenance", MenuLinkStatus.NOT_ACTIVE));
         links.add(new MenuLink("./report", "Reports", MenuLinkStatus.NOT_ACTIVE));
         links.add(new MenuLink("./request", "Requests", MenuLinkStatus.NOT_ACTIVE));
-      //  links.add(new MenuLink("./valuation", "Valuation", MenuLinkStatus.NOT_ACTIVE));
+        links.add(new MenuLink("./assigned", "MyAssets", MenuLinkStatus.NOT_ACTIVE));
+
+        //  links.add(new MenuLink("./valuation", "Valuation", MenuLinkStatus.NOT_ACTIVE));
 
     }
 
-    @Override
-    public String menu(String activeUrl) {
+    public String getMenu() {
         return """
                 <nav class="p-2 mb-3 border-bottom navbar navbar-expand-md navbar-light bg-light">
                 <a class="navbar-brand" href="#">
@@ -37,7 +41,7 @@ public class Header implements Menu, Serializable {
                                                                                         
                 """ +
 
-        new Header().insertUrls(activeUrl) +
+        new Header().insertUrls(getActiveUrl()) +
 
                      """
                                   </div>
@@ -75,6 +79,16 @@ public class Header implements Menu, Serializable {
         return stringBuilder.toString();
     }
 
+    public String getActiveUrl() {
+        return activeUrl;
+    }
+
+    public void setActiveUrl(String activeUrl) {
+        this.activeUrl = activeUrl;
+    }
 
 
+    public void setMenu(String menu) {
+        this.menu = menu;
+    }
 }

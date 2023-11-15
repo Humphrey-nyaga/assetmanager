@@ -1,6 +1,9 @@
 package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.app.model.entity.Assignee;
+
+import java.util.List;
 
 public interface AssetBeanI {
     Asset createAsset(Asset asset);
@@ -11,6 +14,7 @@ public interface AssetBeanI {
 
     void transferAsset();
 
-    String getAllAssets();
+    List<Asset> getAllAssets();
+    void delete(Asset asset);
 
 }

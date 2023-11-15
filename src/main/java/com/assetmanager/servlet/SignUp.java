@@ -3,7 +3,7 @@ package com.assetmanager.servlet;
 import com.assetmanager.app.bean.UserBean;
 import com.assetmanager.app.bean.UserBeanI;
 import com.assetmanager.app.model.entity.User;
-import com.assetmanager.database.Database;
+import com.assetmanager.app.model.entity.UserRole;
 import com.assetmanager.util.logger.FileLogger;
 
 import javax.servlet.RequestDispatcher;
@@ -26,13 +26,12 @@ public class SignUp extends BaseAction {
 
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         User registerUser = new User();
         serializeForm(registerUser, req.getParameterMap());
-        userBean.registerUser(registerUser);
+        registerUser.setUserRole(UserRole.REGULAR);
 
-        resp.sendRedirect("./");
+        if(userBean.registerUser(registerUser))
+           resp.sendRedirect("./");
     }
-
 
 }

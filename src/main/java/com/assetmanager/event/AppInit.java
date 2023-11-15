@@ -1,9 +1,8 @@
 package com.assetmanager.event;
 
-import com.assetmanager.app.bean.AssetBeanI;
-import com.assetmanager.app.bean.AssetBeanImpl;
-import com.assetmanager.app.bean.UserBean;
+import com.assetmanager.app.bean.*;
 import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.app.model.entity.Category;
 import com.assetmanager.app.model.entity.User;
 import com.assetmanager.database.Database;
@@ -25,6 +24,7 @@ public class AppInit implements ServletContextListener {
 
     UserBean userBean = new UserBean();
     AssetBeanI assetBean = new AssetBeanImpl();
+    AssigneeBeanI assigneeBean = new AssigneeBean();
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -39,9 +39,8 @@ public class AppInit implements ServletContextListener {
         registerUser.setConfirmPassword("root");
         registerUser.setUsername("root");
         userBean.registerUser(registerUser);
-        userBean.registerUser(new User("hum.admin","root","root"));
-        userBean.registerUser(new User("test","root","root"));
-
+        userBean.registerUser(new User("hum.admin", "root", "root"));
+        userBean.registerUser(new User("test", "root", "root"));
 
 
         LOGGER.info("*************** Creating Default Assets *************");
@@ -56,7 +55,15 @@ public class AppInit implements ServletContextListener {
         assetBean.createAsset(new Asset("005", "Digital Artwork", "Abstract Painting", LocalDate.of(2023, 2, 18),
                 Category.DIGITAL, new BigDecimal("3999.99")));
 
-        LOGGER.info("Context Initialized");
+
+        /*Create some default assignees*/
+        assigneeBean.createAssignee(new Assignee(1L, "SN001", "Hans", "Schmidt", "hans@gmail.com",
+                LocalDate.of(1985, 5, 15), "DE123456789"));
+
+        assigneeBean.createAssignee(new Assignee(2L, "SN002", "Henry", "Müller", "henry@gmail.com",
+                LocalDate.of(1990, 8, 22), "DE987654321"));
+        assigneeBean.createAssignee(new Assignee(3L, "SN003", "Pablo", "Kevo", "kevo@gmail.com",
+                LocalDate.of(1982, 11, 7), "ES876543210"));
 
 
     }

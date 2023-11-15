@@ -10,14 +10,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import com.assetmanager.app.view.html.HtmlComponent;
 import com.assetmanager.util.logger.FileLogger;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.converters.BigDecimalConverter;
+import org.apache.commons.lang3.StringUtils;
 
 public class BaseAction extends HttpServlet {
     private static final Logger LOGGER = FileLogger.getLogger();
@@ -44,13 +47,27 @@ public class BaseAction extends HttpServlet {
             LOGGER.warning("Serialization Error" + e);
         }
     }
-    public void renderPage(HttpServletRequest request, HttpServletResponse response,
-                           String content, String activeUrl) throws IOException, ServletException {
+    public <T> void renderPage(HttpServletRequest request, HttpServletResponse response,
+                               String activeUrl, Class<T> entity,List<T> entityDataList) throws IOException, ServletException {
 
         request.setAttribute("activeUrl", activeUrl);
-        request.setAttribute("content", content);
+        if (StringUtils.trimToEmpty(request.getParameter("action")).equals("add"))
+            request.setAttribute("content", HtmlComponent.form(entity));
+        else
+            request.setAttribute("content", HtmlComponent.table(entityDataList,entity));
+
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("./app/index.jsp");
         requestDispatcher.forward(request, response);
 
     }
+
+    public void renderPageWithoutTables(HttpServletRequest request, HttpServletResponse response, String content, String activeUrl) throws ServletException, IOException {
+        request.setAttribute("activeUrl", activeUrl);
+        request.setAttribute("content",content);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("./app/index.jsp");
+        requestDispatcher.forward(request, response);
+
+    }
+
+
 }

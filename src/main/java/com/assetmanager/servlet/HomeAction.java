@@ -15,9 +15,10 @@ public class HomeAction extends BaseAction {
 
         OverviewHtml overviewHtml = new OverviewHtml();
 
-        renderPage(servletRequest, servletResponse, overviewHtml.getPageHtml()
-                ,"./home");
+        renderPageWithoutTables(servletRequest, servletResponse, overviewHtml.getPageHtml()
+                , "./home");
 
     }
+
 
 }

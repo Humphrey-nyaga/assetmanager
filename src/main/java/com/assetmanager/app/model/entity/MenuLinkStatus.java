@@ -1,6 +1,8 @@
 package com.assetmanager.app.model.entity;
 
-public enum MenuLinkStatus {
+import java.io.Serializable;
+
+public enum MenuLinkStatus implements Serializable {
     ACTIVE,
     NOT_ACTIVE
 }

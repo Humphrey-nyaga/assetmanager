@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 @WebServlet("/report")
 
-public class Reports extends BaseAction {
+public class ReportAction extends BaseAction {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
 
-            renderPage(servletRequest, servletResponse,
+        renderPageWithoutTables(servletRequest, servletResponse,
                     """
                             <div class="container">
                                         <div class="row">
