@@ -1,9 +1,6 @@
 package com.assetmanager.database;
 
-import com.assetmanager.app.model.entity.Asset;
-import com.assetmanager.app.model.entity.AssetRequest;
-import com.assetmanager.app.model.entity.Assignee;
-import com.assetmanager.app.model.entity.User;
+import com.assetmanager.app.model.entity.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -15,6 +12,8 @@ public class Database implements Serializable {
     private final List<Asset> assetList = new ArrayList<>();
     private final List<Assignee> assigneeList = new ArrayList<>();
     private final List<AssetRequest> assetRequestsList = new ArrayList<>();
+    private final List<Maintenance> maintenanceList = new ArrayList<>();
+
     private static Database databaseInstance;
     private LocalDateTime dateTimeCreatedAt;
 
@@ -52,5 +51,9 @@ public class Database implements Serializable {
 
     public List<AssetRequest> getAssetRequestsList() {
         return assetRequestsList;
+    }
+
+    public List<Maintenance> getMaintenanceList() {
+        return maintenanceList;
     }
 }

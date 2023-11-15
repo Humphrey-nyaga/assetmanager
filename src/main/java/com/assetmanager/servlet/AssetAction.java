@@ -39,6 +39,7 @@ public class AssetAction extends BaseAction {
         Asset createAsset = new Asset();
         LOGGER.info(" Proceeding to serialize Asset");
         serializeForm(createAsset, servletRequest.getParameterMap());
+
         assetBean.createAsset(createAsset);
         servletResponse.sendRedirect("./asset");
 

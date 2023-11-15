@@ -2,7 +2,7 @@ package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.User;
 import com.assetmanager.database.Database;
-import com.assetmanager.exceptions.UserPasswordEncodingFailed;
+import com.assetmanager.exceptions.UserPasswordEncodingException;
 import com.assetmanager.util.security.PasswordEncoder;
 import com.assetmanager.util.security.PasswordEncoderI;
 
@@ -22,7 +22,7 @@ public class AuthBean implements AuthBeanI, Serializable {
                     return true;
                 }
             } catch (NoSuchAlgorithmException e) {
-                throw new UserPasswordEncodingFailed("Password encoding algorithm failed: " + e.getMessage());
+                throw new UserPasswordEncodingException("Password encoding algorithm failed: " + e.getMessage());
             }
 
         }

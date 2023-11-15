@@ -8,4 +8,8 @@
     <param-name>AppName</param-name>
     <param-value>Asset Manager</param-value>
   </context-param>
+  <error-page>
+    <exception-type>java.lang.Exception</exception-type>
+    <location>/errorHandler</location>
+  </error-page>
 </web-app>

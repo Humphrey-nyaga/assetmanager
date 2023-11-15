@@ -25,6 +25,6 @@ public class AssigneeAction extends BaseAction {
         Assignee assignee = new Assignee();
         serializeForm(assignee, servletRequest.getParameterMap());
         assigneeBean.createAssignee(assignee);
-        servletResponse.sendRedirect("./asssignee");
+        servletResponse.sendRedirect("./assignee");
     }
 }

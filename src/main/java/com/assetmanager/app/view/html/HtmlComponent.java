@@ -20,7 +20,7 @@ public class HtmlComponent implements Serializable {
         List<Field> fields = List.of(dataClass.getDeclaredFields());
         StringBuilder stringBuilder = new StringBuilder()
                 .append("<div class=\"row justify-content-center\">\n")
-                .append("<div class=\"col-md-10 mr-0\">\n")
+                .append("<div class=\"col-md-11 mr-0\">\n")
                 .append("<div class=\"btn-toolbar\"><a href=\"" + htmlTableLabel.addUrl() + "\"><button class=\"btn btn-primary rounded-2\">Add " + htmlTableLabel.label() + "</button></a></div>\n")
                 .append("<div class=\"\">\n")
                 .append("<div style=\"max-height: 60vh; overflow: auto;\">\n")
@@ -58,11 +58,19 @@ public class HtmlComponent implements Serializable {
                     throw new RuntimeException(e);
                 }
             }
-            stringBuilder.append("""
-                    <td>
-                    <button type="button" class="btn btn-sm btn-success">Update</button>
-                    <button type = "button" class="btn btn-sm btn-danger" onclick = "confirmDelete(this)"> Delete </button>
-                                        </td>""");
+            if (dataClass.getSimpleName().equals("Asset")) {
+                stringBuilder.append("""
+                <td>
+                <button type="button" class="btn btn-sm btn-success">Update</button>
+                <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(this)">Delete</button>
+                </td>""");
+            } else {
+                stringBuilder.append("""
+                <td>
+                <button type="button" class="btn btn-sm btn-success">Update</button>
+                <button type="button" class="btn btn-sm btn-danger">Delete</button>
+                </td>""");
+            }
             stringBuilder.append("</tr>");
         }
         stringBuilder.append("""

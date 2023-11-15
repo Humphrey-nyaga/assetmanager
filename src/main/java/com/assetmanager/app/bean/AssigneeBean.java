@@ -2,6 +2,7 @@ package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.database.Database;
+import com.assetmanager.exceptions.AssigneeDoesNotExistException;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,10 +30,12 @@ public class AssigneeBean implements AssigneeBeanI {
 
     @Override
     public Optional<Assignee> getAssigneeByStaffId(String staffID) {
-        return assignees.stream()
+        return Optional.ofNullable(assignees.stream()
                 .filter(assignee -> assignee.getStaffNumber().equals(staffID))
-                .findFirst();
+                .findFirst().orElseThrow(
+                        () -> new AssigneeDoesNotExistException("Staff with id " + staffID + "does not exist")));
     }
+
 
     @Override
     public Assignee getAssigneeByEmail() {

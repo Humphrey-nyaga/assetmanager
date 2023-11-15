@@ -3,7 +3,7 @@ package com.assetmanager.app.bean;
 import com.assetmanager.app.model.entity.User;
 import com.assetmanager.app.view.html.HtmlComponent;
 import com.assetmanager.database.Database;
-import com.assetmanager.exceptions.UserPasswordEncodingFailed;
+import com.assetmanager.exceptions.UserPasswordEncodingException;
 import com.assetmanager.util.logger.FileLogger;
 import com.assetmanager.util.security.PasswordEncoderI;
 import com.assetmanager.util.security.PasswordEncoder;
@@ -31,7 +31,7 @@ public class UserBean implements UserBeanI, Serializable {
                 LOGGER.info("User Registered Successfully");
                 return true;
             } catch (NoSuchAlgorithmException e) {
-                throw new UserPasswordEncodingFailed("Password encoding algorithm failed: " + e.getMessage());
+                throw new UserPasswordEncodingException("Password encoding algorithm failed: " + e.getMessage());
             }
         }
         LOGGER.warning("User Registration failed");
