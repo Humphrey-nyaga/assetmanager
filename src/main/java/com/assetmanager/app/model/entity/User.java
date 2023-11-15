@@ -2,9 +2,6 @@ package com.assetmanager.app.model.entity;
 
 import com.assetmanager.app.view.html.HtmlTable;
 
-import javax.persistence.*;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -15,6 +12,15 @@ public class User implements Serializable {
     private String username;
     private String password;
     private String confirmPassword;
+    private UserRole userRole;
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
 
     public User() {
     }

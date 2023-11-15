@@ -7,7 +7,7 @@ import com.assetmanager.app.view.html.TableColumnHeader;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-@HtmlForm(url = "/request" ,label="Asset Request")
+@HtmlForm(url = "./request" ,label="Asset Request")
 @HtmlTable(name = "Asset Requests",addUrl = "./request?action=add")
 public class AssetRequest implements Serializable {
     @TableColumnHeader(header = "Request ID")
@@ -31,10 +31,9 @@ public class AssetRequest implements Serializable {
     @TableColumnHeader(header = "Quantity")
     @HtmlFormField(label = "Quantity")
     private int quantity;
-    @TableColumnHeader(header = "Request status")
+    @TableColumnHeader(header = "Status")
+    @HtmlFormField(label = "Request Status")
     private RequestStatusEnum requestStatus;
-    @TableColumnHeader(header = "Category")
-    private Category category;
 
     public AssetRequest() {
     }
@@ -90,14 +89,6 @@ public class AssetRequest implements Serializable {
 
     public void setRequestStatus(RequestStatusEnum requestStatus) {
         this.requestStatus = requestStatus;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     public int getQuantity() {

@@ -1,7 +1,6 @@
 package com.assetmanager.servlet;
 
 import com.assetmanager.app.model.entity.AssetRequest;
-import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.app.view.html.HtmlComponent;
 
 import javax.servlet.ServletException;
@@ -9,9 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 @WebServlet("/request")
 
-public class Requests extends BaseAction {
+public class RequestAction extends BaseAction {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
 
@@ -91,15 +91,23 @@ public class Requests extends BaseAction {
                                </div>
                         <div class="row justify-content-center">
                         """ + HtmlComponent.form(AssetRequest.class) +
-                        "</div>","./request");
+                        "</div>", "./request");
+
+    }
+
+
+//TODO - implement tables to remove + HtmlComponent.form(new AssetRequest()) +
+    /*
+     * Add asset requests
+     * Link assignee to requests
+     * Design page for normal user
+     * Distinguish admin from user
+     * */
+
+    public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
+            throws ServletException, IOException {
+        AssetRequest assetRequest = new AssetRequest();
+        serializeForm(assetRequest,servletRequest.getParameterMap());
 
     }
 }
-
-//TODO - implement tables to remove + HtmlComponent.form(new AssetRequest()) +
-/*
-* Add asset requests
-* Link assignee to requests
-* Design page for normal user
-* Distinguish admin from user
-* */

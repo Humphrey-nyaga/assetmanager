@@ -4,6 +4,7 @@ import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.database.Database;
 
 import java.util.List;
+import java.util.Optional;
 
 public class AssigneeBean implements AssigneeBeanI {
     Database database = Database.getDatabaseInstance();
@@ -26,10 +27,11 @@ public class AssigneeBean implements AssigneeBeanI {
 
     }
 
-
     @Override
-    public Assignee getAssigneeByNationalId() {
-        return null;
+    public Optional<Assignee> getAssigneeByStaffId(String staffID) {
+        return assignees.stream()
+                .filter(assignee -> assignee.getStaffNumber().equals(staffID))
+                .findFirst();
     }
 
     @Override
