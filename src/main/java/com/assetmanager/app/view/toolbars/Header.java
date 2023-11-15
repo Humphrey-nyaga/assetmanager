@@ -29,7 +29,7 @@ public class Header implements  Serializable {
     public String getMenu() {
         return """
                 <nav class="p-2 mb-3 border-bottom navbar navbar-expand-md navbar-light bg-light">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="./home">
                             <img src="https://i.etsystatic.com/13930112/r/il/299b7a/4866387148/il_1140xN.4866387148_7oh3.jpg" width="35" height="35" class="d-inline-block align-top" alt="">
                             <b>Asset Manager</b>
                         </a>
@@ -70,7 +70,7 @@ public class Header implements  Serializable {
         for (MenuLink link : links) {
             String activeClass = link.getUrl().equals(activeLinkLabel) ? " active" : "";
             String url = "<li class=\"nav-item\">\n" +
-                    "   <a class=\"nav-link px-2 link-dark" + activeClass + "\" href=" + link.getUrl() + ">" + link.getLabel() + "</a>\n" +
+                    "   <a class=\"nav-link px-2 fs-5 link-dark" + activeClass + "\" href=" + link.getUrl() + ">" + link.getLabel() + "</a>\n" +
                     "</li>\n";
             stringBuilder.append(url);
         }

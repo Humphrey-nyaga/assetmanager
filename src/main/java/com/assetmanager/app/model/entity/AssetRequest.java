@@ -8,14 +8,14 @@ import com.assetmanager.app.view.html.TableColumnHeader;
 import java.io.Serializable;
 import java.time.LocalDate;
 @HtmlForm(url = "./request" ,label="Asset Request")
-@HtmlTable(name = "Asset Requests",addUrl = "./request?action=add")
+@HtmlTable(name = "Asset Requests", label = "Asset Request",addUrl = "./request?action=add")
 public class AssetRequest implements Serializable {
     @TableColumnHeader(header = "Request ID")
     @HtmlFormField(label = "Request ID")
     private String id;
 
-    @TableColumnHeader(header = "Requester ID")
-    @HtmlFormField(label = "Requester ID")
+    @TableColumnHeader(header = "Staff ID")
+    @HtmlFormField(label = "Staff ID")
     private String staffId;
 
     @TableColumnHeader(header = "Asset")
@@ -36,6 +36,16 @@ public class AssetRequest implements Serializable {
     private RequestStatusEnum requestStatus;
 
     public AssetRequest() {
+    }
+
+    public AssetRequest(String id, String staffId, String assetName, String description, LocalDate dateRequested, int quantity, RequestStatusEnum requestStatus) {
+        this.id = id;
+        this.staffId = staffId;
+        this.assetName = assetName;
+        this.description = description;
+        this.dateRequested = dateRequested;
+        this.quantity = quantity;
+        this.requestStatus = requestStatus;
     }
 
     public String getId() {

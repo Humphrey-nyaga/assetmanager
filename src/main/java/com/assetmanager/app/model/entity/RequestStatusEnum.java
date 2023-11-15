@@ -3,9 +3,10 @@ package com.assetmanager.app.model.entity;
 import java.io.Serializable;
 
 public enum RequestStatusEnum implements Serializable {
-    IN_PROGRESS("In Progress"),
+    COMPLETED("Completed"),
     PENDING("Pending"),
-    COMPLETED("Completed");
+    REJECTED("Rejected"),
+    APPROVED("Approved");
 
     private final String status;
     RequestStatusEnum(String status) {

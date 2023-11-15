@@ -53,14 +53,12 @@ public class AssetBeanImpl implements Serializable, AssetBeanI {
         if (optionalAsset.isPresent()) {
             Asset presentAsset = optionalAsset.get();
             assets.removeIf(a -> a.getId().equals(presentAsset.getId()));
-        } else {
-            throw new AssetNotFoundException("Asset with ID " + assetToDelete.getId() + " not found");
         }
     }
 
     public Optional<Asset> findAssetById(String id){
-        return assets.stream()
+        return Optional.ofNullable(assets.stream()
                 .filter(asset -> asset.getId().equals(id))
-                .findFirst();
+                .findFirst().orElseThrow(() -> new AssetNotFoundException("Asset with ID " + id + " not found")));
     }
 }

@@ -3,6 +3,8 @@ package com.assetmanager.app.bean;
 import com.assetmanager.app.model.entity.AssetRequest;
 import com.assetmanager.database.Database;
 
+import java.util.List;
+
 public class AssetRequestBean implements AssetRequestBeanI {
 
     Database database = Database.getDatabaseInstance();
@@ -23,4 +25,10 @@ public class AssetRequestBean implements AssetRequestBeanI {
     public void deleteAssetRequest(AssetRequest assetRequest) {
 
     }
+
+    @Override
+    public List<AssetRequest> getAllAssetRequests() {
+        return database.getAssetRequestsList();
+    }
+
 }
