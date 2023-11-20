@@ -1,8 +1,11 @@
 package com.assetmanager.app.view.html;
 
+import com.assetmanager.app.bean.AssetBeanI;
+import com.assetmanager.app.bean.AssetBeanImpl;
 import com.assetmanager.app.service.AssetsValuation;
 import com.assetmanager.app.model.entity.Category;
 import com.assetmanager.database.Database;
+import com.assetmanager.database.MysqlDatabase;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -10,7 +13,8 @@ import java.text.DecimalFormat;
 import java.util.Map;
 
 public class OverviewHtml implements Serializable {
-    Database database = Database.getDatabaseInstance();
+    AssetBeanI assetBean = new AssetBeanImpl();
+
     DecimalFormat df = new DecimalFormat("#,###.00");
     AssetsValuation assetsValuation = new AssetsValuation();
     private final String pageHtml = "<div class=\"container\">\n"
@@ -52,7 +56,7 @@ public class OverviewHtml implements Serializable {
     }
 
     public String listAssetsValueByCategory() {
-        Map<Category, BigDecimal> map = assetsValuation.totalAssetValueByCategory(database.getAssetList());
+        Map<Category, BigDecimal> map = assetsValuation.totalAssetValueByCategory(assetBean.list());
         StringBuilder stringBuilder = new StringBuilder().append(
                 "    <div class=\"card hover-zoom mb-3\">" +
                         "        <div class=\"card-header bg-secondary\">" +
@@ -75,7 +79,7 @@ public class OverviewHtml implements Serializable {
     }
 
     public String listAssetCountByCategory() {
-        Map<Category, Long> map = assetsValuation.countAssetsByCategory(database.getAssetList());
+        Map<Category, Long> map = assetsValuation.countAssetsByCategory(assetBean.list());
         StringBuilder stringBuilder = new StringBuilder().append(
                 "    <div class=\"card hover-zoom mb-3\">" +
                         "        <div class=\"card-header bg-secondary \">" +
@@ -111,7 +115,7 @@ public class OverviewHtml implements Serializable {
                         </svg>
                         <div class="display-4 text-center mt-0">
                         """ +
-                df.format(assetsValuation.totalAssetsValue(database.getAssetList())) +
+                df.format(assetsValuation.totalAssetsValue(assetBean.list())) +
                 """ 
                         </div>
                          </div>
@@ -132,7 +136,7 @@ public class OverviewHtml implements Serializable {
                         <div class="d-flex align-items-center flex-column">
                         <div class="display-4 text-center mt-0">
                         """ +
-                assetsValuation.totalAssets(database.getAssetList()) +
+                assetsValuation.totalAssets(assetBean.list()) +
                 """ 
                         </div>
                          </div>

@@ -1,10 +1,9 @@
-package com.assetmanager.servlet;
+package com.assetmanager.action;
 
 import com.assetmanager.app.bean.AssetBeanI;
 import com.assetmanager.app.bean.AssetBeanImpl;
 
 import com.assetmanager.app.model.entity.Asset;
-import com.assetmanager.app.view.html.HtmlComponent;
 import com.assetmanager.database.Database;
 import com.assetmanager.util.logger.FileLogger;
 
@@ -40,7 +39,7 @@ public class AssetAction extends BaseAction {
         LOGGER.info(" Proceeding to serialize Asset");
         serializeForm(createAsset, servletRequest.getParameterMap());
 
-        assetBean.create(createAsset);
+        assetBean.insert(createAsset);
         servletResponse.sendRedirect("./asset");
 
 

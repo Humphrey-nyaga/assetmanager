@@ -1,7 +1,8 @@
-package com.assetmanager.servlet;
+package com.assetmanager.action;
 
 import com.assetmanager.app.bean.MaintenanceBean;
 import com.assetmanager.app.bean.MaintenanceBeanI;
+import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.Maintenance;
 
 import javax.servlet.ServletException;
@@ -18,6 +19,17 @@ public class MaintenanceAction extends BaseAction {
 
         renderPage(servletRequest, servletResponse
                             ,"./maintenance", Maintenance.class,maintenanceBean.list());
+
+    }
+    public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
+            throws ServletException, IOException {
+
+        Maintenance maintenance  = new Maintenance();
+        serializeForm(maintenance, servletRequest.getParameterMap());
+
+        maintenanceBean.insert(maintenance);
+        servletResponse.sendRedirect("./maintenance");
+
 
     }
 }

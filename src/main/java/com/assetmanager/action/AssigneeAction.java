@@ -1,9 +1,8 @@
-package com.assetmanager.servlet;
+package com.assetmanager.action;
 
 import com.assetmanager.app.bean.AssigneeBean;
 import com.assetmanager.app.bean.AssigneeBeanI;
 import com.assetmanager.app.model.entity.Assignee;
-import com.assetmanager.app.view.html.HtmlComponent;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +23,7 @@ public class AssigneeAction extends BaseAction {
             throws ServletException, IOException {
         Assignee assignee = new Assignee();
         serializeForm(assignee, servletRequest.getParameterMap());
-        assigneeBean.createAssignee(assignee);
+        assigneeBean.create(assignee);
         servletResponse.sendRedirect("./assignee");
     }
 }

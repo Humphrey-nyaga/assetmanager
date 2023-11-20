@@ -1,4 +1,4 @@
-package com.assetmanager.servlet;
+package com.assetmanager.action;
 
 import com.assetmanager.app.bean.UserBean;
 import com.assetmanager.app.bean.UserBeanI;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 @WebServlet("/signup")
-public class SignUp extends BaseAction {
+public class SignUpAction extends BaseAction {
     private static final Logger LOGGER = FileLogger.getLogger();
     UserBeanI userBean = new UserBean();
 

@@ -1,10 +1,8 @@
-package com.assetmanager.servlet;
+package com.assetmanager.action;
 
 import com.assetmanager.app.bean.AssetRequestBean;
 import com.assetmanager.app.bean.AssetRequestBeanI;
 import com.assetmanager.app.model.entity.AssetRequest;
-import com.assetmanager.app.view.html.HtmlComponent;
-import com.assetmanager.database.Database;
 import com.assetmanager.exceptions.AssigneeDoesNotExistException;
 
 import javax.servlet.ServletException;
@@ -20,7 +18,7 @@ public class RequestAction extends BaseAction {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
 
-        renderPage(servletRequest, servletResponse,"./request", AssetRequest.class,assetRequestBean.getAllAssetRequests());
+        renderPage(servletRequest, servletResponse,"./request", AssetRequest.class,assetRequestBean.list());
 
     }
 
@@ -38,7 +36,7 @@ public class RequestAction extends BaseAction {
         try {
             AssetRequest assetRequest = new AssetRequest();
             serializeForm(assetRequest, servletRequest.getParameterMap());
-            assetRequestBean.createAssetRequest(assetRequest);
+            assetRequestBean.create(assetRequest);
             servletResponse.sendRedirect("./");
         }catch(AssigneeDoesNotExistException e) {
             servletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "ERROR" +  e.getMessage());

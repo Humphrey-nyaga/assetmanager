@@ -4,30 +4,39 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.assetmanager.app.bean.GenericBean;
 import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.app.view.html.TableColumnHeader;
+import com.assetmanager.database.helper.DbColumn;
+import com.assetmanager.database.helper.DbTable;
 
+@DbTable(name = "assets")
 @HtmlForm(label = "Asset", url = "./asset")
 @HtmlTable(name = "Asset Table" ,label = "Asset", addUrl = "./asset?action=add")
 public class Asset  implements Serializable {
+
+    @DbColumn(name = "asset_id")
     @TableColumnHeader(header = "Asset ID")
     @HtmlFormField(label = "Asset ID")
     private String id;
+    @DbColumn(name = "name")
     @TableColumnHeader(header = "Name of Asset")
     @HtmlFormField(label = "Name")
     private String name;
+    @DbColumn(name = "description")
     @TableColumnHeader(header = "Description")
     @HtmlFormField(label = "Description")
     private String description;
+    @DbColumn(name = "date_Acquired",definition = "DATE")
     @TableColumnHeader(header = "Date Acquired")
     @HtmlFormField(label = "Date Acquired")
     private LocalDate dateAcquired;
+    @DbColumn(name = "category")
     @TableColumnHeader(header = "Category")
     @HtmlFormField(label = "Category")
     private Category category;
+    @DbColumn(name = "purchase_value",definition = "DECIMAL(10,2)")
     @TableColumnHeader(header = "Value")
     @HtmlFormField(label = "Purchase Value")
     private BigDecimal purchaseValue;

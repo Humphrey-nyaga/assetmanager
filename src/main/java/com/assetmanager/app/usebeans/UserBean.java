@@ -1,9 +1,6 @@
-package com.assetmanager.app.UserBean;
+package com.assetmanager.app.usebeans;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Objects;
 
 
 public class UserBean implements Serializable {

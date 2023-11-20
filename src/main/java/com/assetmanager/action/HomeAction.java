@@ -1,4 +1,4 @@
-package com.assetmanager.servlet;
+package com.assetmanager.action;
 
 import com.assetmanager.app.view.html.OverviewHtml;
 
