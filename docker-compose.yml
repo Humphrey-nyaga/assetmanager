@@ -1,0 +1,6 @@
+services:
+  assetM1:
+    ports:
+      - "8080:8080"
+  assetmanager:
+    image: "assetmanager:latest"

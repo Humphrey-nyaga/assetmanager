@@ -6,13 +6,13 @@ FROM maven:3.9.5-eclipse-temurin-17-alpine AS build
 LABEL authors="Humphrey Nyaga"
 WORKDIR /app
 COPY pom.xml .
-COPY src src
+COPY . .
 RUN mvn dependency:go-offline
 RUN mvn clean compile package
 RUN apk --no-cache del maven
 
-FROM quay.io/wildfly/wildfly:28.0.0.Final-jdk17
-WORKDIR /app
+FROM quay.io/wildfly/wildfly:28.0.0.Final-jdk17 AS deploy
+#WORKDIR /app
 COPY --from=build /app/target/assetmanager.war /opt/jboss/wildfly/standalone/deployments/
 
 EXPOSE 8080 9990
