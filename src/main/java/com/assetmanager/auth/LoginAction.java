@@ -40,12 +40,13 @@ public class LoginAction extends BaseAction {
 
         User user = new User();
         serializeForm(user, servletRequest.getParameterMap());
+        User authenticatedUser = authBean.authenticate(user);
 
 
-        if (authBean.authenticate(user)!=null) {
+        if (authenticatedUser!=null && StringUtils.isNotBlank(authenticatedUser.getUsername())) {
             HttpSession httpSession = servletRequest.getSession(true);
             httpSession.setAttribute("loggedInId", new Date().getTime() + "");
-            httpSession.setAttribute("username", user.getUsername());
+            httpSession.setAttribute("username", authenticatedUser.getUsername());
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String currentDate = LocalDate.now().format(formatter);

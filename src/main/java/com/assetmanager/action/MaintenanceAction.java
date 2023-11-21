@@ -18,7 +18,7 @@ public class MaintenanceAction extends BaseAction {
             throws ServletException, IOException {
 
         renderPage(servletRequest, servletResponse
-                            ,"./maintenance", Maintenance.class,maintenanceBean.list());
+                            ,"./maintenance", Maintenance.class,maintenanceBean.list(Maintenance.class));
 
     }
     public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
@@ -27,7 +27,7 @@ public class MaintenanceAction extends BaseAction {
         Maintenance maintenance  = new Maintenance();
         serializeForm(maintenance, servletRequest.getParameterMap());
 
-        maintenanceBean.insert(maintenance);
+        maintenanceBean.create(maintenance);
         servletResponse.sendRedirect("./maintenance");
 
 

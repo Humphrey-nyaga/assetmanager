@@ -5,7 +5,8 @@ import com.assetmanager.app.model.entity.*;
 import com.assetmanager.database.MysqlDatabase;
 import com.assetmanager.database.helper.DbColumn;
 import com.assetmanager.database.helper.DbTable;
-import com.assetmanager.database.helper.TablePrimaryKey;
+import com.assetmanager.database.helper.NotNull;
+import com.assetmanager.database.helper.PrimaryKey;
 import com.assetmanager.util.logger.FileLogger;
 import org.reflections.Reflections;
 
@@ -20,8 +21,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 
 
@@ -29,10 +30,6 @@ import java.util.logging.Logger;
 public class AppInit implements ServletContextListener {
     private static final Logger LOGGER = FileLogger.getLogger();
 
-    UserBean userBean = new UserBean();
-    AssetBeanI assetBean = new AssetBeanImpl();
-    AssigneeBeanI assigneeBean = new AssigneeBean();
-    AssetRequestBeanI assetRequestBean = new AssetRequestBean();
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -56,7 +53,11 @@ public class AppInit implements ServletContextListener {
                         .append("CREATE TABLE IF NOT EXISTS ").append(dbTable.name()).append("(");
 
                 String prefix = "";
-                for (Field field : clazz.getDeclaredFields()) {
+
+                List<Field> fields = new ArrayList<>(Arrays.asList(clazz.getSuperclass().getDeclaredFields()));
+                fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
+
+                for (Field field : fields) {
                     field.setAccessible(true);
 
                     if (!field.isAnnotationPresent(DbColumn.class))
@@ -66,21 +67,15 @@ public class AppInit implements ServletContextListener {
                     stringBuilder.append(prefix)
                             .append(dbColumn.name())
                             .append(" ")
-                            .append(dbColumn.definition());
-
-                    if (!field.isAnnotationPresent(TablePrimaryKey.class)) {
-                        prefix = ", ";
-                        continue;
-
-                    } else {
-                        stringBuilder
-                                .append(" ")
-                                .append("AUTO_INCREMENT PRIMARY KEY");
-                    }
+                            .append(dbColumn.definition())
+                            .append(field.isAnnotationPresent(NotNull.class) ? " NOT NULL" : "")
+                            .append(field.isAnnotationPresent(PrimaryKey.class) ? " AUTO_INCREMENT PRIMARY KEY" : "");
                     prefix = ", ";
+
                 }
 
                 stringBuilder.append(");");
+                System.out.println("SQL CODE >> " + stringBuilder);
 
                 PreparedStatement createTableStmt = conn.prepareStatement(stringBuilder.toString());
                 createTableStmt.execute();
@@ -89,38 +84,38 @@ public class AppInit implements ServletContextListener {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        LOGGER.info("*************** Creating Default Users *************");
 
         AssetBeanI assetBean = new AssetBeanImpl();
 
-////        LOGGER.info("*************** Creating Default Assets *************");
-//        assetBean.create(new Asset("001", "Laptop", "Dell Laptop", LocalDate.of(2022, 5, 10), Category.ELECTRONICS,
+
+//////        LOGGER.info("*************** Creating Default Assets *************");
+//        assetBean.insert(new Asset("001", "Laptop", "Dell Laptop", LocalDate.of(2022, 5, 10), Category.ELECTRONICS,
 //                new BigDecimal("99999.99")));
-//        assetBean.create(new Asset("002", "Software License", "Microsoft Office", LocalDate.of(2021, 8, 15), Category.SOFTWARE,
+//        assetBean.insert(new Asset("002", "Software License", "Microsoft Office", LocalDate.of(2021, 8, 15), Category.SOFTWARE,
 //                new BigDecimal("14999.99")));
-//        assetBean.create(new Asset("003", "Server", "HP ProLiant Server", LocalDate.of(2021, 12, 5), Category.ELECTRONICS,
+//        assetBean.insert(new Asset("003", "Server", "HP ProLiant Server", LocalDate.of(2021, 12, 5), Category.ELECTRONICS,
 //                new BigDecimal("25000.00")));
-//        assetBean.create(new Asset("004", "Operating System", "Windows 10", LocalDate.of(2020, 3, 2), Category.SOFTWARE,
+//        assetBean.insert(new Asset("004", "Operating System", "Windows 10", LocalDate.of(2020, 3, 2), Category.SOFTWARE,
 //                new BigDecimal("11000.50")));
-//        assetBean.create(new Asset("005", "Digital Artwork", "Abstract Painting", LocalDate.of(2023, 2, 18),
+//        assetBean.insert(new Asset("005", "Digital Artwork", "Abstract Painting", LocalDate.of(2023, 2, 18),
 //                Category.DIGITAL, new BigDecimal("3999.99")));
-
-
-        /*Create some default assignees*/
-//        assigneeBean.create(new Assignee("SN001", "Hans", "Schmidt", "hans@gmail.com",
+//AssigneeBeanI assigneeBean = new AssigneeBean();
+//
+//        /*Create some default assignees*/
+//        assigneeBean.insert(new Assignee("SN001", "Hans", "Schmidt", "hans@gmail.com",
 //                LocalDate.of(1985, 5, 15), "DE123456789"));
 //
-//        assigneeBean.create(new Assignee( "SN002", "Henry", "Müller", "henry@gmail.com",
+//        assigneeBean.insert(new Assignee( "SN002", "Henry", "Müller", "henry@gmail.com",
 //                LocalDate.of(1990, 8, 22), "DE987654321"));
-//        assigneeBean.create(new Assignee( "SN003", "Pablo", "Kevo", "kevo@gmail.com",
+//        assigneeBean.insert(new Assignee( "SN003", "Pablo", "Kevo", "kevo@gmail.com",
 //                LocalDate.of(1982, 11, 7), "ES876543210"));
-
 //
-//        assetRequestBean.create(new AssetRequest("ASR001", "SN001", "MacBook M1", "M2 2022 Grey", LocalDate.now(), 2, RequestStatusEnum.PENDING));
-//        assetRequestBean.create(new AssetRequest("ASR002", "SN002", "MacBook M2", "M2 2021 Silver", LocalDate.now(), 1, RequestStatusEnum.APPROVED));
+//AssetRequestBeanI assetRequestBean = new AssetRequestBean();
 //
-//        assetRequestBean.create(new AssetRequest(
-//                "ASR002",
+//        assetRequestBean.insert(new AssetRequest( "SN001", "MacBook M1", "M2 2022 Grey", LocalDate.now(), 2, RequestStatusEnum.PENDING));
+//        assetRequestBean.insert(new AssetRequest( "SN002", "MacBook M2", "M2 2021 Silver", LocalDate.now(), 1, RequestStatusEnum.APPROVED));
+//
+//        assetRequestBean.insert(new AssetRequest(
 //                "SN003",
 //                "HP Laptop",
 //                "EliteBook Intel Core i7.",
@@ -129,8 +124,8 @@ public class AppInit implements ServletContextListener {
 //                RequestStatusEnum.PENDING
 //        ));
 //
-//        assetRequestBean.create(new AssetRequest(
-//                "ASR003",
+//        assetRequestBean.insert(new AssetRequest(
+//
 //                "SN002",
 //                "HP Laptop",
 //                "HP Spectre x360, Intel Core i5",
@@ -139,8 +134,8 @@ public class AppInit implements ServletContextListener {
 //                RequestStatusEnum.REJECTED
 //        ));
 //
-//        assetRequestBean.create(new AssetRequest(
-//                "ASR005",
+//        assetRequestBean.insert(new AssetRequest(
+//
 //                "SN002",
 //                "Pickup Truck",
 //                "Ford F-150 Pickup.",
@@ -148,12 +143,13 @@ public class AppInit implements ServletContextListener {
 //                1,
 //                RequestStatusEnum.APPROVED
 //        ));
-//
+
 //        assetRequestBean.create(new AssetRequest(
 //                "ASR006",
 //                "SN001",
 //                "Pickup Truck",
-//                "Chevrolet Silverado 1500 Pickup.",
+//                "Chevrolet Silve
+//                rado 1500 Pickup.",
 //                LocalDate.now(),
 //                1,
 //                RequestStatusEnum.PENDING

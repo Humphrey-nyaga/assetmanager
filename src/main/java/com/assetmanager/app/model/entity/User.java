@@ -3,20 +3,19 @@ package com.assetmanager.app.model.entity;
 import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.database.helper.DbColumn;
 import com.assetmanager.database.helper.DbTable;
-import com.assetmanager.database.helper.TablePrimaryKey;
+import com.assetmanager.database.helper.NotNull;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @HtmlTable(name = "Users")
 @DbTable(name="users")
-public class User implements Serializable {
-    @DbColumn(name = "user_id",definition = "INTEGER")
-    @TablePrimaryKey
-    private Long id;
+public class User extends BaseEntity implements Serializable {
     @DbColumn(name = "username")
+    @NotNull
     private String username;
     @DbColumn(name = "password")
+    @NotNull
     private String password;
     private String confirmPassword;
     private UserRole userRole;
@@ -67,13 +66,6 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Override
     public boolean equals(Object o) {

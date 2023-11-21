@@ -2,10 +2,8 @@ package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.Category;
-import com.assetmanager.app.view.html.HtmlComponent;
 import com.assetmanager.database.Database;
 import com.assetmanager.database.MysqlDatabase;
-import com.assetmanager.exceptions.AssetNotFoundException;
 import com.assetmanager.util.logger.FileLogger;
 
 import java.sql.*;
@@ -18,45 +16,20 @@ import java.util.logging.Logger;
 public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
     private static final Logger LOGGER = FileLogger.getLogger();
 
-
-    Database database = Database.getDatabaseInstance();
-    List<Asset> assets = database.getAssetList();
-
-    @Override
-    public Asset create(Asset newAsset) {
-        String sql = "INSERT INTO assets (asset_id, name, description, date_Acquired, category, purchase_value) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
-        try {
-            Connection conn = MysqlDatabase.getDatabaseInstance().getConnection();
-            PreparedStatement createAssetstmt = conn.prepareStatement(sql);
-            createAssetstmt.setString(1, newAsset.getId());
-            createAssetstmt.setString(2, newAsset.getName());
-            createAssetstmt.setString(3, newAsset.getDescription());
-            createAssetstmt.setDate(4, Date.valueOf(newAsset.getDateAcquired()));
-            createAssetstmt.setString(5, String.valueOf(newAsset.getCategory()));
-            createAssetstmt.setBigDecimal(6, newAsset.getPurchaseValue());
-            createAssetstmt.execute();
-            return newAsset;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
     @Override
     public void delete(Asset assetToDelete) {
-        Optional<Asset> optionalAsset = findAssetById(assetToDelete.getId());
+        Optional<Asset> optionalAsset = findAssetById(assetToDelete.getSerialNumber());
 
         if (optionalAsset.isPresent()) {
             try {
                 Connection connection = MysqlDatabase.getDatabaseInstance().getConnection();
-                String deleteAssetQuery = "DELETE FROM assets WHERE asset_id = ?;";
+                String deleteAssetQuery = "DELETE FROM assets WHERE serial_id = ?;";
 
                 PreparedStatement preparedStatement = connection.prepareStatement(deleteAssetQuery);
-                preparedStatement.setString(1, assetToDelete.getId());
+                preparedStatement.setString(1, assetToDelete.getSerialNumber());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
-                throw new RuntimeException("Error deleting asset with ID: " + assetToDelete.getId(), e);
+                throw new RuntimeException("Error deleting asset with ID: " + assetToDelete.getSerialNumber(), e);
             }
         }
     }
@@ -66,14 +39,14 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
 
         try {
             Connection connection = MysqlDatabase.getDatabaseInstance().getConnection();
-            String findAssetByIdQuery = "SELECT * FROM assets WHERE asset_id = ?;";
+            String findAssetByIdQuery = "SELECT * FROM assets WHERE serial_id = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(findAssetByIdQuery);
             preparedStatement.setString(1, id);
 
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 Asset asset = new Asset();
-                asset.setId(rs.getString("asset_id"));
+                asset.setSerialNumber(rs.getString("serial_id"));
                 asset.setName(rs.getString("name"));
                 asset.setCategory(Category.valueOf(rs.getString("category")));
                 asset.setDescription(rs.getString("description"));
@@ -90,7 +63,7 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
 
 
     @Override
-    public List<Asset> list() {
+    public List<Asset> list(Class<?> clazz) {
         List<Asset> assets = new ArrayList<>();
         try {
             Connection connection = MysqlDatabase.getDatabaseInstance().getConnection();
@@ -100,7 +73,7 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
             while (rs.next()) {
                 Asset asset = new Asset();
 
-                asset.setId(rs.getString("asset_id"));
+                asset.setSerialNumber(rs.getString("serial_id"));
                 asset.setName(rs.getString("name"));
                 asset.setCategory(Category.valueOf(rs.getString("category")));
                 asset.setDescription(rs.getString("description"));

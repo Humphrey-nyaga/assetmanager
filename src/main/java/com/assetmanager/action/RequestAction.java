@@ -18,7 +18,7 @@ public class RequestAction extends BaseAction {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
 
-        renderPage(servletRequest, servletResponse,"./request", AssetRequest.class,assetRequestBean.list());
+        renderPage(servletRequest, servletResponse,"./request", AssetRequest.class,assetRequestBean.list(AssetRequest.class));
 
     }
 

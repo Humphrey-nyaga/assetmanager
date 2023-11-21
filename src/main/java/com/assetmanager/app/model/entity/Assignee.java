@@ -6,39 +6,42 @@ import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.app.view.html.TableColumnHeader;
 import com.assetmanager.database.helper.DbColumn;
 import com.assetmanager.database.helper.DbTable;
-import com.assetmanager.database.helper.TablePrimaryKey;
+import com.assetmanager.database.helper.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 @DbTable(name = "assignee")
 @HtmlForm(label = "Assignee", url = "./assignee")
 @HtmlTable(name = "Assignee Table", label = "Assignee",addUrl = "./assignee?action=add")
-public class Assignee implements Serializable {
-    @DbColumn(name = "assignee_id",definition = "INTEGER")
-    @TablePrimaryKey
-    @TableColumnHeader(header = "ID")
-    private Long id;
+public class Assignee extends BaseEntity implements Serializable {
+
     @DbColumn(name = "staff_id")
+    @NotNull
     @TableColumnHeader(header = "Staff Number")
     @HtmlFormField(label = "Staff Number")
     private String staffNumber;
     @DbColumn(name = "firstname")
+    @NotNull
     @TableColumnHeader(header = "First Name")
     @HtmlFormField(label = "First Name")
     private String firstName;
     @DbColumn(name = "lastname")
+    @NotNull
     @TableColumnHeader(header = "Last Name")
     @HtmlFormField(label = "Last Name")
     private String lastName;
     @DbColumn(name = "email")
+    @NotNull
     @TableColumnHeader(header = "Email")
     @HtmlFormField(label = "Email")
     private String email;
     @DbColumn(name = "date_of_birth",definition = "DATE")
+    @NotNull
     @TableColumnHeader(header = "Date of Birth")
     @HtmlFormField(label = "Date of Birth")
     private LocalDate dateOfBirth;
     @DbColumn(name = "national_id")
+    @NotNull
     @TableColumnHeader(header = "National ID")
     @HtmlFormField(label = "ID Number")
     private String identificationNumber;
@@ -56,13 +59,6 @@ public class Assignee implements Serializable {
     }
 
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getStaffNumber() {
         return staffNumber;

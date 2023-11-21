@@ -16,7 +16,7 @@ public class AssigneeAction extends BaseAction {
             throws ServletException, IOException {
 
         renderPage(servletRequest,servletResponse,
-                "./assignee", Assignee.class,assigneeBean.list());
+                "./assignee", Assignee.class,assigneeBean.list(Assignee.class));
 
     }
     public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)

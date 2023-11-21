@@ -17,36 +17,12 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
     AssigneeBeanI assigneeBean = new AssigneeBean();
 
     @Override
-    public AssetRequest create(AssetRequest assetRequest) {
-        try {
-            String sql = "INSERT INTO asset_request" +
-                    " (asset_request_id, staff_id, asset_name, description, date_requested, quantity, request_status)" +
-                    " VALUES (?, ?, ?, ?, ?, ?, ?)";
-            Connection conn = MysqlDatabase.getDatabaseInstance().getConnection();
-
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, assetRequest.getId());
-            preparedStatement.setString(2, assetRequest.getStaffId());
-            preparedStatement.setString(3, assetRequest.getAssetName());
-            preparedStatement.setString(4, assetRequest.getDescription());
-            preparedStatement.setDate(5, Date.valueOf(assetRequest.getDateRequested()));
-            preparedStatement.setInt(6,assetRequest.getQuantity());
-            preparedStatement.setString(7, String.valueOf(assetRequest.getRequestStatus()));
-            preparedStatement.execute();
-            return assetRequest;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    @Override
     public void delete(AssetRequest assetRequest) {
 
     }
 
     @Override
-    public List<AssetRequest> list() {
+    public List<AssetRequest> list(Class<?>clazz) {
         List<AssetRequest> requests = new ArrayList<>();
         try {
             Connection connection = MysqlDatabase.getDatabaseInstance().getConnection();
@@ -55,7 +31,6 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 AssetRequest assetRequest = new AssetRequest();
-                assetRequest.setId(resultSet.getString("asset_request_id"));
                 assetRequest.setStaffId(resultSet.getString("staff_id"));
                 assetRequest.setAssetName(resultSet.getString("asset_name"));
                 assetRequest.setDescription(resultSet.getString("description"));

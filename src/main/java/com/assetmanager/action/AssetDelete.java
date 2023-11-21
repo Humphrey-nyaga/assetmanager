@@ -16,7 +16,7 @@ public class AssetDelete extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         AssetBeanI assetBean = new AssetBeanImpl();
         Asset asset = new Asset();
-        asset.setId(req.getParameter("id"));
+        asset.setSerialNumber(req.getParameter("id"));
         assetBean.delete(asset);
         resp.sendRedirect("./asset");
     }

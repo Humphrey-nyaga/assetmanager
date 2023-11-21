@@ -6,7 +6,7 @@ import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.app.view.html.TableColumnHeader;
 import com.assetmanager.database.helper.DbColumn;
 import com.assetmanager.database.helper.DbTable;
-import com.assetmanager.database.helper.TablePrimaryKey;
+import com.assetmanager.database.helper.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -14,16 +14,15 @@ import java.time.LocalDate;
 @DbTable(name = "maintenance")
 @HtmlForm(url = "./maintenance", label = "Maintenance")
 @HtmlTable(name = "Maintenance", label = "Maintenance", addUrl = "./maintenance?action=add")
-public class Maintenance implements Serializable {
-    @DbColumn(name = "maintenance_id", definition = "INTEGER")
-    @TablePrimaryKey
-    @TableColumnHeader(header = "Maintenance ID")
-    private int maintenanceId;
+public class Maintenance extends BaseEntity implements Serializable {
+
     @DbColumn(name = "asset_id", definition = "INTEGER")
+    @NotNull
     @TableColumnHeader(header = "Asset ID")
     @HtmlFormField(label = "Asset ID")
     private int assetId;
     @DbColumn(name = "maintenance_type")
+    @NotNull
     @TableColumnHeader(header = "Maintenance Type")
     @HtmlFormField(label = "Maintenance Type")
     private String maintenanceType;
@@ -49,14 +48,6 @@ public class Maintenance implements Serializable {
 
 
     public Maintenance() {
-    }
-
-    public int getMaintenanceId() {
-        return maintenanceId;
-    }
-
-    public void setMaintenanceId(int maintenanceId) {
-        this.maintenanceId = maintenanceId;
     }
 
     public int getAssetId() {

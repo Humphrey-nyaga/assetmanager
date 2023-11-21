@@ -18,18 +18,10 @@ import java.util.List;
 import java.util.logging.Logger;
 
 
-public class UserBean implements UserBeanI, Serializable {
+public class UserBean extends  GenericBean<User> implements UserBeanI, Serializable {
     private static final Logger LOGGER = FileLogger.getLogger();
 
-    Connection conn;
-
-    {
-        try {
-            conn = MysqlDatabase.getDatabaseInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    Connection conn = MysqlDatabase.getDatabaseInstance().getConnection();
 
     PasswordEncoderI passwordEncoder = new PasswordEncoder();
 
@@ -41,8 +33,8 @@ public class UserBean implements UserBeanI, Serializable {
             try {
                 hashedPassword = passwordEncoder.encodePassword(user.getPassword());
                 PreparedStatement registerUserStmt = conn.prepareStatement("INSERT INTO users (username, password) VALUES (?,?);");
-                registerUserStmt.setString(1,user.getUsername());
-                registerUserStmt.setString(2,hashedPassword);
+                registerUserStmt.setString(1, user.getUsername());
+                registerUserStmt.setString(2, hashedPassword);
                 registerUserStmt.execute();
                 LOGGER.info("User Registered Successfully");
                 return true;
@@ -60,6 +52,7 @@ public class UserBean implements UserBeanI, Serializable {
     public User findUserByUsername() {
         return null;
     }
+
     @Override
     public String getAllUsers() {
         Database database = Database.getDatabaseInstance();

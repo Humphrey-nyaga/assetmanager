@@ -18,25 +18,6 @@ public class AssigneeBean extends GenericBean<Assignee> implements AssigneeBeanI
 
     List<Assignee> assignees = database.getAssigneeList();
 
-    @Override
-    public Assignee create(Assignee newAssignee) {
-
-        try {
-            Connection connection = MysqlDatabase.getDatabaseInstance().getConnection();
-            PreparedStatement createAssigneeStmt = connection.prepareStatement("INSERT INTO assignee(staff_id,firstname,lastname,email, date_of_birth,national_id)VALUES(?,?,?,?,?,?);");
-            createAssigneeStmt.setString(1, newAssignee.getStaffNumber());
-            createAssigneeStmt.setString(2, newAssignee.getFirstName());
-            createAssigneeStmt.setString(3,newAssignee.getLastName());
-            createAssigneeStmt.setString(4,newAssignee.getEmail());
-            createAssigneeStmt.setDate(5, Date.valueOf(newAssignee.getDateOfBirth()));
-            createAssigneeStmt.setString(6, newAssignee.getIdentificationNumber());
-            createAssigneeStmt.execute();
-            return newAssignee;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 
     @Override
     public Optional<Assignee> getAssigneeByStaffId(String staffID) {

@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface GenericBeanI<T> extends Serializable {
 
-    List<T> list();
+    List<T> list(Class<?> clazz);
 
-    T create(T entity);
+    void create(T entity);
     T update(T entity);
 
     void delete(T entity);
@@ -18,7 +18,6 @@ public interface GenericBeanI<T> extends Serializable {
     default Optional<T> findById(String id) {
         return Optional.empty();
     }
-    void insert(T entity);
 
 
 }

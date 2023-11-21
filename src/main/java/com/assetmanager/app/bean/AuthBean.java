@@ -22,7 +22,7 @@ public class AuthBean implements AuthBeanI, Serializable {
         try {
             String hashedPassword = passwordEncoder.encodePassword(userToAuthenticate.getPassword());
             PreparedStatement pre = MysqlDatabase.getDatabaseInstance().getConnection()
-                    .prepareStatement("select user_id,username,password from users where username=? and password=? limit 1");
+                    .prepareStatement("select id,username,password from users where username=? and password=? limit 1");
             pre.setString(1, userToAuthenticate.getUsername());
             pre.setString(2, hashedPassword);
 
@@ -30,8 +30,8 @@ public class AuthBean implements AuthBeanI, Serializable {
 
             User user = new User();
 
-            while (result.next()) {
-                user.setId(result.getLong("user_id"));
+            if (result.next()) {
+                user.setId(result.getLong("id"));
                 user.setUsername(result.getString("username"));
             }
 
