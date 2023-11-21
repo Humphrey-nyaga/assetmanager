@@ -24,17 +24,18 @@ public class Login extends BaseAction {
     private static final Logger LOGGER = FileLogger.getLogger();
     AuthBeanI authBean = new AuthBean();
 
+    @Override
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
         HttpSession httpSession = servletRequest.getSession();
         if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
             servletResponse.sendRedirect("./home");
-        }
-        else {
+        } else {
             servletResponse.sendRedirect("./");
         }
     }
 
+    @Override
     public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
 

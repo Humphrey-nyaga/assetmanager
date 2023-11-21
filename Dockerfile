@@ -7,9 +7,7 @@ LABEL authors="Humphrey Nyaga"
 WORKDIR /app
 COPY pom.xml .
 COPY . .
-RUN mvn dependency:go-offline
-RUN mvn clean compile package
-RUN apk --no-cache del maven
+RUN mvn clean package
 
 FROM quay.io/wildfly/wildfly:28.0.0.Final-jdk17 AS deploy
 #WORKDIR /app

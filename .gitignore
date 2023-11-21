@@ -84,3 +84,6 @@ nb-configuration.xml
 ##############################
 .DS_Store
 .idea/workspace.xml
+
+/modules
+modules/
