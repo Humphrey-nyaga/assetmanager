@@ -2,9 +2,9 @@ package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.User;
 
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
+import javax.ejb.Remote;
 
+@Remote
 public interface AuthBeanI {
     User authenticate(User user);
 }

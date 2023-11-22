@@ -8,8 +8,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MysqlDatabase {
 
@@ -76,8 +79,8 @@ public class MysqlDatabase {
                 values.append(prefix).append("?");
 
                 prefix = ", ";
-                System.out.println("Columns>>>>>>>" + columns.toString());
-                System.out.println("Values>>>>>>>" + values.toString());
+                System.out.println("Columns>>>>>>>" + columns);
+                System.out.println("Values>>>>>>>" + values);
 
 
             }
@@ -116,6 +119,58 @@ public class MysqlDatabase {
                 throw new RuntimeException("Error inserting data into the database", e);
             }
         } catch (IllegalAccessException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+    public static <T> List<T> select(Class<T> filter) {
+        try {
+            Class<?> clazz = filter;
+            System.out.println();
+            System.out.println("Clazz>>>>>>>>>>" + clazz.getName());
+
+            if (!clazz.isAnnotationPresent(DbTable.class))
+                return new ArrayList<>();
+
+            DbTable dbTable = clazz.getAnnotation(DbTable.class);
+            String stringBuilder = "SELECT * FROM " +
+                    dbTable.name() + ";";
+            Connection conn = MysqlDatabase.getDatabaseInstance().getConnection();
+            PreparedStatement preparedStatement = conn.prepareStatement(stringBuilder);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<T> result = new ArrayList<>();
+
+            while (resultSet.next()) {
+                T object = (T) clazz.getDeclaredConstructor().newInstance();
+
+                for (Field field : clazz.getDeclaredFields()) {
+                    DbColumn dbColumn = field.getAnnotation(DbColumn.class);
+                    if (dbColumn != null) {
+                        String columnName = dbColumn.name();
+
+                        Object value = resultSet.getObject(columnName);
+                        /*Check dates and convert to Local date.
+                        * Specific date classes may need to be handled differently
+                        * */
+                        if (value instanceof java.sql.Date && field.getType() == LocalDate.class) {
+                            value = ((java.sql.Date) value).toLocalDate();
+                        }
+
+                        if (field.getType().isEnum() && value instanceof String) {
+                            value = Enum.valueOf((Class<Enum>) field.getType(), (String) value);
+                        }
+
+                        field.setAccessible(true);
+                        field.set(object, value);
+                    }
+                }
+
+                result.add(object);
+            }
+            return result;
+
+        } catch (SQLException | InvocationTargetException | InstantiationException | IllegalAccessException |
+                 NoSuchMethodException ex) {
             throw new RuntimeException(ex);
         }
     }

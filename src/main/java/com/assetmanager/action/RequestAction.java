@@ -5,6 +5,7 @@ import com.assetmanager.app.bean.AssetRequestBeanI;
 import com.assetmanager.app.model.entity.AssetRequest;
 import com.assetmanager.exceptions.AssigneeDoesNotExistException;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +15,8 @@ import java.io.IOException;
 @WebServlet("/request")
 
 public class RequestAction extends BaseAction {
-    AssetRequestBeanI assetRequestBean = new AssetRequestBean();
+   @EJB
+   AssetRequestBeanI assetRequestBean;
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
 

@@ -1,18 +1,13 @@
 package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.Assignee;
-import com.assetmanager.database.Database;
-import com.assetmanager.database.MysqlDatabase;
-import com.assetmanager.exceptions.AssigneeDoesNotExistException;
-import com.mysql.cj.MysqlConnection;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import com.assetmanager.exceptions.AssigneeDoesNotExistException;
+
+import javax.ejb.Stateless;
 import java.util.List;
 import java.util.Optional;
-
+@Stateless
 public class AssigneeBean extends GenericBean<Assignee> implements AssigneeBeanI {
 
 

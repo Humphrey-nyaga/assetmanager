@@ -6,13 +6,14 @@ import com.assetmanager.database.Database;
 import com.assetmanager.database.MysqlDatabase;
 import com.assetmanager.util.logger.FileLogger;
 
+import javax.ejb.Stateless;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-
+@Stateless
 public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
     private static final Logger LOGGER = FileLogger.getLogger();
 
@@ -62,30 +63,4 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
     }
 
 
-    @Override
-    public List<Asset> list(Class<?> clazz) {
-        List<Asset> assets = new ArrayList<>();
-        try {
-            Connection connection = MysqlDatabase.getDatabaseInstance().getConnection();
-            String findAllAssets = "SELECT * FROM assets;";
-            PreparedStatement preparedStatement = connection.prepareStatement(findAllAssets);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                Asset asset = new Asset();
-
-                asset.setSerialNumber(rs.getString("serial_id"));
-                asset.setName(rs.getString("name"));
-                asset.setCategory(Category.valueOf(rs.getString("category")));
-                asset.setDescription(rs.getString("description"));
-                asset.setDateAcquired(rs.getDate("date_acquired").toLocalDate());
-                asset.setPurchaseValue(rs.getBigDecimal("purchase_value"));
-                assets.add(asset);
-            }
-
-
-            return assets;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

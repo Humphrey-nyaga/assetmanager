@@ -17,17 +17,17 @@ import javax.persistence.Entity;
 @DbTable(name = "assets")
 @HtmlForm(label = "Asset", url = "./asset")
 @HtmlTable(name = "Asset Table" ,label = "Asset", addUrl = "./asset?action=add")
-public class Asset  implements Serializable {
+public class Asset extends BaseEntity  implements Serializable {
 
     @DbColumn(name = "serial_id")
     @NotNull
     @TableColumnHeader(header = "Serial Number")
-    @HtmlFormField(label = "Serial Number")
+    @HtmlFormField(label = "Serial Number",isRequired = true)
     private String serialNumber;
     @DbColumn(name = "name")
     @NotNull
     @TableColumnHeader(header = "Name of Asset")
-    @HtmlFormField(label = "Name")
+    @HtmlFormField(label = "Name",isRequired = true)
     private String name;
     @DbColumn(name = "description")
     @TableColumnHeader(header = "Description")
@@ -36,7 +36,7 @@ public class Asset  implements Serializable {
     @DbColumn(name = "date_Acquired",definition = "DATE")
     @NotNull
     @TableColumnHeader(header = "Date Acquired")
-    @HtmlFormField(label = "Date Acquired")
+    @HtmlFormField(label = "Date Acquired",isRequired = true)
     private LocalDate dateAcquired;
     @DbColumn(name = "category")
     @TableColumnHeader(header = "Category")
@@ -44,7 +44,7 @@ public class Asset  implements Serializable {
     private Category category;
     @DbColumn(name = "purchase_value",definition = "DECIMAL(10,2)")
     @TableColumnHeader(header = "Value")
-    @HtmlFormField(label = "Purchase Value")
+    @HtmlFormField(label = "Purchase Value",isRequired = true)
     private BigDecimal purchaseValue;
 
     public Asset() {

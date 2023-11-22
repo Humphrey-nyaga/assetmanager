@@ -4,6 +4,7 @@ import com.assetmanager.app.bean.AssetBeanI;
 import com.assetmanager.app.bean.AssetBeanImpl;
 import com.assetmanager.app.model.entity.Asset;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,8 +14,11 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/deleteAsset")
 public class AssetDelete extends HttpServlet {
+    @EJB
+    AssetBeanI assetBean;
+
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        AssetBeanI assetBean = new AssetBeanImpl();
+
         Asset asset = new Asset();
         asset.setSerialNumber(req.getParameter("id"));
         assetBean.delete(asset);

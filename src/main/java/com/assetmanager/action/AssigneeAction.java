@@ -4,6 +4,7 @@ import com.assetmanager.app.bean.AssigneeBean;
 import com.assetmanager.app.bean.AssigneeBeanI;
 import com.assetmanager.app.model.entity.Assignee;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 @WebServlet("/assignee")
 public class AssigneeAction extends BaseAction {
-    AssigneeBeanI assigneeBean = new AssigneeBean();
+   @EJB
+   AssigneeBeanI assigneeBean;
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
 

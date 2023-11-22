@@ -6,6 +6,7 @@ import com.assetmanager.app.model.entity.User;
 import com.assetmanager.app.model.entity.UserRole;
 import com.assetmanager.util.logger.FileLogger;
 
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +18,8 @@ import java.util.logging.Logger;
 @WebServlet("/signup")
 public class SignUpAction extends BaseAction {
     private static final Logger LOGGER = FileLogger.getLogger();
-    UserBeanI userBean = new UserBean();
+    @EJB
+    UserBeanI userBean;
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("./signup.jsp");
@@ -30,8 +32,8 @@ public class SignUpAction extends BaseAction {
         serializeForm(registerUser, req.getParameterMap());
         registerUser.setUserRole(UserRole.REGULAR);
 
-        if(userBean.registerUser(registerUser))
-           resp.sendRedirect("./");
+        if (userBean.registerUser(registerUser))
+            resp.sendRedirect("./");
     }
 
 }

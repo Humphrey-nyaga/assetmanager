@@ -9,6 +9,7 @@ import com.assetmanager.util.logger.FileLogger;
 import com.assetmanager.util.security.PasswordEncoderI;
 import com.assetmanager.util.security.PasswordEncoder;
 
+import javax.ejb.Stateless;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -17,7 +18,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
 
-
+@Stateless
 public class UserBean extends  GenericBean<User> implements UserBeanI, Serializable {
     private static final Logger LOGGER = FileLogger.getLogger();
 

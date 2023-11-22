@@ -7,12 +7,13 @@ import com.assetmanager.exceptions.UserPasswordEncodingException;
 import com.assetmanager.util.security.PasswordEncoder;
 import com.assetmanager.util.security.PasswordEncoderI;
 
+import javax.ejb.Stateless;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+@Stateless
 public class AuthBean implements AuthBeanI, Serializable {
     PasswordEncoderI passwordEncoder = new PasswordEncoder();
 
