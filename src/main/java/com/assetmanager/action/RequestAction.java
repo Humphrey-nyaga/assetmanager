@@ -3,6 +3,7 @@ package com.assetmanager.action;
 import com.assetmanager.app.bean.AssetRequestBean;
 import com.assetmanager.app.bean.AssetRequestBeanI;
 import com.assetmanager.app.model.entity.AssetRequest;
+import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.exceptions.AssigneeDoesNotExistException;
 
 import javax.ejb.EJB;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/request")
+@WebServlet("/request/*")
 
 public class RequestAction extends BaseAction {
    @EJB
@@ -45,5 +46,26 @@ public class RequestAction extends BaseAction {
 
         }
 
+    }
+    public void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String pathInfo = request.getPathInfo();
+
+        if (pathInfo != null && pathInfo.length() > 1) {
+            String idString = pathInfo.substring(1);
+
+            try {
+                Long id = Long.parseLong(idString);
+                assetRequestBean.deleteById(AssetRequest.class, id);
+
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+
+            } catch (NumberFormatException e) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.getWriter().println("Invalid ID Parsed");
+            }
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
     }
 }

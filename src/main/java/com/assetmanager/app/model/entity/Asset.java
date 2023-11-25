@@ -16,7 +16,7 @@ import javax.persistence.Entity;
 
 @DbTable(name = "assets")
 @HtmlForm(label = "Asset", url = "./asset")
-@HtmlTable(name = "Asset Table" ,label = "Asset", addUrl = "./asset?action=add")
+@HtmlTable(name = "Asset Table" ,label = "Asset", addUrl = "./asset?action=add", url = "./asset")
 public class Asset extends BaseEntity  implements Serializable {
 
     @DbColumn(name = "serial_id")

@@ -4,8 +4,11 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +20,10 @@ public class HtmlComponent implements Serializable {
             return StringUtils.EMPTY;
 
         HtmlTable htmlTableLabel = dataClass.getAnnotation(HtmlTable.class);
-        List<Field> fields = List.of(dataClass.getDeclaredFields());
+
+        List<Field> fields = new ArrayList<>(Arrays.asList(dataClass.getSuperclass().getDeclaredFields()));
+        fields.addAll(Arrays.asList(dataClass.getDeclaredFields()));
+
         StringBuilder stringBuilder = new StringBuilder()
                 .append("<div class=\"row justify-content-center\">\n")
                 .append("<div class=\"col-md-11 mr-0\">\n")
@@ -48,6 +54,8 @@ public class HtmlComponent implements Serializable {
         for (T model : data) {
             stringBuilder.append("<tr>");
             for (Field field : fields) {
+                if (!field.isAnnotationPresent(TableColumnHeader.class))
+                    continue;
                 field.setAccessible(true);
                 try {
                     stringBuilder.append("<td>")
@@ -57,19 +65,24 @@ public class HtmlComponent implements Serializable {
                     throw new RuntimeException(e);
                 }
             }
-            if (dataClass.getSimpleName().equals("Asset")) {
-                stringBuilder.append("""
-                        <td>
-                        <button type="button" class="btn btn-sm btn-success">Update</button>
-                        <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(this)">Delete</button>
-                        </td>""");
-            } else {
-                stringBuilder.append("""
-                        <td>
-                        <button type="button" class="btn btn-sm btn-success">Update</button>
-                        <button type="button" class="btn btn-sm btn-danger">Delete</button>
-                        </td>""");
+
+            try {
+                Object id = dataClass.getMethod("getId").invoke(model);
+
+
+                stringBuilder.append("<td>")
+                        .append("""
+                                <button type="button" class="btn btn-sm btn-success">Update</button>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('""").append(htmlTableLabel.url())
+                        .append("/").append(id).append("""
+                                        ')">
+                                        Delete
+                                    </button>
+                                </td>""");
+            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                throw new RuntimeException(e);
             }
+
             stringBuilder.append("</tr>");
         }
         stringBuilder.append("""

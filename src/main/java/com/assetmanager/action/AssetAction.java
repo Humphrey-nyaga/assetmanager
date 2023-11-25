@@ -3,6 +3,7 @@ package com.assetmanager.action;
 import com.assetmanager.app.bean.AssetBeanI;
 
 import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.database.Database;
 
 import javax.ejb.EJB;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet("/asset")
+@WebServlet("/asset/*")
 public class AssetAction extends BaseAction {
     @EJB
     AssetBeanI assetBean;
@@ -39,5 +40,28 @@ public class AssetAction extends BaseAction {
 
 
     }
+
+    public void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String pathInfo = request.getPathInfo();
+
+        if (pathInfo != null && pathInfo.length() > 1) {
+            String idString = pathInfo.substring(1);
+            try {
+                Long id = Long.parseLong(idString);
+                assetBean.deleteById(Asset.class, id);
+
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+
+            } catch (NumberFormatException e) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            }
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().println("Invalid URL format");
+        }
+    }
+
 }
+
 

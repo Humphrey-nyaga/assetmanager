@@ -1,5 +1,6 @@
 package com.assetmanager.app.model.entity;
 
+import com.assetmanager.app.view.html.TableColumnHeader;
 import com.assetmanager.database.helper.DbColumn;
 import com.assetmanager.database.helper.NotNull;
 import com.assetmanager.database.helper.PrimaryKey;
@@ -11,6 +12,7 @@ public class BaseEntity implements Serializable {
     @PrimaryKey
     @NotNull
     @DbColumn(name = "id", definition = "INTEGER")
+    @TableColumnHeader(header = "ID")
     private Long id;
 
     public Long getId() {

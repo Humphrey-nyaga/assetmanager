@@ -4,7 +4,6 @@ import com.assetmanager.app.model.entity.AssetRequest;
 
 import javax.ejb.Remote;
 import java.util.List;
-@Remote
 public interface AssetRequestBeanI extends GenericBeanI<AssetRequest> {
 
 }

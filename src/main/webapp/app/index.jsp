@@ -23,27 +23,26 @@
 
     </style>
     <script>
-        let deleteRow;
-
-        function confirmDelete(button) {
-            deleteRow = button.closest("tr");
+        function confirmDelete(deleteUrl) {
             $('#deleteConfirmationModal').modal('show');
+
+            $("#deleteConfirmationModal").data('delete-url', deleteUrl);
         }
+
         function proceedWithDelete() {
-            const id = deleteRow.cells[0].innerText;
+            const deleteUrl = $("#deleteConfirmationModal").data('delete-url');
             $('#deleteConfirmationModal').modal('hide');
+            console.log("Delete url" + deleteUrl);
 
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = './deleteAsset';
-
-            const idInput = document.createElement('input');
-            idInput.type = 'hidden';
-            idInput.name = 'id';
-            idInput.value = id;
-            form.appendChild(idInput);
-            document.body.appendChild(form);
-            form.submit();
+            fetch(deleteUrl, { method: 'DELETE' })
+                .then(response => {
+                    if (response.status === 204) {
+                        location.reload();
+                    } else {
+                        console.error('Error:', response.statusText);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         }
     </script>
 
@@ -63,14 +62,14 @@ ${requestScope.content}
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Asset Delete</h5>
+                <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Delete</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete the asset? <br>
-                This action is irreversible.
+                Are you sure you want to delete the Item? <br>
+                This action Cannot Be Reversed.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

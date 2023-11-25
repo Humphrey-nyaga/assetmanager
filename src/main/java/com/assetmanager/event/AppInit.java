@@ -43,59 +43,6 @@ public class AppInit implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
 
 
-        FileLogger.getLogger();
-        LOGGER.info("*************** Asset Manager Database Tables Creation Initialized *************");
-
-        try {
-            Reflections reflections = new Reflections("com.assetmanager.app.model.entity");
-            List<Class<?>> entities = reflections.getTypesAnnotatedWith(DbTable.class)
-                    .stream().toList();
-
-            Connection conn = MysqlDatabase.getDatabaseInstance().getConnection();
-
-            for (Class<?> clazz : entities) {
-                if (!clazz.isAnnotationPresent(DbTable.class))
-                    continue;
-                DbTable dbTable = clazz.getAnnotation(DbTable.class);
-                StringBuilder stringBuilder = new StringBuilder()
-                        .append("CREATE TABLE IF NOT EXISTS ").append(dbTable.name()).append("(");
-
-                String prefix = "";
-
-                List<Field> fields = new ArrayList<>(Arrays.asList(clazz.getSuperclass().getDeclaredFields()));
-                fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
-
-                for (Field field : fields) {
-                    field.setAccessible(true);
-
-                    if (!field.isAnnotationPresent(DbColumn.class))
-                        continue;
-
-                    DbColumn dbColumn = field.getAnnotation(DbColumn.class);
-                    stringBuilder.append(prefix)
-                            .append(dbColumn.name())
-                            .append(" ")
-                            .append(dbColumn.definition())
-                            .append(field.isAnnotationPresent(NotNull.class) ? " NOT NULL" : "")
-                            .append(field.isAnnotationPresent(PrimaryKey.class) ? " AUTO_INCREMENT PRIMARY KEY" : "");
-                    prefix = ", ";
-
-                }
-
-                stringBuilder.append(");");
-                System.out.println("Create Table SQL >> " + stringBuilder);
-
-                PreparedStatement createTableStmt = conn.prepareStatement(stringBuilder.toString());
-                createTableStmt.execute();
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-
-
-//
 ////////        LOGGER.info("*************** Creating Default Assets *************");
 //        assetBean.create(new Asset("001", "Laptop", "Dell Laptop", LocalDate.of(2022, 5, 10), Category.ELECTRONICS,
 //                new BigDecimal("99999.99")));

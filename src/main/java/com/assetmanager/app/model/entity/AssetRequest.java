@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 @DbTable(name = "asset_request")
 @HtmlForm(url = "./request", label = "Asset Request")
-@HtmlTable(name = "Asset Requests", label = "Asset Request", addUrl = "./request?action=add")
+@HtmlTable(name = "Asset Requests", label = "Asset Request", addUrl = "./request?action=add",url = "./request")
 public class AssetRequest extends BaseEntity implements Serializable {
 
     @DbColumn(name = "staff_id")
@@ -44,12 +44,12 @@ public class AssetRequest extends BaseEntity implements Serializable {
     @NotNull
     @TableColumnHeader(header = "Status")
     @HtmlFormField(label = "Request Status")
-    private RequestStatusEnum requestStatus;
+    private RequestStatus requestStatus;
 
     public AssetRequest() {
     }
 
-    public AssetRequest(String staffId, String assetName, String description, LocalDate dateRequested, int quantity, RequestStatusEnum requestStatus) {
+    public AssetRequest(String staffId, String assetName, String description, LocalDate dateRequested, int quantity, RequestStatus requestStatus) {
         this.staffId = staffId;
         this.assetName = assetName;
         this.description = description;
@@ -95,11 +95,11 @@ public class AssetRequest extends BaseEntity implements Serializable {
     }
 
 
-    public RequestStatusEnum getRequestStatus() {
+    public RequestStatus getRequestStatus() {
         return requestStatus;
     }
 
-    public void setRequestStatus(RequestStatusEnum requestStatus) {
+    public void setRequestStatus(RequestStatus requestStatus) {
         this.requestStatus = requestStatus;
     }
 

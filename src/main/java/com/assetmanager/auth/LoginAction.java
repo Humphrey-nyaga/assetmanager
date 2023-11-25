@@ -7,6 +7,7 @@ import com.assetmanager.action.BaseAction;
 import com.assetmanager.util.logger.FileLogger;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,8 @@ import java.util.logging.Logger;
 @WebServlet(urlPatterns = "/login")
 public class LoginAction extends BaseAction {
     private static final Logger LOGGER = FileLogger.getLogger();
-    AuthBeanI authBean = new AuthBean();
+   @EJB
+   AuthBeanI authBean;
 
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {

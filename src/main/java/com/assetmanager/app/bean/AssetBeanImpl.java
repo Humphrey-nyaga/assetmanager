@@ -6,6 +6,7 @@ import com.assetmanager.database.Database;
 import com.assetmanager.database.MysqlDatabase;
 import com.assetmanager.util.logger.FileLogger;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,15 +16,16 @@ import java.util.logging.Logger;
 
 @Stateless
 public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
-    private static final Logger LOGGER = FileLogger.getLogger();
 
+    @EJB
+    MysqlDatabase database;
     @Override
     public void delete(Asset assetToDelete) {
         Optional<Asset> optionalAsset = findAssetById(assetToDelete.getSerialNumber());
 
         if (optionalAsset.isPresent()) {
             try {
-                Connection connection = MysqlDatabase.getDatabaseInstance().getConnection();
+                Connection connection = database.getConnection();
                 String deleteAssetQuery = "DELETE FROM assets WHERE serial_id = ?;";
 
                 PreparedStatement preparedStatement = connection.prepareStatement(deleteAssetQuery);
@@ -39,7 +41,7 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
 
 
         try {
-            Connection connection = MysqlDatabase.getDatabaseInstance().getConnection();
+            Connection connection = database.getConnection();
             String findAssetByIdQuery = "SELECT * FROM assets WHERE serial_id = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(findAssetByIdQuery);
             preparedStatement.setString(1, id);

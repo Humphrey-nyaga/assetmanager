@@ -9,6 +9,7 @@ import com.assetmanager.database.helper.DbColumn;
 import com.assetmanager.database.helper.DbTable;
 import com.assetmanager.database.helper.PrimaryKey;
 
+import javax.ejb.EJB;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
@@ -18,18 +19,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GenericBean<T> implements GenericBeanI<T> {
-    Database database = Database.getDatabaseInstance();
+public abstract class GenericBean<T> implements GenericBeanI<T> {
     private final GenericDaoI<T> genericDao = new GenericDao<>();
+    @EJB
+    MysqlDatabase database;
 
     @Override
     @SuppressWarnings({"unchecked", "rawtypes"})
     public List<T> list(Class<?> clazz) {
+        genericDao.setDatabase(database);
         return genericDao.list(clazz);
     }
 
     @Override
     public void create(T entity) {
+        genericDao.setDatabase(database);
         genericDao.create(entity);
     }
 
@@ -42,6 +46,20 @@ public class GenericBean<T> implements GenericBeanI<T> {
     public void delete(T entity) {
 
     }
+
+    public GenericDao<T> getDao() {
+        genericDao.setDatabase(database);
+        return (GenericDao<T>) genericDao;
+    }
+
+    @Override
+    public void deleteById(Class<?> clazz, Long id) {
+        genericDao.setDatabase(database);
+        genericDao.deleteById(clazz, id);
+    }
+
+    ;
+
 
 }
 

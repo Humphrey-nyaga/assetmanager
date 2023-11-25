@@ -4,7 +4,6 @@ import com.assetmanager.app.model.entity.User;
 
 import javax.ejb.Remote;
 
-@Remote
 public interface AuthBeanI {
     User authenticate(User user);
 }

@@ -4,6 +4,9 @@ import java.security.NoSuchAlgorithmException;
 
 public interface PasswordEncoderI {
     String encodePassword(String rawPassword) throws NoSuchAlgorithmException;
+
     boolean verifyPassword(String rawPassword, String encodedPassword) throws NoSuchAlgorithmException;
 
+    String bytesToString(byte[] bytes);
 }
+

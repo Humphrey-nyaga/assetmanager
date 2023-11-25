@@ -7,22 +7,29 @@ import com.assetmanager.exceptions.UserPasswordEncodingException;
 import com.assetmanager.util.security.PasswordEncoder;
 import com.assetmanager.util.security.PasswordEncoderI;
 
+import javax.ejb.EJB;
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 @Stateless
+@Remote
 public class AuthBean implements AuthBeanI, Serializable {
-    PasswordEncoderI passwordEncoder = new PasswordEncoder();
+    @EJB
+    PasswordEncoderI passwordEncoder;
+    @EJB
+    MysqlDatabase database;
 
     @Override
     public User authenticate(User userToAuthenticate) {
 
         try {
             String hashedPassword = passwordEncoder.encodePassword(userToAuthenticate.getPassword());
-            PreparedStatement pre = MysqlDatabase.getDatabaseInstance().getConnection()
+            PreparedStatement pre = database.getConnection()
                     .prepareStatement("select id,username,password from users where username=? and password=? limit 1");
             pre.setString(1, userToAuthenticate.getUsername());
             pre.setString(2, hashedPassword);

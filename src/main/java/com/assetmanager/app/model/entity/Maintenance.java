@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 @DbTable(name = "maintenance")
 @HtmlForm(url = "./maintenance", label = "Maintenance")
-@HtmlTable(name = "Maintenance", label = "Maintenance", addUrl = "./maintenance?action=add")
+@HtmlTable(name = "Maintenance", label = "Maintenance", addUrl = "./maintenance?action=add",url = "./maintenance")
 public class Maintenance extends BaseEntity implements Serializable {
 
     @DbColumn(name = "asset_id", definition = "INTEGER")

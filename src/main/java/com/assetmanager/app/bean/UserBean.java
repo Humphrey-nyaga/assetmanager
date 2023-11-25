@@ -9,6 +9,8 @@ import com.assetmanager.util.logger.FileLogger;
 import com.assetmanager.util.security.PasswordEncoderI;
 import com.assetmanager.util.security.PasswordEncoder;
 
+import javax.ejb.EJB;
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
@@ -19,12 +21,13 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Stateless
-public class UserBean extends  GenericBean<User> implements UserBeanI, Serializable {
-    private static final Logger LOGGER = FileLogger.getLogger();
+@Remote
+public class UserBean extends GenericBean<User> implements UserBeanI, Serializable {
 
-    Connection conn = MysqlDatabase.getDatabaseInstance().getConnection();
-
-    PasswordEncoderI passwordEncoder = new PasswordEncoder();
+    @EJB
+    MysqlDatabase database;
+    @EJB
+    PasswordEncoderI passwordEncoder;
 
     @Override
     public Boolean registerUser(User user) {
@@ -32,12 +35,13 @@ public class UserBean extends  GenericBean<User> implements UserBeanI, Serializa
         if (user.getPassword().equals(user.getConfirmPassword())) {
             String hashedPassword = null;
             try {
+                Connection conn = database.getConnection();
                 hashedPassword = passwordEncoder.encodePassword(user.getPassword());
                 PreparedStatement registerUserStmt = conn.prepareStatement("INSERT INTO users (username, password) VALUES (?,?);");
                 registerUserStmt.setString(1, user.getUsername());
                 registerUserStmt.setString(2, hashedPassword);
                 registerUserStmt.execute();
-                LOGGER.info("User Registered Successfully");
+                System.out.println("User Registered Successfully");
                 return true;
             } catch (NoSuchAlgorithmException e) {
                 throw new UserPasswordEncodingException("Password encoding algorithm failed: " + e.getMessage());
@@ -45,7 +49,7 @@ public class UserBean extends  GenericBean<User> implements UserBeanI, Serializa
                 throw new RuntimeException(e);
             }
         }
-        LOGGER.warning("User Registration failed");
+        System.out.println("User Registration failed");
         return false;
     }
 
@@ -54,12 +58,5 @@ public class UserBean extends  GenericBean<User> implements UserBeanI, Serializa
         return null;
     }
 
-    @Override
-    public String getAllUsers() {
-        Database database = Database.getDatabaseInstance();
-        List<User> users = database.getUsersList();
-        LOGGER.info("Retrieving All users");
-        return HtmlComponent.table(users, User.class);
-    }
 
 }
