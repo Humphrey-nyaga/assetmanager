@@ -1,15 +1,21 @@
 package com.assetmanager.app.model.entity;
 
 import com.assetmanager.app.view.html.HtmlTable;
+import com.assetmanager.database.helper.DbColumn;
+import com.assetmanager.database.helper.DbTable;
+import com.assetmanager.database.helper.NotNull;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @HtmlTable(name = "Users")
-public class User implements Serializable {
-
-    private Long id;
+@DbTable(name="users")
+public class User extends BaseEntity implements Serializable {
+    @DbColumn(name = "username")
+    @NotNull
     private String username;
+    @DbColumn(name = "password")
+    @NotNull
     private String password;
     private String confirmPassword;
     private UserRole userRole;
@@ -60,6 +66,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,11 +80,5 @@ public class User implements Serializable {
         return Objects.hash(getUsername());
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+
 }

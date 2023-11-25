@@ -52,7 +52,7 @@
                                     <div class="mb-3">
                                         <h2 class="fw-bold mb-2 text-uppercase">LOGIN</h2>
 
-                                        <jsp:useBean id="loginForm" class="com.assetmanager.app.UserBean.UserBean">
+                                        <jsp:useBean id="loginForm" class="com.assetmanager.app.usebeans.UserBean">
                                             <jsp:setProperty name="loginForm" property="usernameLabel" value="Enter Unique Username"/>
                                                 <jsp:setProperty name="loginForm" property="passwordLabel" value="Enter Unique Password"/>
                                         </jsp:useBean>

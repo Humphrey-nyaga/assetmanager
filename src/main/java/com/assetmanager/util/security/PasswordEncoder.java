@@ -2,15 +2,19 @@ package com.assetmanager.util.security;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.ejb.Remote;
+import javax.ejb.Stateless;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
+@Remote
+@Stateless
 public class PasswordEncoder implements PasswordEncoderI {
     private final org.springframework.security.crypto.password.PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-
+    @Override
     public boolean verifyPassword(String rawPassword, String encodedPassword) throws NoSuchAlgorithmException {
 
         if (rawPassword == null) {
@@ -26,7 +30,7 @@ public class PasswordEncoder implements PasswordEncoderI {
     // TODO - Password Encoder using custom hashing
     @Override
     public String encodePassword(String rawPassword) throws NoSuchAlgorithmException {
-        if ( rawPassword == null || rawPassword.isEmpty())
+        if (rawPassword == null || rawPassword.isEmpty())
             throw new IllegalArgumentException("Raw Password cannot be null or Empty");
 
         MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
@@ -36,6 +40,7 @@ public class PasswordEncoder implements PasswordEncoderI {
         return bytesToString(passWordDigest);
     }
 
+    @Override
     public String bytesToString(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {

@@ -1,64 +1,40 @@
 package com.assetmanager.app.bean;
 
+import com.assetmanager.app.dao.GenericDao;
+import com.assetmanager.app.dao.GenericDaoI;
 import com.assetmanager.app.model.entity.*;
 import com.assetmanager.database.Database;
+import com.assetmanager.database.MysqlDatabase;
+import com.assetmanager.database.helper.DbColumn;
+import com.assetmanager.database.helper.DbTable;
+import com.assetmanager.database.helper.PrimaryKey;
 
+import javax.ejb.EJB;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class GenericBean<T> implements GenericBeanI<T> {
-    Database database = Database.getDatabaseInstance();
+public abstract class GenericBean<T> implements GenericBeanI<T> {
+    private final GenericDaoI<T> genericDao = new GenericDao<>();
+    @EJB
+    MysqlDatabase database;
 
     @Override
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public List<T> list() {
-        Class clazz = ((Class<T>) ((ParameterizedType) getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[0]);
-
-
-        if (clazz.equals(Asset.class))
-            return (List<T>) database.getAssetList();
-
-        if (clazz.equals(AssetRequest.class))
-            return (List<T>) database.getAssetRequestsList();
-
-        if (clazz.equals(Assignee.class))
-            return (List<T>) database.getAssigneeList();
-
-        if (clazz.equals(User.class))
-            return (List<T>) database.getUsersList();
-
-        return new ArrayList<>();
+    public List<T> list(Class<?> clazz) {
+        genericDao.setDatabase(database);
+        return genericDao.list(clazz);
     }
 
     @Override
-    public T create(T entity) {
-        Database database = Database.getDatabaseInstance();
-
-        Class clazz = entity.getClass();
-        System.out.println(clazz.getName());
-
-        if (entity instanceof Asset)
-            database.getAssetList().add((Asset) entity);
-
-        else if (entity instanceof AssetRequest)
-            database.getAssetRequestsList().add((AssetRequest) entity);
-
-
-        else if (entity instanceof User)
-            database.getUsersList().add((User) entity);
-
-        else if (entity instanceof Maintenance)
-            database.getMaintenanceList().add((Maintenance) entity);
-
-        else if (entity instanceof Assignee)
-            ((Assignee) entity).setId(100L);
-        if (entity instanceof Assignee) {
-            database.getAssigneeList().add((Assignee) entity);
-        }
-        return entity;
-
+    public void create(T entity) {
+        genericDao.setDatabase(database);
+        genericDao.create(entity);
     }
 
     @Override
@@ -70,4 +46,20 @@ public class GenericBean<T> implements GenericBeanI<T> {
     public void delete(T entity) {
 
     }
+
+    public GenericDao<T> getDao() {
+        genericDao.setDatabase(database);
+        return (GenericDao<T>) genericDao;
+    }
+
+    @Override
+    public void deleteById(Class<?> clazz, Long id) {
+        genericDao.setDatabase(database);
+        genericDao.deleteById(clazz, id);
+    }
+
+    ;
+
+
 }
+

@@ -2,31 +2,53 @@ package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.User;
 import com.assetmanager.database.Database;
+import com.assetmanager.database.MysqlDatabase;
 import com.assetmanager.exceptions.UserPasswordEncodingException;
 import com.assetmanager.util.security.PasswordEncoder;
 import com.assetmanager.util.security.PasswordEncoderI;
 
+import javax.ejb.EJB;
+import javax.ejb.Remote;
+import javax.ejb.Stateless;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+@Stateless
+@Remote
 public class AuthBean implements AuthBeanI, Serializable {
-    Database database = Database.getDatabaseInstance();
-    PasswordEncoderI passwordEncoder = new PasswordEncoder();
+    @EJB
+    PasswordEncoderI passwordEncoder;
+    @EJB
+    MysqlDatabase database;
 
     @Override
-    public boolean authenticate(User userToAuthenticate) {
-        for (User user : database.getUsersList()) {
-            try {
-                if (userToAuthenticate.getUsername().equals(user.getUsername())
-                        && passwordEncoder.verifyPassword(userToAuthenticate.getPassword(), user.getPassword())) {
-                    return true;
-                }
-            } catch (NoSuchAlgorithmException e) {
-                throw new UserPasswordEncodingException("Password encoding algorithm failed: " + e.getMessage());
+    public User authenticate(User userToAuthenticate) {
+
+        try {
+            String hashedPassword = passwordEncoder.encodePassword(userToAuthenticate.getPassword());
+            PreparedStatement pre = database.getConnection()
+                    .prepareStatement("select id,username,password from users where username=? and password=? limit 1");
+            pre.setString(1, userToAuthenticate.getUsername());
+            pre.setString(2, hashedPassword);
+
+            ResultSet result = pre.executeQuery();
+
+            User user = new User();
+
+            if (result.next()) {
+                user.setId(result.getLong("id"));
+                user.setUsername(result.getString("username"));
             }
 
+            return user;
+
+        } catch (NoSuchAlgorithmException | SQLException e) {
+            throw new UserPasswordEncodingException("Password decoding algorithm failed: " + e.getMessage());
         }
 
-        return false;
     }
 }
+

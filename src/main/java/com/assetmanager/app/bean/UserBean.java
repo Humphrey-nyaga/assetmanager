@@ -3,22 +3,31 @@ package com.assetmanager.app.bean;
 import com.assetmanager.app.model.entity.User;
 import com.assetmanager.app.view.html.HtmlComponent;
 import com.assetmanager.database.Database;
+import com.assetmanager.database.MysqlDatabase;
 import com.assetmanager.exceptions.UserPasswordEncodingException;
 import com.assetmanager.util.logger.FileLogger;
 import com.assetmanager.util.security.PasswordEncoderI;
 import com.assetmanager.util.security.PasswordEncoder;
 
+import javax.ejb.EJB;
+import javax.ejb.Remote;
+import javax.ejb.Stateless;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
 
+@Stateless
+@Remote
+public class UserBean extends GenericBean<User> implements UserBeanI, Serializable {
 
-public class UserBean implements UserBeanI, Serializable {
-    private static final Logger LOGGER = FileLogger.getLogger();
-
-    Database database = Database.getDatabaseInstance();
-    PasswordEncoderI passwordEncoder = new PasswordEncoder();
+    @EJB
+    MysqlDatabase database;
+    @EJB
+    PasswordEncoderI passwordEncoder;
 
     @Override
     public Boolean registerUser(User user) {
@@ -26,15 +35,21 @@ public class UserBean implements UserBeanI, Serializable {
         if (user.getPassword().equals(user.getConfirmPassword())) {
             String hashedPassword = null;
             try {
+                Connection conn = database.getConnection();
                 hashedPassword = passwordEncoder.encodePassword(user.getPassword());
-                database.getUsersList().add(new User(user.getUsername(), hashedPassword));
-                LOGGER.info("User Registered Successfully");
+                PreparedStatement registerUserStmt = conn.prepareStatement("INSERT INTO users (username, password) VALUES (?,?);");
+                registerUserStmt.setString(1, user.getUsername());
+                registerUserStmt.setString(2, hashedPassword);
+                registerUserStmt.execute();
+                System.out.println("User Registered Successfully");
                 return true;
             } catch (NoSuchAlgorithmException e) {
                 throw new UserPasswordEncodingException("Password encoding algorithm failed: " + e.getMessage());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
-        LOGGER.warning("User Registration failed");
+        System.out.println("User Registration failed");
         return false;
     }
 
@@ -42,12 +57,6 @@ public class UserBean implements UserBeanI, Serializable {
     public User findUserByUsername() {
         return null;
     }
-    @Override
-    public String getAllUsers() {
-        Database database = Database.getDatabaseInstance();
-        List<User> users = database.getUsersList();
-        LOGGER.info("Retrieving All users");
-        return HtmlComponent.table(users, User.class);
-    }
+
 
 }

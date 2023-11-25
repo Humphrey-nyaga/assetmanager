@@ -1,0 +1,28 @@
+  version: '3'
+
+  services:
+    mysqld:
+      image: mysql:latest
+      container_name: assetmanager-db
+      restart: always
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: assetmanager
+      volumes:
+        - mysql-data:/var/lib/mysql
+
+    assetmanager-app:
+      image: assetmanager:latest
+      ports:
+        - "8080:8080"
+      depends_on:
+        - mysqld
+      environment:
+        MYSQL_HOST: mysqld
+        MYSQL_PORT: 3306
+        MYSQL_USER: admin
+        MYSQL_PASSWORD: admin
+        MYSQL_DATABASE: assetmanager
+
+  volumes:
+    mysql-data:

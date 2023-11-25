@@ -15,7 +15,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-
     <style>
         <jsp:include page="../styles/style.css">
         <jsp:param name="pageBackground" value="#f5f5f5"/>
@@ -24,27 +23,26 @@
 
     </style>
     <script>
-        let deleteRow;
-
-        function confirmDelete(button) {
-            deleteRow = button.closest("tr");
+        function confirmDelete(deleteUrl) {
             $('#deleteConfirmationModal').modal('show');
+
+            $("#deleteConfirmationModal").data('delete-url', deleteUrl);
         }
+
         function proceedWithDelete() {
-            const id = deleteRow.cells[0].innerText;
+            const deleteUrl = $("#deleteConfirmationModal").data('delete-url');
             $('#deleteConfirmationModal').modal('hide');
+            console.log("Delete url" + deleteUrl);
 
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = './deleteAsset';
-
-            const idInput = document.createElement('input');
-            idInput.type = 'hidden';
-            idInput.name = 'id';
-            idInput.value = id;
-            form.appendChild(idInput);
-            document.body.appendChild(form);
-            form.submit();
+            fetch(deleteUrl, { method: 'DELETE' })
+                .then(response => {
+                    if (response.status === 204) {
+                        location.reload();
+                    } else {
+                        console.error('Error:', response.statusText);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         }
     </script>
 
@@ -53,11 +51,10 @@
 <body>
 <jsp:useBean id="headerMenu" class="com.assetmanager.app.view.toolbars.Header"/>
 <jsp:setProperty name="headerMenu" property="activeUrl" value='${requestScope.activeUrl}'/>
-<c:set var="currentDate" value='${sessionScope.currentDate}' />
+
 
 ${headerMenu.menu}
-<h4><c:out value="${currentDate}" />
-</h4>
+<h5> Welcome <c:out value="${sessionScope.username}" /></h5>
 
 ${requestScope.content}
 
@@ -65,14 +62,14 @@ ${requestScope.content}
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Asset Delete</h5>
+                <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Delete</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete the asset? <br>
-                This action is irreversible.
+                Are you sure you want to delete the Item? <br>
+                This action Cannot Be Reversed.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

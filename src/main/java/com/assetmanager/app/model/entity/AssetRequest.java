@@ -4,56 +4,58 @@ import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.app.view.html.TableColumnHeader;
+import com.assetmanager.database.helper.DbColumn;
+import com.assetmanager.database.helper.DbTable;
+import com.assetmanager.database.helper.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-@HtmlForm(url = "./request" ,label="Asset Request")
-@HtmlTable(name = "Asset Requests", label = "Asset Request",addUrl = "./request?action=add")
-public class AssetRequest implements Serializable {
-    @TableColumnHeader(header = "Request ID")
-    @HtmlFormField(label = "Request ID")
-    private String id;
 
+@DbTable(name = "asset_request")
+@HtmlForm(url = "./request", label = "Asset Request")
+@HtmlTable(name = "Asset Requests", label = "Asset Request", addUrl = "./request?action=add",url = "./request")
+public class AssetRequest extends BaseEntity implements Serializable {
+
+    @DbColumn(name = "staff_id")
+    @NotNull
     @TableColumnHeader(header = "Staff ID")
     @HtmlFormField(label = "Staff ID")
     private String staffId;
-
+    @DbColumn(name = "asset_name")
+    @NotNull
     @TableColumnHeader(header = "Asset")
     @HtmlFormField(label = "Asset Name")
     private String assetName;
-
+    @DbColumn(name = "description")
+    @NotNull
     @TableColumnHeader(header = "Description")
     @HtmlFormField(label = "Description")
     private String description;
+    @DbColumn(name = "date_requested",definition = "DATE")
+    @NotNull
     @TableColumnHeader(header = "Request Date")
     @HtmlFormField(label = "Request Date")
     private LocalDate dateRequested;
+    @DbColumn(name = "quantity",definition = "INTEGER")
     @TableColumnHeader(header = "Quantity")
     @HtmlFormField(label = "Quantity")
     private int quantity;
+    @DbColumn(name = "request_status")
+    @NotNull
     @TableColumnHeader(header = "Status")
     @HtmlFormField(label = "Request Status")
-    private RequestStatusEnum requestStatus;
+    private RequestStatus requestStatus;
 
     public AssetRequest() {
     }
 
-    public AssetRequest(String id, String staffId, String assetName, String description, LocalDate dateRequested, int quantity, RequestStatusEnum requestStatus) {
-        this.id = id;
+    public AssetRequest(String staffId, String assetName, String description, LocalDate dateRequested, int quantity, RequestStatus requestStatus) {
         this.staffId = staffId;
         this.assetName = assetName;
         this.description = description;
         this.dateRequested = dateRequested;
         this.quantity = quantity;
         this.requestStatus = requestStatus;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getStaffId() {
@@ -92,12 +94,12 @@ public class AssetRequest implements Serializable {
         this.quantity = quantity;
     }
 
-   
-    public RequestStatusEnum getRequestStatus() {
+
+    public RequestStatus getRequestStatus() {
         return requestStatus;
     }
 
-    public void setRequestStatus(RequestStatusEnum requestStatus) {
+    public void setRequestStatus(RequestStatus requestStatus) {
         this.requestStatus = requestStatus;
     }
 

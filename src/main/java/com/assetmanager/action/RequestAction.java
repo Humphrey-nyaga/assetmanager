@@ -1,26 +1,27 @@
-package com.assetmanager.servlet;
+package com.assetmanager.action;
 
 import com.assetmanager.app.bean.AssetRequestBean;
 import com.assetmanager.app.bean.AssetRequestBeanI;
 import com.assetmanager.app.model.entity.AssetRequest;
-import com.assetmanager.app.view.html.HtmlComponent;
-import com.assetmanager.database.Database;
+import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.exceptions.AssigneeDoesNotExistException;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/request")
+@WebServlet("/request/*")
 
 public class RequestAction extends BaseAction {
-    AssetRequestBeanI assetRequestBean = new AssetRequestBean();
+   @EJB
+   AssetRequestBeanI assetRequestBean;
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
 
-        renderPage(servletRequest, servletResponse,"./request", AssetRequest.class,assetRequestBean.getAllAssetRequests());
+        renderPage(servletRequest, servletResponse,"./request", AssetRequest.class,assetRequestBean.list(AssetRequest.class));
 
     }
 
@@ -38,12 +39,33 @@ public class RequestAction extends BaseAction {
         try {
             AssetRequest assetRequest = new AssetRequest();
             serializeForm(assetRequest, servletRequest.getParameterMap());
-            assetRequestBean.createAssetRequest(assetRequest);
+            assetRequestBean.create(assetRequest);
             servletResponse.sendRedirect("./");
         }catch(AssigneeDoesNotExistException e) {
             servletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "ERROR" +  e.getMessage());
 
         }
 
+    }
+    public void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String pathInfo = request.getPathInfo();
+
+        if (pathInfo != null && pathInfo.length() > 1) {
+            String idString = pathInfo.substring(1);
+
+            try {
+                Long id = Long.parseLong(idString);
+                assetRequestBean.deleteById(AssetRequest.class, id);
+
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+
+            } catch (NumberFormatException e) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.getWriter().println("Invalid ID Parsed");
+            }
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
     }
 }

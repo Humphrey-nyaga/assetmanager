@@ -1,9 +1,11 @@
 package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.Maintenance;
-import com.assetmanager.database.Database;
 
-import java.util.List;
+import javax.ejb.Remote;
+import javax.ejb.Stateless;
 
+@Stateless
+@Remote
 public class MaintenanceBean extends GenericBean<Maintenance> implements MaintenanceBeanI{
 }

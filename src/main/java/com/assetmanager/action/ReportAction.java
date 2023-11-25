@@ -1,4 +1,4 @@
-package com.assetmanager.servlet;
+package com.assetmanager.action;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

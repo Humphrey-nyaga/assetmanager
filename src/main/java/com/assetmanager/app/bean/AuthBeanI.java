@@ -2,6 +2,8 @@ package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.User;
 
+import javax.ejb.Remote;
+
 public interface AuthBeanI {
-    boolean authenticate(User user);
+    User authenticate(User user);
 }

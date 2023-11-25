@@ -1,12 +1,12 @@
-package com.assetmanager.app.bean;
+package com.assetmanager.app.dao;
 
-import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.database.MysqlDatabase;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public interface GenericBeanI<T> extends Serializable {
+public interface GenericDaoI<T> extends Serializable {
 
     List<T> list(Class<?> clazz);
 
@@ -16,11 +16,13 @@ public interface GenericBeanI<T> extends Serializable {
 
     void delete(T entity);
 
-    void deleteById(Class<?> clazz, Long id);
-
     default Optional<T> findById(String id) {
         return Optional.empty();
     }
 
+    void setDatabase(MysqlDatabase database);
+
+    MysqlDatabase getDatabase();
+    void deleteById(Class<?> clazz, Long id);
 
 }

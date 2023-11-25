@@ -1,4 +1,4 @@
-package com.assetmanager.servlet;
+package com.assetmanager.action;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,7 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 public class BaseAction extends HttpServlet {
     private static final Logger LOGGER = FileLogger.getLogger();
 
-    public void serializeForm(Object bean, Map<String, ?> requestMap) {
+    @SuppressWarnings("unchecked") public void serializeForm(Object bean, Map<String, ?> requestMap) {
         try {
             BeanUtilsBean beanUtilsBean = new BeanUtilsBean(new ConvertUtilsBean() {
                 @Override
