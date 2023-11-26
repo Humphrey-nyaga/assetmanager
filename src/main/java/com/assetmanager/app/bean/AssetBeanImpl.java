@@ -19,26 +19,9 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
 
     @EJB
     MysqlDatabase database;
-    @Override
-    public void delete(Asset assetToDelete) {
-        Optional<Asset> optionalAsset = findAssetById(assetToDelete.getSerialNumber());
 
-        if (optionalAsset.isPresent()) {
-            try {
-                Connection connection = database.getConnection();
-                String deleteAssetQuery = "DELETE FROM assets WHERE serial_id = ?;";
-
-                PreparedStatement preparedStatement = connection.prepareStatement(deleteAssetQuery);
-                preparedStatement.setString(1, assetToDelete.getSerialNumber());
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException("Error deleting asset with ID: " + assetToDelete.getSerialNumber(), e);
-            }
-        }
-    }
 
     public Optional<Asset> findAssetById(String id) {
-
 
         try {
             Connection connection = database.getConnection();
@@ -64,5 +47,28 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
         }
     }
 
+    // TODO Implement and observer for asset of type vehicle insertion to create a maintenance schedule.
+    public List<Asset> findAssetsByAssigneeID(String staffID) {
 
+        List<Asset> assets = new ArrayList<>();
+        try {
+            Connection connection = database.getConnection();
+            String findAssetByIdQuery = "SELECT * FROM assets WHERE staff_id = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(findAssetByIdQuery);
+            preparedStatement.setString(1, staffID);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                Asset asset = new Asset();
+                asset.setSerialNumber(rs.getString("serial_id"));
+                asset.setName(rs.getString("name"));
+                asset.setCategory(Category.valueOf(rs.getString("category")));
+                asset.setDescription(rs.getString("description"));
+                assets.add(asset);
+            }
+            return assets;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }

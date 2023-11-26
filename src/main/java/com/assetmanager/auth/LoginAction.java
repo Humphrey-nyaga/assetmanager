@@ -1,9 +1,9 @@
 package com.assetmanager.auth;
 
-import com.assetmanager.app.bean.AuthBean;
 import com.assetmanager.app.bean.AuthBeanI;
 import com.assetmanager.app.model.entity.User;
 import com.assetmanager.action.BaseAction;
+import com.assetmanager.app.model.entity.UserRole;
 import com.assetmanager.util.logger.FileLogger;
 import org.apache.commons.lang3.StringUtils;
 
@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -49,14 +47,12 @@ public class LoginAction extends BaseAction {
             HttpSession httpSession = servletRequest.getSession(true);
             httpSession.setAttribute("loggedInId", new Date().getTime() + "");
             httpSession.setAttribute("username", authenticatedUser.getUsername());
+            httpSession.setAttribute("role",authenticatedUser.getUserRole());
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String currentDate = LocalDate.now().format(formatter);
-            httpSession.setAttribute("currentDate", currentDate);
-
-            servletResponse.sendRedirect("./home");
-            LOGGER.info("User Logged In Sucessfully");
-
+            if (authenticatedUser.getUserRole() == UserRole.ADMIN)
+                servletResponse.sendRedirect("./home");
+            if (authenticatedUser.getUserRole() == UserRole.REGULAR)
+                servletResponse.sendRedirect("./asset");
         } else {
             servletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
 

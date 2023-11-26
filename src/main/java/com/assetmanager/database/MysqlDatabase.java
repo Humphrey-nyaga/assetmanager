@@ -4,6 +4,8 @@ import com.assetmanager.database.helper.DbColumn;
 import com.assetmanager.database.helper.DbTable;
 import com.assetmanager.database.helper.NotNull;
 import com.assetmanager.database.helper.PrimaryKey;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.reflections.Reflections;
 
 import javax.annotation.PostConstruct;
@@ -15,8 +17,10 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -131,8 +135,6 @@ public class MysqlDatabase {
                 values.append(prefix).append("?");
 
                 prefix = ", ";
-                System.out.println("Columns>>>>>>>" + columns);
-                System.out.println("Values>>>>>>>" + values);
 
 
             }
@@ -144,7 +146,7 @@ public class MysqlDatabase {
                     .append(") VALUES (")
                     .append(values)
                     .append(");");
-            System.out.println("insertQuery >>>>>>>>>>>>>>> " + insertQuery);
+            System.out.println("insertQuery >>>" + insertQuery);
 
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(insertQuery.toString());
@@ -164,7 +166,6 @@ public class MysqlDatabase {
                         preparedStatement.setObject(parameterIndex++, value);
                     }
                 }
-                System.out.println("FINAL SQL STATEMENT>>" + preparedStatement.toString());
                 preparedStatement.executeUpdate();
             } catch (SQLException | IllegalAccessException e) {
                 throw new RuntimeException("Error inserting data into the database", e);
@@ -174,62 +175,126 @@ public class MysqlDatabase {
         }
     }
 
-    public <T> List<T> select(Class<T> filter) {
-        try {
-            Class<?> clazz = filter;
-            System.out.println();
-            System.out.println("Clazz>>>>>>>>>>" + clazz.getName());
+    public <T> List<T> select(T entity) {
+        List<T> resultList = new ArrayList<>();
 
+        try {
+            Class<?> clazz = entity.getClass();
             if (!clazz.isAnnotationPresent(DbTable.class))
-                return new ArrayList<>();
+                return resultList;
 
             DbTable dbTable = clazz.getAnnotation(DbTable.class);
-            String stringBuilder = "SELECT * FROM " +
-                    dbTable.name() + ";";
-            Connection conn = connection;
-            PreparedStatement preparedStatement = conn.prepareStatement(stringBuilder);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            List<T> result = new ArrayList<>();
+            String tableAlias = dbTable.name().charAt(0) + "_e_";
+            System.out.println("table alias " + tableAlias);
 
-            while (resultSet.next()) {
-                T object = (T) clazz.getDeclaredConstructor().newInstance();
+            List<Field> fields = new ArrayList<>(Arrays.asList(clazz.getSuperclass().getDeclaredFields()));
+            fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
 
-                List<Field> fields = new ArrayList<>(Arrays.asList(filter.getSuperclass().getDeclaredFields()));
-                fields.addAll(Arrays.asList(filter.getDeclaredFields()));
+            StringBuilder columnBuilder = new StringBuilder();
+            StringBuilder paramPlaceHolderBuilder = new StringBuilder();
+            List<Object> whereParams = new ArrayList<>();
 
-                for (Field field : fields) {
-                    DbColumn dbColumn = field.getAnnotation(DbColumn.class);
-                    if (dbColumn != null) {
-                        String columnName = dbColumn.name();
+            for (Field field : fields) {
+                if (!field.isAnnotationPresent(DbColumn.class))
+                    continue;
 
-                        Object value = resultSet.getObject(columnName);
-                        /*Check dates and convert to Local date.
-                         * Specific date classes may need to be handled differently
-                         * */
-                        if (value instanceof java.sql.Date && field.getType() == LocalDate.class) {
-                            value = ((java.sql.Date) value).toLocalDate();
-                        }
-                        if (field.getType().isEnum() && value instanceof String) {
-                            value = Enum.valueOf((Class<Enum>) field.getType(), (String) value);
-                        }
-                        if (field.getType() == Long.class) {
-                            assert value instanceof Integer;
-                            value = Long.valueOf((Integer) value);
-                        }
+                DbColumn dbTableColumn = field.getAnnotation(DbColumn.class);
 
-                        field.setAccessible(true);
-                        field.set(object, value);
-                    }
+                columnBuilder.append(tableAlias).append(".").append(dbTableColumn.name()).append(",");
+
+                field.setAccessible(true);
+                if (field.get(entity) != null) {
+                    paramPlaceHolderBuilder
+                            .append(whereParams.isEmpty() ? "" : " and ")
+                            .append(tableAlias).append(".").append(dbTableColumn.name()).append("=?");
+                    whereParams.add(field.get(entity));
                 }
 
-                result.add(object);
             }
-            return result;
 
-        } catch (SQLException | InvocationTargetException | InstantiationException | IllegalAccessException |
-                 NoSuchMethodException ex) {
-            throw new RuntimeException(ex);
+            String queryBuilder =
+                    "select " +
+                            columnBuilder +
+                            " from " +
+                            dbTable.name() + " " + tableAlias;
+                           // (whereParams.isEmpty() && StringUtils.isBlank(paramPlaceHolderBuilder) ? "" : " where " + paramPlaceHolderBuilder);
+
+            String query = queryBuilder.replace(", from", " from");
+            System.out.println("Query: " + query);
+
+            PreparedStatement sqlStmt = connection.prepareStatement(query);
+
+//            int paramIdx = 1;
+//            for (Object whereParam : whereParams) {
+//
+//                if (whereParam.getClass().isAssignableFrom(BigDecimal.class)) {
+//                    sqlStmt.setBigDecimal(paramIdx++, (BigDecimal) whereParam);
+//                } else if (whereParam.getClass().isAssignableFrom(Long.class)) {
+//                    sqlStmt.setLong(paramIdx++, (long) whereParam);
+//                } else if (whereParam instanceof Enum<?> enumValue && whereParam.getClass().isEnum()) {
+//                    sqlStmt.setObject(paramIdx++, enumValue);
+//                } else if (whereParam instanceof Integer) {
+//                    sqlStmt.setInt(paramIdx++, (int) whereParam);
+//                } else if (whereParam instanceof java.sql.Date && whereParam.getClass().isAssignableFrom(LocalDate.class)) {
+//                    sqlStmt.setObject(paramIdx++, ((java.sql.Date) whereParam).toLocalDate());
+//                } else if (whereParam instanceof LocalDateTime) {
+//                    sqlStmt.setObject(paramIdx++, (LocalDateTime) whereParam);
+//                } else {
+//                    sqlStmt.setString(paramIdx++, (String) whereParam);
+//                }
+
+            ResultSet resultSet = sqlStmt.executeQuery();
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+            int resultSetMetaDataCnt = resultSetMetaData.getColumnCount();
+            System.out.println("resultSetMetaDataCnt = " + resultSetMetaDataCnt);
+
+            while (resultSet.next()) {
+                T bean = (T) entity.getClass().getDeclaredConstructor().newInstance();
+
+                for (int idx = 1; idx <= resultSetMetaDataCnt; idx++) {
+                    String colName = resultSetMetaData.getColumnName(idx);
+
+
+                    for (Field field : fields) {
+                        if (!field.isAnnotationPresent(DbColumn.class))
+                            continue;
+
+                        DbColumn dbTableColumn = field.getAnnotation(DbColumn.class);
+
+                        if (dbTableColumn.name().equals(colName)) {
+
+                            Object value = resultSet.getObject(idx);
+
+                            if (value instanceof java.sql.Date && field.getType() == LocalDate.class) {
+                                value = ((java.sql.Date) value).toLocalDate();
+                            }
+                            if (field.getType().isEnum()) {
+                                value = Enum.valueOf((Class<Enum>) field.getType(), (String) value);
+                            }
+                            if (field.getType() == Long.class) {
+                                assert value instanceof Integer;
+                                value = Long.valueOf((Integer) value);
+                            }
+
+                            field.setAccessible(true);
+                            BeanUtils.setProperty(bean, field.getName(), value);
+                            break;
+                        }
+                    }
+
+                }
+
+                resultList.add(bean);
+            }
+
+
+            return resultList;
+
+
+        } catch (SQLException | NoSuchMethodException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
+            throw new RuntimeException(e);
         }
     }
 

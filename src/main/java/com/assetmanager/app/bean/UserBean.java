@@ -37,9 +37,10 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
             try {
                 Connection conn = database.getConnection();
                 hashedPassword = passwordEncoder.encodePassword(user.getPassword());
-                PreparedStatement registerUserStmt = conn.prepareStatement("INSERT INTO users (username, password) VALUES (?,?);");
+                PreparedStatement registerUserStmt = conn.prepareStatement("INSERT INTO users (username, password,role) VALUES (?,?,?);");
                 registerUserStmt.setString(1, user.getUsername());
                 registerUserStmt.setString(2, hashedPassword);
+                registerUserStmt.setString(3, String.valueOf(user.getUserRole()));
                 registerUserStmt.execute();
                 System.out.println("User Registered Successfully");
                 return true;

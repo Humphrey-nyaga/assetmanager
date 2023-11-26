@@ -1,6 +1,7 @@
 package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.User;
+import com.assetmanager.app.model.entity.UserRole;
 import com.assetmanager.database.Database;
 import com.assetmanager.database.MysqlDatabase;
 import com.assetmanager.exceptions.UserPasswordEncodingException;
@@ -30,7 +31,7 @@ public class AuthBean implements AuthBeanI, Serializable {
         try {
             String hashedPassword = passwordEncoder.encodePassword(userToAuthenticate.getPassword());
             PreparedStatement pre = database.getConnection()
-                    .prepareStatement("select id,username,password from users where username=? and password=? limit 1");
+                    .prepareStatement("select id,username,role from users where username=? and password=? limit 1");
             pre.setString(1, userToAuthenticate.getUsername());
             pre.setString(2, hashedPassword);
 
@@ -41,6 +42,7 @@ public class AuthBean implements AuthBeanI, Serializable {
             if (result.next()) {
                 user.setId(result.getLong("id"));
                 user.setUsername(result.getString("username"));
+                user.setUserRole(UserRole.valueOf(result.getString("role")));
             }
 
             return user;

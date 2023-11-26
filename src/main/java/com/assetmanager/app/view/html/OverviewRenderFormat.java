@@ -21,13 +21,11 @@ public class  OverviewRenderFormat implements Serializable {
 
             Method[] methods = clazz.getDeclaredMethods();
             for (Method method : methods) {
-                System.out.println("Method>>>>>>>" + method.getName());
                 if (!method.isAnnotationPresent(SummaryHtmlCard.class))
                     continue;
                 method.setAccessible(true);
                 SummaryHtmlCard summaryHtml = method.getAnnotation(SummaryHtmlCard.class);
                 String label = summaryHtml.name();
-                System.out.println("Method Label>>>>>>>" + label);
 
                 Object result = method.invoke(instance, list);
 

@@ -9,6 +9,7 @@ import com.assetmanager.database.helper.DbTable;
 import com.assetmanager.database.helper.NotNull;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 @DbTable(name = "assignee")
 @HtmlForm(label = "Assignee", url = "./assignee")
@@ -60,6 +61,7 @@ public class Assignee extends BaseEntity implements Serializable {
 
 
 
+
     public String getStaffNumber() {
         return staffNumber;
     }
@@ -106,5 +108,17 @@ public class Assignee extends BaseEntity implements Serializable {
 
     public void setIdentificationNumber(String identificationNumber) {
         this.identificationNumber = identificationNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Assignee{" +
+                "staffNumber='" + staffNumber + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", identificationNumber='" + identificationNumber + '\'' +
+                '}';
     }
 }

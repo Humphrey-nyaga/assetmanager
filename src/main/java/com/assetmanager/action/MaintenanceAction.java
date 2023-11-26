@@ -1,9 +1,6 @@
 package com.assetmanager.action;
 
-import com.assetmanager.app.bean.MaintenanceBean;
 import com.assetmanager.app.bean.MaintenanceBeanI;
-import com.assetmanager.app.model.entity.Asset;
-import com.assetmanager.app.model.entity.AssetRequest;
 import com.assetmanager.app.model.entity.Maintenance;
 
 import javax.ejb.EJB;
@@ -21,7 +18,7 @@ public class MaintenanceAction extends BaseAction {
             throws ServletException, IOException {
 
         renderPage(servletRequest, servletResponse
-                            ,"./maintenance", Maintenance.class,maintenanceBean.list(Maintenance.class));
+                            ,"./maintenance", Maintenance.class,maintenanceBean.list(new Maintenance()));
 
     }
     public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)

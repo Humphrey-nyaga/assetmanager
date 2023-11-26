@@ -50,6 +50,7 @@ public class AssetRequest extends BaseEntity implements Serializable {
     }
 
     public AssetRequest(String staffId, String assetName, String description, LocalDate dateRequested, int quantity, RequestStatus requestStatus) {
+        super();
         this.staffId = staffId;
         this.assetName = assetName;
         this.description = description;
@@ -105,5 +106,17 @@ public class AssetRequest extends BaseEntity implements Serializable {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "AssetRequest{" +
+                "staffId='" + staffId + '\'' +
+                ", assetName='" + assetName + '\'' +
+                ", description='" + description + '\'' +
+                ", dateRequested=" + dateRequested +
+                ", quantity=" + quantity +
+                ", requestStatus=" + requestStatus +
+                '}';
     }
 }

@@ -98,6 +98,9 @@ public class AppInit implements ServletContextListener {
 //        ));
 //
 
+
+        System.out.println("++++++++Mail Bean++++++++++");
+
     }
 
     @Override

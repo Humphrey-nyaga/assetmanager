@@ -7,6 +7,7 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.assetmanager.app.model.entity.UserRole" %>
 <!doctype html>
 <html lang=en">
 <head>
@@ -23,6 +24,23 @@
 
     </style>
     <script>
+        $(document).ready(function () {
+            $(document).on("click", ".btn-success", function () {
+                console.log("Update button clicked!");
+
+                var tds = $(this).closest("tr").find("td:not(:last-child)");
+                $.each(tds, function (i, v) {
+                    var inputValue = $(v).text();
+                    var inputField = $($(".data-form input")[i]);
+
+                    console.log("Setting value for input field:", inputField.attr("name"), "with value:", inputValue);
+
+                    inputField.val(inputValue);
+                });
+            });
+        });
+
+
         function confirmDelete(deleteUrl) {
             $('#deleteConfirmationModal').modal('show');
 
@@ -34,7 +52,7 @@
             $('#deleteConfirmationModal').modal('hide');
             console.log("Delete url" + deleteUrl);
 
-            fetch(deleteUrl, { method: 'DELETE' })
+            fetch(deleteUrl, {method: 'DELETE'})
                 .then(response => {
                     if (response.status === 204) {
                         location.reload();
@@ -51,37 +69,38 @@
 <body>
 <jsp:useBean id="headerMenu" class="com.assetmanager.app.view.toolbars.Header"/>
 <jsp:setProperty name="headerMenu" property="activeUrl" value='${requestScope.activeUrl}'/>
+<%--<c:when test='${sessionScope.role eq UserRole.ADMIN}'>--%>
+    ${headerMenu.menu}
+    <h5> Welcome <c:out value="${sessionScope.username}"/></h5>
 
+    ${requestScope.content}
 
-${headerMenu.menu}
-<h5> Welcome <c:out value="${sessionScope.username}" /></h5>
-
-${requestScope.content}
-
-<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Delete</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete the Item? <br>
-                This action Cannot Be Reversed.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick=" proceedWithDelete() ">Delete</button>
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog"
+         aria-labelledby="deleteConfirmationModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Delete</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete the Item? <br>
+                    This action Cannot Be Reversed.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick=" proceedWithDelete() ">Delete</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous">
 
-</script>
+    </script>
+<%--</c:when>--%>
 </body>
 </html>

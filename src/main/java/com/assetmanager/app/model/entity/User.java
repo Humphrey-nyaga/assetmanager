@@ -18,6 +18,7 @@ public class User extends BaseEntity implements Serializable {
     @NotNull
     private String password;
     private String confirmPassword;
+    @DbColumn(name = "role")
     private UserRole userRole;
 
     public UserRole getUserRole() {
@@ -80,5 +81,12 @@ public class User extends BaseEntity implements Serializable {
         return Objects.hash(getUsername());
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", userRole=" + userRole +
+                '}';
+    }
 }

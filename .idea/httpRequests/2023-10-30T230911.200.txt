@@ -1,1 +1,0 @@
-<b>Hello from Http Servlet. This can only be called using a GET method</b>
