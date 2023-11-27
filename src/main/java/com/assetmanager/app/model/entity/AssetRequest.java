@@ -7,11 +7,13 @@ import com.assetmanager.app.view.html.TableColumnHeader;
 import com.assetmanager.database.helper.DbColumn;
 import com.assetmanager.database.helper.DbTable;
 import com.assetmanager.database.helper.NotNull;
+import com.assetmanager.util.idgenerator.IdPrefix;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 @DbTable(name = "asset_request")
+@IdPrefix(prefix = "ASR-")
 @HtmlForm(url = "./request", label = "Asset Request")
 @HtmlTable(name = "Asset Requests", label = "Asset Request", addUrl = "./request?action=add",url = "./request")
 public class AssetRequest extends BaseEntity implements Serializable {
@@ -21,8 +23,8 @@ public class AssetRequest extends BaseEntity implements Serializable {
     @TableColumnHeader(header = "Staff ID")
     @HtmlFormField(label = "Staff ID")
     private String staffId;
-    //@DbColumn(name = "asset_request_id")
-    //@NotNull
+    @DbColumn(name = "asset_request_id")
+    @NotNull
     @TableColumnHeader(header = "Request ID")
     private String assetRequestID;
     @DbColumn(name = "asset_name")

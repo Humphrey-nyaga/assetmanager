@@ -2,24 +2,30 @@ package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.Category;
-import com.assetmanager.database.Database;
 import com.assetmanager.database.MysqlDatabase;
-import com.assetmanager.util.logger.FileLogger;
+import com.assetmanager.util.idgenerator.GenericIDGenerator;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 @Stateless
 public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
 
     @EJB
     MysqlDatabase database;
+    @Inject
+    GenericIDGenerator generate;
 
+    @Override
+    public void create(Asset entity) {
+        entity.setSerialNumber(generate.generateId(entity));
+        getDao().create(entity);
+    }
 
     public Optional<Asset> findAssetById(String id) {
 

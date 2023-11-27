@@ -50,7 +50,10 @@ public class MailBean implements MailBeanI, Serializable {
         try {
             message.setFrom(new InternetAddress(from));
             InternetAddress[] address = {new InternetAddress(mail.getRecipient())};
+            InternetAddress[] replyToEmail = {new InternetAddress(from)};
+
             message.setRecipients(Message.RecipientType.TO, address);
+            message.setReplyTo(replyToEmail);
             message.setSubject(mail.getSubject());
             message.setSentDate(new Date());
             message.setContent(mail.getMessage(),"text/html; charset=utf-8");

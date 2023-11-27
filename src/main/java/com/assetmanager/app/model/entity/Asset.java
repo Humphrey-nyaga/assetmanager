@@ -11,18 +11,18 @@ import com.assetmanager.app.view.html.TableColumnHeader;
 import com.assetmanager.database.helper.DbColumn;
 import com.assetmanager.database.helper.DbTable;
 import com.assetmanager.database.helper.NotNull;
-
-import javax.persistence.Entity;
+import com.assetmanager.util.idgenerator.IdPrefix;
 
 @DbTable(name = "assets")
 @HtmlForm(label = "Asset", url = "./asset")
+@IdPrefix(prefix = "ASN00")
 @HtmlTable(name = "Asset Table", label = "Asset", addUrl = "./asset?action=add", url = "./asset")
 public class Asset extends BaseEntity implements Serializable {
 
     @DbColumn(name = "serial_id")
     @NotNull
     @TableColumnHeader(header = "Serial Number")
-    @HtmlFormField(label = "Serial Number", isRequired = true)
+    //@HtmlFormField(label = "Serial Number", isRequired = true)
     private String serialNumber;
     @DbColumn(name = "name")
     @NotNull
@@ -46,7 +46,7 @@ public class Asset extends BaseEntity implements Serializable {
     @TableColumnHeader(header = "Value")
     @HtmlFormField(label = "Purchase Value", isRequired = true)
     private BigDecimal purchaseValue;
-    @DbColumn(name = "staff_id")
+    //@DbColumn(name = "staff_id")
     @TableColumnHeader(header = "Assignee Staff ID")
     private String assigneeStaffID;
 
@@ -54,15 +54,16 @@ public class Asset extends BaseEntity implements Serializable {
     public Asset() {
     }
 
-    public Asset(String serialNumber, String name, String description, LocalDate dateAcquired, Category category,
+    public Asset(String name, String description, LocalDate dateAcquired, Category category,
                  BigDecimal purchaseValue) {
-        this.serialNumber = serialNumber;
         this.name = name;
         this.description = description;
         this.dateAcquired = dateAcquired;
         this.category = category;
         this.purchaseValue = purchaseValue;
     }
+
+
 
     public String getSerialNumber() {
         return serialNumber;

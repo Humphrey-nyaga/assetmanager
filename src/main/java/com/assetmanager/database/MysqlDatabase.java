@@ -109,7 +109,7 @@ public class MysqlDatabase {
             if (dbTable == null) {
                 throw new IllegalArgumentException("DbTable annotation is absent for the entity class");
             }
-
+            System.out.println("Object>>>>>>>>" + entity.toString());
             String tableName = dbTable.name();
 
             StringBuilder columns = new StringBuilder();
