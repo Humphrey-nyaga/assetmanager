@@ -1,5 +1,8 @@
 package com.assetmanager.app.bean;
 
+import com.assetmanager.app.mail.bean.MailBeanI;
+import com.assetmanager.app.mail.model.Mail;
+import com.assetmanager.app.mail.utility.MailFormatter;
 import com.assetmanager.app.model.entity.User;
 import com.assetmanager.exceptions.InvalidEmailFormatException;
 import com.assetmanager.exceptions.UserAlreadyExistsException;
@@ -24,6 +27,10 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
     PasswordEncoderI passwordEncoder;
     @Inject
     EmailValidator emailValidator;
+    @Inject
+    MailBeanI mailBean;
+    @Inject
+    MailFormatter mailFormat;
 
     @Override
     public Boolean registerUser(User user) {
@@ -39,7 +46,28 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
 
             if (user.getPassword().equals(user.getConfirmPassword())) {
                 user.setPassword(passwordEncoder.encodePassword(user.getPassword()));
+
                 getDao().create(user);
+
+                String subject = "RE: Account Creation Confirmation" ;
+                String message = "Dear " + user.getUsername() + ", <br>" +
+                        "Thank you for registering with us 🎉. <br> Your account has been created in the Asset Management System." +
+                        "<br> Your username is: <b>" + user.getUsername() +
+                        "</b>.<br> Kindly use it to login. <br>" +
+                        "<br>" +
+                        "Kind Regards, <br> Asset Management Team <br> ✨";
+
+                String templateContent = mailFormat.emailTemplate();
+                String fomattedMessage = templateContent.replace("%body%", message);
+
+                System.out.println("Mail Content " + fomattedMessage);
+
+                Mail mail = new Mail();
+                mail.setRecipient(user.getEmail());
+                mail.setSubject(subject);
+                mail.setMessage(fomattedMessage);
+                mailBean.sendMail(mail);
+                System.out.println("Mail Set Successfully");
                 return true;
 
             }
@@ -50,7 +78,6 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
         } catch (InvalidEmailFormatException ex) {
             System.out.println("Email Verification Error: " + ex.getMessage());
         }
-        System.out.println("User Registration failed");
         return false;
     }
 
