@@ -10,11 +10,14 @@ import com.assetmanager.database.helper.DbTable;
 import com.assetmanager.database.helper.PrimaryKey;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 
 import java.util.List;
 
 public abstract class GenericBean<T> implements GenericBeanI<T> {
-    private final GenericDaoI<T> genericDao = new GenericDao<>();
+
+    @Inject
+    private GenericDaoI<T> genericDao;
     @EJB
     MysqlDatabase database;
 

@@ -11,6 +11,7 @@ import com.assetmanager.util.security.PasswordEncoderI;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ import java.sql.SQLException;
 @Stateless
 @Remote
 public class AuthBean implements AuthBeanI, Serializable {
-    @EJB
+    @Inject
     PasswordEncoderI passwordEncoder;
     @EJB
     MysqlDatabase database;

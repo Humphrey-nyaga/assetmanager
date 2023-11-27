@@ -9,8 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
-@Remote
-@Stateless
+
 public class PasswordEncoder implements PasswordEncoderI {
     private final org.springframework.security.crypto.password.PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 

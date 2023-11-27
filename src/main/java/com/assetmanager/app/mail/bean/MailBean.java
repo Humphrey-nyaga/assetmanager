@@ -46,7 +46,6 @@ public class MailBean implements MailBeanI, Serializable {
     @Override
     public void sendMail(Mail mail) {
 
-        System.out.println("============================Mail Has Been Reached for sending ========= " );;
         MimeMessage message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(from));
@@ -54,9 +53,8 @@ public class MailBean implements MailBeanI, Serializable {
             message.setRecipients(Message.RecipientType.TO, address);
             message.setSubject(mail.getSubject());
             message.setSentDate(new Date());
-            message.setText(mail.getMessage());
+            message.setContent(mail.getMessage(),"text/html; charset=utf-8");
             Transport.send(message);
-            System.out.println("===========Messaage Sent====================");
         } catch (MessagingException ex) {
             ex.printStackTrace();
             throw new RuntimeException(ex);

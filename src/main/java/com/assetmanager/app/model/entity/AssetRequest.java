@@ -21,6 +21,10 @@ public class AssetRequest extends BaseEntity implements Serializable {
     @TableColumnHeader(header = "Staff ID")
     @HtmlFormField(label = "Staff ID")
     private String staffId;
+    //@DbColumn(name = "asset_request_id")
+    //@NotNull
+    @TableColumnHeader(header = "Request ID")
+    private String assetRequestID;
     @DbColumn(name = "asset_name")
     @NotNull
     @TableColumnHeader(header = "Asset")
@@ -57,6 +61,14 @@ public class AssetRequest extends BaseEntity implements Serializable {
         this.dateRequested = dateRequested;
         this.quantity = quantity;
         this.requestStatus = requestStatus;
+    }
+
+    public String getAssetRequestID() {
+        return assetRequestID;
+    }
+
+    public void setAssetRequestID(String assetRequestID) {
+        this.assetRequestID = assetRequestID;
     }
 
     public String getStaffId() {
