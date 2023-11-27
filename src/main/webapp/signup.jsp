@@ -48,7 +48,11 @@
 
                                         <div class="mb-3">
                                             <h2 class="fw-bold mb-2 text-uppercase">SIGN UP</h2>
-
+                                            <div class="form-group">
+                                                <label class="mb-2" for="email">Email</label>
+                                                <input name="email" id="email" class="form-control"
+                                                       placeholder="Enter Email"/>
+                                            </div>
                                             <div class="form-group">
                                                 <label class="mb-2" for="username">Username</label>
                                                 <input name="username" id="username" class="form-control"

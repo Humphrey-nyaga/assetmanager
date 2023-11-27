@@ -1,8 +1,10 @@
 package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.User;
+import com.assetmanager.exceptions.InvalidEmailFormatException;
 import com.assetmanager.exceptions.UserAlreadyExistsException;
 import com.assetmanager.exceptions.UserPasswordEncodingException;
+import com.assetmanager.util.EmailValidator;
 import com.assetmanager.util.security.PasswordEncoderI;
 
 
@@ -20,12 +22,20 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
 
     @Inject
     PasswordEncoderI passwordEncoder;
+    @Inject
+    EmailValidator emailValidator;
 
     @Override
     public Boolean registerUser(User user) {
         try {
             if (findUserByUsername(user.getUsername()).isPresent())
-                throw new UserAlreadyExistsException("User with username " + user.getUsername() + " already exists.");
+                throw new UserAlreadyExistsException("Failed!!. User with username " + user.getUsername() + " already exists.");
+
+            if (findUserByEmail(user.getEmail()).isPresent())
+                throw new UserAlreadyExistsException("Failed!!. User with email " + user.getEmail() + " already exists.");
+
+            if (!emailValidator.isValidEmail(user.getEmail()))
+                throw new InvalidEmailFormatException("Failed!!. Invalid Email Format");
 
             if (user.getPassword().equals(user.getConfirmPassword())) {
                 user.setPassword(passwordEncoder.encodePassword(user.getPassword()));
@@ -36,7 +46,9 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
         } catch (NoSuchAlgorithmException e) {
             throw new UserPasswordEncodingException("Password encoding algorithm failed: " + e.getMessage());
         } catch (UserAlreadyExistsException e) {
-            System.out.println("User Registration Error " +e.getMessage());
+            System.out.println("User Registration Error " + e.getMessage());
+        } catch (InvalidEmailFormatException ex) {
+            System.out.println("Email Verification Error: " + ex.getMessage());
         }
         System.out.println("User Registration failed");
         return false;
@@ -46,6 +58,13 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
     public Optional<User> findUserByUsername(String username) {
         List<User> users = list(new User());
         return users.stream().filter(user -> user.getUsername().equals(username))
+                .findFirst();
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) {
+        List<User> users = list(new User());
+        return users.stream().filter(user -> user.getEmail().equals(email))
                 .findFirst();
     }
 
