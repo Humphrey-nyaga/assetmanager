@@ -44,29 +44,29 @@ public class AppInit implements ServletContextListener {
 
 
 ////////        LOGGER.info("*************** Creating Default Assets *************");
-//        assetBean.create(new Asset("001", "Laptop", "Dell Laptop", LocalDate.of(2022, 5, 10), Category.ELECTRONICS,
+//        assetBean.create(new Asset( "Laptop", "Dell Laptop", LocalDate.of(2022, 5, 10), Category.ELECTRONICS,
 //                new BigDecimal("99999.99")));
-//        assetBean.create(new Asset("002", "Software License", "Microsoft Office", LocalDate.of(2021, 8, 15), Category.SOFTWARE,
+//        assetBean.create(new Asset( "Software License", "Microsoft Office", LocalDate.of(2021, 8, 15), Category.SOFTWARE,
 //                new BigDecimal("14999.99")));
-//        assetBean.create(new Asset("003", "Server", "HP ProLiant Server", LocalDate.of(2021, 12, 5), Category.ELECTRONICS,
+//        assetBean.create(new Asset( "Server", "HP ProLiant Server", LocalDate.of(2021, 12, 5), Category.ELECTRONICS,
 //                new BigDecimal("25000.00")));
-//        assetBean.create(new Asset("004", "Operating System", "Windows 10", LocalDate.of(2020, 3, 2), Category.SOFTWARE,
+//        assetBean.create(new Asset( "Operating System", "Windows 10", LocalDate.of(2020, 3, 2), Category.SOFTWARE,
 //                new BigDecimal("11000.50")));
-//        assetBean.create(new Asset("005", "Digital Artwork", "Abstract Painting", LocalDate.of(2023, 2, 18),
+//        assetBean.create(new Asset("Digital Artwork", "Abstract Painting", LocalDate.of(2023, 2, 18),
 //                Category.DIGITAL, new BigDecimal("3999.99")));
-////
+
 ////        /*Create some default assignees*/
-//        assigneeBean.create(new Assignee("SN001", "Hans", "Schmidt", "hans@gmail.com",
+//        assigneeBean.create(new Assignee("SN001", "Hans", "Schmidt", "hans@example0.com",
 //                LocalDate.of(1985, 5, 15), "DE123456789"));
 //
-//        assigneeBean.create(new Assignee( "SN002", "Henry", "Müller", "henry@gmail.com",
+//        assigneeBean.create(new Assignee( "SN002", "Henry", "Müller", "henry@example0.com",
 //                LocalDate.of(1990, 8, 22), "DE987654321"));
-//        assigneeBean.create(new Assignee( "SN003", "Pablo", "Kevo", "kevo@gmail.com",
+//        assigneeBean.create(new Assignee( "SN003", "Pablo", "Kevo", "kevo@example.com",
 //                LocalDate.of(1982, 11, 7), "ES876543210"));
 //
 ////
-//        assetRequestBean.create(new AssetRequest( "SN001", "MacBook M1", "M2 2022 Grey", LocalDate.now(), 2, RequestStatusEnum.PENDING));
-//        assetRequestBean.create(new AssetRequest( "SN002", "MacBook M2", "M2 2021 Silver", LocalDate.now(), 1, RequestStatusEnum.APPROVED));
+//        assetRequestBean.create(new AssetRequest( "SN001", "MacBook M1", "M2 2022 Grey", LocalDate.now(), 2, RequestStatus.PENDING));
+//        assetRequestBean.create(new AssetRequest( "SN002", "MacBook M2", "M2 2021 Silver", LocalDate.now(), 1, RequestStatus.APPROVED));
 //
 //        assetRequestBean.create(new AssetRequest(
 //                "SN003",
@@ -74,7 +74,7 @@ public class AppInit implements ServletContextListener {
 //                "EliteBook Intel Core i7.",
 //                LocalDate.now(),
 //                2,
-//                RequestStatusEnum.PENDING
+//                RequestStatus.PENDING
 //        ));
 //
 //        assetRequestBean.create(new AssetRequest(
@@ -84,7 +84,7 @@ public class AppInit implements ServletContextListener {
 //                "HP Spectre x360, Intel Core i5",
 //                LocalDate.now(),
 //                1,
-//                RequestStatusEnum.REJECTED
+//                RequestStatus.REJECTED
 //        ));
 //
 //        assetRequestBean.create(new AssetRequest(
@@ -94,9 +94,9 @@ public class AppInit implements ServletContextListener {
 //                "Ford F-150 Pickup.",
 //                LocalDate.now(),
 //                1,
-//                RequestStatusEnum.APPROVED
+//                RequestStatus.APPROVED
 //        ));
-//
+
 
     }
 

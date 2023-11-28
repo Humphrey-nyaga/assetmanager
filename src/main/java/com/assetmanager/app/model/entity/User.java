@@ -9,8 +9,11 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @HtmlTable(name = "Users")
-@DbTable(name="users")
+@DbTable(name = "users")
 public class User extends BaseEntity implements Serializable {
+    @DbColumn(name = "email")
+    @NotNull
+    private String email;
     @DbColumn(name = "username")
     @NotNull
     private String username;
@@ -18,6 +21,9 @@ public class User extends BaseEntity implements Serializable {
     @NotNull
     private String password;
     private String confirmPassword;
+    @DbColumn(name = "isActive", definition = "BOOLEAN")
+    private boolean isActive;
+    @DbColumn(name = "role")
     private UserRole userRole;
 
     public UserRole getUserRole() {
@@ -37,7 +43,7 @@ public class User extends BaseEntity implements Serializable {
         this.confirmPassword = confirmPassword;
     }
 
-    public User(String username, String password){
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -75,10 +81,32 @@ public class User extends BaseEntity implements Serializable {
         return Objects.equals(getUsername(), user.getUsername());
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(getUsername());
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", userRole=" + userRole +
+                '}';
+    }
 }

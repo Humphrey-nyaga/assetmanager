@@ -30,7 +30,7 @@ public class HtmlComponent implements Serializable {
                 .append("<div class=\"btn-toolbar\"><a href=\"" + htmlTableLabel.addUrl() + "\"><button class=\"btn btn-primary rounded-2\">Add " + htmlTableLabel.label() + "</button></a></div>\n")
                 .append("<div class=\"\">\n")
                 .append("<div style=\"max-height: 60vh; overflow: auto;\">\n")
-                .append("<table class=\"table table-bordered border-4 table-striped table-responsive-sm \">\n")
+                .append("<table class=\" table table-bordered border-4 table-striped table-responsive-sm \">\n")
                 .append("<thead class=\"table-success\">\n")
                 .append("<tr>\n");
 
@@ -107,7 +107,7 @@ public class HtmlComponent implements Serializable {
                 " <div class=\"asset-container mx-auto\" style=\"\">\n" +
                 " <form method=" + htmlForm.httpMethod() +
                 " action= " + htmlForm.url() + " ");
-        htmlFormBuilder.append("class=\"border border-4\">\n" +
+        htmlFormBuilder.append("class=\" data-form border border-4\">\n" +
                 " <h4 class=\"text-center mb-0 mt-0\">" +
                 "Create New " + htmlForm.label() + "</h4>");
 
@@ -129,7 +129,7 @@ public class HtmlComponent implements Serializable {
             if (field.getType().isEnum()) {
                 htmlFormBuilder.append("<div class=\"mb-1 mt-0 p-2\">\n" +
                                 " <label for=\" " + fieldName + "\" class=\"form-label\">" + label + "</label>\n")
-                        .append("<select class=\"form-select form-select-sm\" id=\"" + fieldName + "\" name=\"category\">\n");
+                        .append("<select class=\"form-select form-select-sm\" id=\"" + fieldName + "\" name=\""+ fieldName + "\">\n");
 
                 Class<?> enumClass = field.getType();
                 for (Object enumConstant : enumClass.getEnumConstants()) {

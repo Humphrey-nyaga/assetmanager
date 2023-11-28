@@ -1,7 +1,7 @@
 package com.assetmanager.action;
 
-import com.assetmanager.app.bean.AssigneeBean;
 import com.assetmanager.app.bean.AssigneeBeanI;
+import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.Assignee;
 
 import javax.ejb.EJB;
@@ -20,7 +20,7 @@ public class AssigneeAction extends BaseAction {
             throws ServletException, IOException {
 
         renderPage(servletRequest, servletResponse,
-                "./assignee", Assignee.class, assigneeBean.list(Assignee.class));
+                "./assignee", Assignee.class, assigneeBean.list(new Assignee()));
 
     }
 

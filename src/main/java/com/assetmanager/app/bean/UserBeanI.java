@@ -2,9 +2,11 @@ package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.User;
 
-import javax.ejb.Remote;
+import java.util.Optional;
 
 public interface UserBeanI extends GenericBeanI<User> {
     Boolean registerUser(User user);
-    User findUserByUsername();
+    Optional<User> findUserByUsername(String username);
+
+    Optional<User> findUserByEmail(String email);
 }

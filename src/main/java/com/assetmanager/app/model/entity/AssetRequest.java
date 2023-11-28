@@ -7,11 +7,13 @@ import com.assetmanager.app.view.html.TableColumnHeader;
 import com.assetmanager.database.helper.DbColumn;
 import com.assetmanager.database.helper.DbTable;
 import com.assetmanager.database.helper.NotNull;
+import com.assetmanager.util.idgenerator.IdPrefix;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 @DbTable(name = "asset_request")
+@IdPrefix(prefix = "ASR-")
 @HtmlForm(url = "./request", label = "Asset Request")
 @HtmlTable(name = "Asset Requests", label = "Asset Request", addUrl = "./request?action=add",url = "./request")
 public class AssetRequest extends BaseEntity implements Serializable {
@@ -21,6 +23,10 @@ public class AssetRequest extends BaseEntity implements Serializable {
     @TableColumnHeader(header = "Staff ID")
     @HtmlFormField(label = "Staff ID")
     private String staffId;
+    @DbColumn(name = "asset_request_id")
+    @NotNull
+    @TableColumnHeader(header = "Request ID")
+    private String assetRequestID;
     @DbColumn(name = "asset_name")
     @NotNull
     @TableColumnHeader(header = "Asset")
@@ -50,12 +56,21 @@ public class AssetRequest extends BaseEntity implements Serializable {
     }
 
     public AssetRequest(String staffId, String assetName, String description, LocalDate dateRequested, int quantity, RequestStatus requestStatus) {
+        super();
         this.staffId = staffId;
         this.assetName = assetName;
         this.description = description;
         this.dateRequested = dateRequested;
         this.quantity = quantity;
         this.requestStatus = requestStatus;
+    }
+
+    public String getAssetRequestID() {
+        return assetRequestID;
+    }
+
+    public void setAssetRequestID(String assetRequestID) {
+        this.assetRequestID = assetRequestID;
     }
 
     public String getStaffId() {
@@ -105,5 +120,17 @@ public class AssetRequest extends BaseEntity implements Serializable {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "AssetRequest{" +
+                "staffId='" + staffId + '\'' +
+                ", assetName='" + assetName + '\'' +
+                ", description='" + description + '\'' +
+                ", dateRequested=" + dateRequested +
+                ", quantity=" + quantity +
+                ", requestStatus=" + requestStatus +
+                '}';
     }
 }

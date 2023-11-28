@@ -1,6 +1,5 @@
 package com.assetmanager.action;
 
-import com.assetmanager.app.bean.UserBean;
 import com.assetmanager.app.bean.UserBeanI;
 import com.assetmanager.app.model.entity.User;
 import com.assetmanager.app.model.entity.UserRole;
@@ -29,8 +28,8 @@ public class SignUpAction extends BaseAction {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User registerUser = new User();
+        registerUser.setUserRole(UserRole.ADMIN);
         serializeForm(registerUser, req.getParameterMap());
-        registerUser.setUserRole(UserRole.REGULAR);
 
         if (userBean.registerUser(registerUser))
             resp.sendRedirect("./");

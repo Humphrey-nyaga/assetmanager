@@ -4,9 +4,6 @@ import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.Category;
 import com.assetmanager.app.view.html.SummaryHtmlCard;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.Remote;
-import javax.ejb.Stateless;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;

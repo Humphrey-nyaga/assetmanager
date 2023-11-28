@@ -23,9 +23,9 @@ public class BaseEntity implements Serializable {
         this.id = id;
     }
 
-    @DbColumn(name = "created_at" ,definition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
+    //@DbColumn(name = "created_at" ,definition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
-    @DbColumn(name = "modified_at",definition = "DATETIME ON UPDATE CURRENT_TIMESTAMP")
+    //@DbColumn(name = "modified_at",definition = "DATETIME ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime lastModifiedAt;
 
     public LocalDateTime getCreatedAt() {

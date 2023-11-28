@@ -7,8 +7,8 @@ import java.util.List;
 public class GenericDao<T> implements GenericDaoI<T>  {
     private MysqlDatabase database;
     @Override
-    public List<T> list(Class<?> clazz) {
-        return (List<T>) database.select(clazz);
+    public List<T> list(Object entity) {
+        return (List<T>) database.select(entity);
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface GenericDaoI<T> extends Serializable {
 
-    List<T> list(Class<?> clazz);
+    List<T> list(Object entity);
 
     void create(T entity);
 
