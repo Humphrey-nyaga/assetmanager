@@ -46,7 +46,7 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
                                 "The status will be communicated soon <br> ").
                         append("<br> Kind Regards, <br> Humphrey G, <br> Managing Director ASM ");
 
-                String htmlContent = mailFormatter.EmailTemplate();
+                String htmlContent = mailFormatter.emailTemplate();
                 String fomattedMessage = htmlContent.replace("%body%", message.toString());
 
                 System.out.println("Mail Content " + fomattedMessage);

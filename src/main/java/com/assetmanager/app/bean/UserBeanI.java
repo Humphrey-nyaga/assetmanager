@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface UserBeanI extends GenericBeanI<User> {
     Boolean registerUser(User user);
     Optional<User> findUserByUsername(String username);
+
+    Optional<User> findUserByEmail(String email);
 }

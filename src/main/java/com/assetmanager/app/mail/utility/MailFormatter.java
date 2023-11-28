@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 public class MailFormatter {
-    public String EmailTemplate() {
+    public String emailTemplate() {
         try {
             String HTML_FILE_PATH = "/home/hum/projects/j2ee/assetmanager/src/main/java/com/assetmanager/app/mail/templates/index.html";
 
