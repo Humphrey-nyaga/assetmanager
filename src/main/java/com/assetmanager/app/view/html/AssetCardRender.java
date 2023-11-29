@@ -6,11 +6,11 @@ import org.reflections.Reflections;
 import java.util.List;
 
 public class AssetCardRender {
-    public String renderAssetCards() {
+    public static String renderAssetCards() {
 
         StringBuilder cardHtml = new StringBuilder()
-                .append("<div class=\"container\">\n" +
-                        "<div class=\"row\">");
+                .append(
+                        "<div class=\"d-grid gap-2 d-md-block\">\n");
 
         Reflections reflections = new Reflections("com.assetmanager.app.model");
         List<Class<?>> entities = reflections.getTypesAnnotatedWith(AssetCreationCard.class)
@@ -21,19 +21,11 @@ public class AssetCardRender {
             String url = assetCreationCard.addUrl();
             String label = assetCreationCard.label();
 
-            cardHtml.append("<div class=\"col-md-4\">\n" +
-                    " <div class=\"card text-center\">\n" +
-                    " <div class=\"card-body\">\n" +
-                    "<h5 class=\"card-title\">Add ").append(label).append(" </h5>\n" +
-                    "<p class=\"card-text\">").append(url).append("</p>\n" +
-                    " <a href=\"#\" class=\"btn btn-primary\">View Report</a>\n" +
-                    " </div>\n" +
-                    " </div>\n" +
-                    " </div>");
+            cardHtml.append(
+                    "    <a href=\"" + url + "\" class=\"btn btn-primary rounded-2\">Add " + label + "</a>"
+                    );
         }
-        cardHtml.append("</div>\n" +
-                "\n" +
-                "</div>");
+        cardHtml.append("</div>\n");
 
         return cardHtml.toString();
     }
