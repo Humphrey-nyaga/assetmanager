@@ -55,8 +55,6 @@ public abstract class GenericBean<T> implements GenericBeanI<T> {
         genericDao.deleteById(clazz, id);
     }
 
-    ;
-
 
 }
 

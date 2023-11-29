@@ -21,6 +21,11 @@ public class Assignee extends BaseEntity implements Serializable {
     @TableColumnHeader(header = "Staff Number")
     @HtmlFormField(label = "Staff Number")
     private String staffNumber;
+    @DbColumn(name = "employee_type")
+    @NotNull
+    @TableColumnHeader(header = "Employee Type")
+    @HtmlFormField(label = "Employee Type")
+    private AssigneeType employeeType;
     @DbColumn(name = "firstname")
     @NotNull
     @TableColumnHeader(header = "First Name")
@@ -50,13 +55,14 @@ public class Assignee extends BaseEntity implements Serializable {
     public Assignee() {
     }
 
-    public Assignee(String staffNumber, String firstName, String lastName, String email, LocalDate dateOfBirth, String identificationNumber) {
+    public Assignee(String staffNumber, String firstName, String lastName, String email, LocalDate dateOfBirth, String identificationNumber, AssigneeType employeeType) {
         this.staffNumber = staffNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.identificationNumber = identificationNumber;
+        this.employeeType = employeeType;
     }
 
 
@@ -108,6 +114,14 @@ public class Assignee extends BaseEntity implements Serializable {
 
     public void setIdentificationNumber(String identificationNumber) {
         this.identificationNumber = identificationNumber;
+    }
+
+    public AssigneeType getEmployeeType() {
+        return employeeType;
+    }
+
+    public void setEmployeeType(AssigneeType employeeType) {
+        this.employeeType = employeeType;
     }
 
     @Override

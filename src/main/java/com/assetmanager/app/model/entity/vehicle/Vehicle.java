@@ -1,11 +1,13 @@
 package com.assetmanager.app.model.entity.vehicle;
 
 import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.app.view.html.AssetCreationCard;
 import com.assetmanager.database.helper.DbColumn;
 import com.assetmanager.database.helper.DbTable;
 import com.assetmanager.database.helper.NotNull;
 
 @DbTable(name = "vehicles")
+@AssetCreationCard(label = "Vehicle",addUrl = "./vehicle?action=add")
 public class Vehicle extends Asset {
 
     @DbColumn(name = "car_type")
