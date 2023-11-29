@@ -13,6 +13,7 @@ import com.assetmanager.app.service.RequestsService;
 import com.assetmanager.app.view.html.OverviewRenderFormat;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,6 +34,8 @@ public class HomeAction extends BaseAction {
 
     @EJB
     AssigneeBeanI assigneeBean;
+    @Inject
+    OverviewRenderFormat summaryRender;
 
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
@@ -40,22 +43,13 @@ public class HomeAction extends BaseAction {
         HttpSession session = servletRequest.getSession();
         UserRole userRole = (UserRole) session.getAttribute("role");
 
+
         switch (userRole) {
             case ADMIN:
-                String assetsSummary = OverviewRenderFormat.generateHtml(AssetsValuation.class, assetBean.list(new Asset()));
-                String assetRequestsSummary = OverviewRenderFormat.generateHtml(RequestsService.class, assetRequestBean.list(new AssetRequest()));
-                String assigneesSummary = OverviewRenderFormat.generateHtml(AssigneeService.class, assigneeBean.list(new Assignee()));
-
-                StringBuilder stringBuilder = new StringBuilder()
-                        .append(assetsSummary)
-                        .append(assetRequestsSummary)
-                        .append(assigneesSummary);
-                String summary = stringBuilder.toString();
+                String summary = getSummary();
 
                 servletRequest.setAttribute("content", summary);
 
-//        renderPageWithoutTables(servletRequest, servletResponse, summary
-//                , "./home");
                 RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("./app/home.jsp");
                 requestDispatcher.forward(servletRequest, servletResponse);
                 break;
@@ -64,6 +58,17 @@ public class HomeAction extends BaseAction {
                 req.forward(servletRequest, servletResponse);
 
         }
+    }
+
+    private String getSummary() {
+        String assetsSummary = summaryRender.generateHtml(AssetsValuation.class, assetBean.list(new Asset()));
+        String assetRequestsSummary = summaryRender.generateHtml(RequestsService.class, assetRequestBean.list(new AssetRequest()));
+        String assigneesSummary = summaryRender.generateHtml(AssigneeService.class, assigneeBean.list(new Assignee()));
+
+        String summary = assetsSummary +
+                assetRequestsSummary +
+                assigneesSummary;
+        return summary;
     }
 
 

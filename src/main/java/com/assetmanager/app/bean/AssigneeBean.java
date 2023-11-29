@@ -2,6 +2,7 @@ package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.Assignee;
 
+import com.assetmanager.app.model.entity.AssigneeType;
 import com.assetmanager.database.MysqlDatabase;
 import com.assetmanager.exceptions.AssigneeDoesNotExistException;
 
@@ -39,10 +40,11 @@ public class AssigneeBean extends GenericBean<Assignee> implements AssigneeBeanI
                 String firstName = resultSet.getString("firstname");
                 String lastName = resultSet.getString("lastname");
                 String email = resultSet.getString("email");
+                AssigneeType employeeType = AssigneeType.valueOf(resultSet.getString("employee_type"));
                 LocalDate dateOfBirth = resultSet.getDate("date_of_birth").toLocalDate();
                 String identificationNumber = resultSet.getString("national_id");
 
-                Assignee assignee = new Assignee(staffNumber, firstName, lastName, email, dateOfBirth, identificationNumber);
+                Assignee assignee = new Assignee(staffNumber, firstName, lastName, email, dateOfBirth, identificationNumber,employeeType);
                 return Optional.of(assignee);
 
             } else {

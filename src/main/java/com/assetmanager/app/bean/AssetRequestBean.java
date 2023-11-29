@@ -5,6 +5,9 @@ import com.assetmanager.app.mail.model.Mail;
 import com.assetmanager.app.mail.utility.MailFormatter;
 import com.assetmanager.app.model.entity.AssetRequest;
 import com.assetmanager.app.model.entity.Assignee;
+import com.assetmanager.util.SerialIDGenerator.EntityType;
+import com.assetmanager.util.SerialIDGenerator.SerialID;
+import com.assetmanager.util.SerialIDGenerator.SerialIDGenerator;
 import com.assetmanager.util.idgenerator.GenericIDGenerator;
 
 import javax.ejb.EJB;
@@ -25,11 +28,16 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
     @Inject
     GenericIDGenerator assetRequestId;
 
+//    @Inject
+//    @SerialID
+//    private SerialIDGenerator assigneeIDGen;
+
     @Override
     public void create(AssetRequest entity) {
         try {
             Optional<Assignee> assignee = assigneeBean.getAssigneeByStaffId(entity.getStaffId());
             StringBuilder message = new StringBuilder();
+
             if (assignee.isPresent()) {
                 entity.setAssetRequestID(assetRequestId.generateId(entity));
 

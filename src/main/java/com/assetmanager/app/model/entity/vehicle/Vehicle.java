@@ -1,65 +1,62 @@
 package com.assetmanager.app.model.entity.vehicle;
 
 import com.assetmanager.app.model.entity.Asset;
-import com.assetmanager.database.helper.DbColumn;
-import com.assetmanager.database.helper.DbTable;
-import com.assetmanager.database.helper.NotNull;
+import com.assetmanager.app.view.html.AssetCreationCard;
 
-@DbTable(name = "vehicles")
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "vehicle",
+        indexes = {
+                @Index(name = "idx_number_plate", columnList = "number_plate"),
+                @Index(name = "idx_manufacturer", columnList = "manufacturer"),
+                @Index(name = "idx_vehicle_type_transmission", columnList = "vehicle_type, transmission")
+        }
+)
+@AssetCreationCard(label = "Vehicle",addUrl = "./vehicle?action=add")
 public class Vehicle extends Asset {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "vehicle_type",nullable = false)
+    private VehicleType vehicleType;
 
-    @DbColumn(name = "car_type")
-    @NotNull
-    private String carType;
-
-    @DbColumn(name = "cc")
+    @Column(name = "cc",nullable = false)
     @NotNull
     private int cc;
 
-    @DbColumn(name = "engine_type")
+    @Column(name = "engine_type",nullable = false)
     private EngineType engineType;
 
-    @DbColumn(name = "model")
+    @Column(name = "model",nullable = false)
     @NotNull
     private String model;
 
-    @DbColumn(name = "year")
+    @Column(name = "year",nullable = false)
     @NotNull
     private int year;
 
-    @DbColumn(name = "manufacturer")
+    @Column(name = "manufacturer",nullable = false)
     @NotNull
     private String manufacturer;
 
-    @DbColumn(name = "color")
+    @Column(name = "color",nullable = false)
     private String color;
 
-    @DbColumn(name = "transmission")
+    @Column(name = "transmission",nullable = false)
     private Transmission transmission;
 
-    @DbColumn(name = "fuel_type")
-    private FuelType fuelType;
-
-    @DbColumn(name = "number_plate")
+    @Column(name = "number_plate",nullable = false)
     @NotNull
     private String numberPlate;
 
-    @DbColumn(name = "chassis_number")
+    @Column(name = "chassis_number")
     @NotNull
     private String chassisNumber;
 
-    @DbColumn(name = "tyre_number")
+    @Column(name = "tyre_number",nullable = false)
     private String tyreNumber;
 
     public Vehicle() {
-    }
-
-    public String getCarType() {
-        return carType;
-    }
-
-    public void setCarType(String carType) {
-        this.carType = carType;
     }
 
     public int getCc() {
@@ -118,14 +115,6 @@ public class Vehicle extends Asset {
         this.transmission = transmission;
     }
 
-    public FuelType getFuelType() {
-        return fuelType;
-    }
-
-    public void setFuelType(FuelType fuelType) {
-        this.fuelType = fuelType;
-    }
-
     public String getNumberPlate() {
         return numberPlate;
     }
@@ -148,6 +137,14 @@ public class Vehicle extends Asset {
 
     public void setTyreNumber(String tyreNumber) {
         this.tyreNumber = tyreNumber;
+    }
+
+    public VehicleType getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(VehicleType vehicleType) {
+        this.vehicleType = vehicleType;
     }
 }
 

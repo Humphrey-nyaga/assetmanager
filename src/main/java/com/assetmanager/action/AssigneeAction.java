@@ -35,7 +35,6 @@ public class AssigneeAction extends BaseAction {
     public void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
-
         if (pathInfo != null && pathInfo.length() > 1) {
             String idString = pathInfo.substring(1);
 
