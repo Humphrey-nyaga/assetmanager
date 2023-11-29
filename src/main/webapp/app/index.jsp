@@ -62,7 +62,9 @@
                 })
                 .catch(error => console.error('Error:', error));
         }
-
+        $(document).ready(function() {
+            $('#myTabs').tab();
+        });
 
     </script>
 

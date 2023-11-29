@@ -64,7 +64,7 @@ public class Vehicle extends Asset {
 
     @Column(name = "tyre_number",nullable = false)
     @HtmlFormField(label = "Tyre Number", isRequired = true)
-    private String tyreNumber;
+    private int tyreNumber;
 
     public Vehicle() {
     }
