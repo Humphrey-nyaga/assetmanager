@@ -4,8 +4,10 @@ import com.assetmanager.app.bean.AssetBeanI;
 
 import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.UserRole;
+import com.assetmanager.app.view.html.AssetCardRender;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,8 @@ import java.io.IOException;
 public class AssetAction extends BaseAction {
     @EJB
     AssetBeanI assetBean;
+    @Inject
+    AssetCardRender assetCardRender;
 
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
@@ -34,11 +38,12 @@ public class AssetAction extends BaseAction {
                         assetBean.list(new Asset()));
                 break;
             case REGULAR:
-                renderPage(servletRequest,
-                        servletResponse,
-                        "./asset",
-                        Asset.class,
-                        assetBean.findAssetsByAssigneeID("SN001"));
+                //renderPageWithoutTables(servletRequest, servletResponse, assetCardRender.renderAssetCards(), "./assets");
+//                renderPage(servletRequest,
+//                        servletResponse,
+//                        "./asset",
+//                        Asset.class,
+//                        assetBean.findAssetsByAssigneeID("SN001"));
                 break;
 
         }

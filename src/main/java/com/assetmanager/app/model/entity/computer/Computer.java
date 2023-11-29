@@ -1,8 +1,10 @@
 package com.assetmanager.app.model.entity.computer;
 
 import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.app.view.html.AssetCreationCard;
 
 import javax.persistence.*;
+
 
 @Entity
 @Table(name = "computer",
@@ -11,6 +13,7 @@ import javax.persistence.*;
                 @Index(name = "idx_manufacturer_model", columnList = "manufacturer, model")
         }
 )
+@AssetCreationCard(label = "Computer & Related ",addUrl = "./computer?action=add")
 public class Computer extends Asset {
 
     @Column(name = "ram_in_gb")

@@ -13,6 +13,8 @@ import com.assetmanager.database.helper.DbTable;
 import com.assetmanager.database.helper.NotNull;
 import com.assetmanager.util.idgenerator.IdPrefix;
 
+import javax.persistence.Entity;
+
 @DbTable(name = "assets")
 @HtmlForm(label = "Asset", url = "./asset")
 @IdPrefix(prefix = "ASN00")

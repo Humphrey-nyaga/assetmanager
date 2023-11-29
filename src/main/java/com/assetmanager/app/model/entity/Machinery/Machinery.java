@@ -1,6 +1,7 @@
 package com.assetmanager.app.model.entity.Machinery;
 
 import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.app.view.html.AssetCreationCard;
 
 import javax.persistence.*;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
                 @Index(name = "idx_name", columnList = "name"),
                 @Index(name = "idx_manufacturer", columnList = "manufacturer")
         })
+@AssetCreationCard(label = "Machinery",addUrl = "./machinery?action=add")
 public class Machinery  extends Asset {
 
     @Column(name = "year_of_production")
