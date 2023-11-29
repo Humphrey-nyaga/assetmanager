@@ -133,11 +133,11 @@ public class Vehicle extends Asset {
         this.numberPlate = numberPlate;
     }
 
-    public String getTyreNumber() {
+    public int getTyreNumber() {
         return tyreNumber;
     }
 
-    public void setTyreNumber(String tyreNumber) {
+    public void setTyreNumber(int tyreNumber) {
         this.tyreNumber = tyreNumber;
     }
 
