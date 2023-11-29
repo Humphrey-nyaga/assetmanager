@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -58,10 +59,19 @@ public class HtmlComponent implements Serializable {
                     continue;
                 field.setAccessible(true);
                 try {
-                    stringBuilder.append("<td>")
-                            .append(field.get(model))
-                            .append("</td>");
-                } catch (IllegalAccessException e) {
+                    if (field.getType().isEnum()) {
+                        Object enumValue = field.get(model);
+                        Method method = field.getType().getMethod("getName");
+                        stringBuilder.append("<td>")
+                                .append(method.invoke(enumValue))
+                                .append("</td>");
+                    } else {
+
+                        stringBuilder.append("<td>")
+                                .append(field.get(model))
+                                .append("</td>");
+                    }
+                } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -111,40 +121,46 @@ public class HtmlComponent implements Serializable {
                 " <h4 class=\"text-center mb-0 mt-0\">" +
                 "Create New " + htmlForm.label() + "</h4>");
 
-        List<Field> fields = List.of(t.getDeclaredFields());
-        for (Field field : fields) {
-            if (!field.isAnnotationPresent(HtmlFormField.class))
-                continue;
-            HtmlFormField htmlFormField = field.getAnnotation(HtmlFormField.class);
+        try {
+            List<Field> fields = List.of(t.getDeclaredFields());
+            for (Field field : fields) {
+                if (!field.isAnnotationPresent(HtmlFormField.class))
+                    continue;
+                HtmlFormField htmlFormField = field.getAnnotation(HtmlFormField.class);
 
-            String fieldName = field.getName();
-            String label = StringUtils.isBlank(htmlFormField.label()) ? fieldName : htmlFormField.label();
-            String type = "text";
-            if (field.getType().isAssignableFrom(LocalDate.class)) {
-                type = "date";
-            }
-            if (field.getType().isAssignableFrom(BigDecimal.class)) {
-                type = "number";
-            }
-            if (field.getType().isEnum()) {
+                String fieldName = field.getName();
+                String label = StringUtils.isBlank(htmlFormField.label()) ? fieldName : htmlFormField.label();
+                String type = "text";
+                if (field.getType().isAssignableFrom(LocalDate.class)) {
+                    type = "date";
+                }
+                if (field.getType().isAssignableFrom(BigDecimal.class)) {
+                    type = "number";
+                }
+                if (field.getType().isEnum()) {
+                    htmlFormBuilder.append("<div class=\"mb-1 mt-0 p-2\">\n" +
+                                    " <label for=\" " + fieldName + "\" class=\"form-label\">" + label + "</label>\n")
+                            .append("<select class=\"form-select form-select-sm\" id=\"" + fieldName + "\" name=\"" + fieldName + "\">\n");
+
+                    Class<?> enumClass = field.getType();
+                    for (Object enumConstant : enumClass.getEnumConstants()) {
+                        Method method = field.getType().getMethod("getName");
+
+                        htmlFormBuilder.append("<option value=\"" + enumConstant.toString() + "\">" + method.invoke(enumConstant) + "</option>\n");
+                    }
+                    htmlFormBuilder.append(" </select></div>");
+                    continue;
+                }
+
                 htmlFormBuilder.append("<div class=\"mb-1 mt-0 p-2\">\n" +
                                 " <label for=\" " + fieldName + "\" class=\"form-label\">" + label + "</label>\n")
-                        .append("<select class=\"form-select form-select-sm\" id=\"" + fieldName + "\" name=\""+ fieldName + "\">\n");
-
-                Class<?> enumClass = field.getType();
-                for (Object enumConstant : enumClass.getEnumConstants()) {
-                    htmlFormBuilder.append("<option value=\"" + enumConstant.toString() + "\">" + enumConstant + "</option>\n");
-                }
-                htmlFormBuilder.append(" </select></div>");
-                continue;
+                        .append(htmlFormField.isRequired() ? "<span style=\"color:black;\">*</span> " : "")
+                        .append(" <input type=\"" + type + "\"").append(htmlFormField.isRequired() ? "required" : "")
+                        .append(" class=\"form-control form-control-sm\" id=\"" + fieldName + "\" name=\"" + fieldName + "\">\n" +
+                                "</div>");
             }
-
-            htmlFormBuilder.append("<div class=\"mb-1 mt-0 p-2\">\n" +
-                            " <label for=\" " + fieldName + "\" class=\"form-label\">" + label + "</label>\n")
-                    .append(htmlFormField.isRequired() ? "<span style=\"color:black;\">*</span> " : "")
-                    .append(" <input type=\"" + type + "\"").append(htmlFormField.isRequired() ? "required" : "")
-                    .append(" class=\"form-control form-control-sm\" id=\"" + fieldName + "\" name=\"" + fieldName + "\">\n" +
-                            "</div>");
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
         htmlFormBuilder.append("""
                         <div class="d-grid gap-2 p-2">

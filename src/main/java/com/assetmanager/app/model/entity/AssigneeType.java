@@ -5,14 +5,14 @@ public enum AssigneeType {
     FULL_TIME("Full-time"),
     SEASONAL("Seasonal"),
     TEMPORARY("Temporary");
-    private final String displayName;
+    private final String name;
 
-    AssigneeType(String displayName) {
-        this.displayName = displayName;
+    AssigneeType(String name) {
+        this.name = name;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public String getName() {
+        return name;
     }
 }
 

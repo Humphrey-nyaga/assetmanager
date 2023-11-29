@@ -9,8 +9,8 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
-public class  OverviewRenderFormat implements Serializable {
-    public static String generateHtml(Class<?> clazz, List<?> list) {
+public class OverviewRenderFormat implements Serializable {
+    public String generateHtml(Class<?> clazz, List<?> list) {
         StringBuilder html = new StringBuilder();
 //                .append("<div class=\"container\">\n" +
 //                        "            <div class=\"row\">");
@@ -54,7 +54,7 @@ public class  OverviewRenderFormat implements Serializable {
         }
     }
 
-    private static  <K, V> String generateMapHtml(Map<K, V> map, String methodLabel) {
+    private <K, V> String generateMapHtml(Map<K, V> map, String methodLabel) {
         StringBuilder stringBuilder = new StringBuilder()
                 .append("<div class=\"card hover-zoom mb-3\">")
                 .append("    <h5 class=\"card-header bg-secondary text-center\">")
@@ -74,14 +74,16 @@ public class  OverviewRenderFormat implements Serializable {
         return stringBuilder.toString();
     }
 
-    private static String generateSingleValueHtml(Object value, String methodLabel) {
+    private String generateSingleValueHtml(Object value, String methodLabel) {
         return "<div class=\"card mb-3\">\n" +
                 "    <h5 class=\"card-header bg-secondary text-center\">" + methodLabel + "</h5>\n" +
                 "    <div class=\"d-flex align-items-center flex-column\">\n" +
-                "        <div class=\"display-4 text-center mt-0\">\n" +
+                "        <div class=\"display-4 text-center mt-0 overflow-hidden\" style=\"white-space: nowrap;\" title=\"" + value.toString() + "\">\n" +
                 "            " + value.toString() + "\n" +
                 "        </div>\n" +
                 "    </div>\n" +
                 "</div>";
     }
+
+
 }

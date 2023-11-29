@@ -1,7 +1,6 @@
 package com.assetmanager.app.service;
 
 import com.assetmanager.app.model.entity.Asset;
-import com.assetmanager.app.model.entity.Category;
 import com.assetmanager.app.view.html.SummaryHtmlCard;
 
 import java.io.Serializable;
@@ -18,12 +17,12 @@ public class AssetsValuation implements Serializable,AssetsValuationI {
     String currency = "$";
 
     @SummaryHtmlCard(name = "Assets Value By Category")
-    public Map<Category, String> totalAssetValueByCategory(List<Asset> assetList) {
+    public Map<String, String> totalAssetValueByCategory(List<Asset> assetList) {
         DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
 
         return assetList.stream()
                 .collect(Collectors.groupingBy(
-                        Asset::getCategory,
+                        asset -> asset.getCategory().getName(),
                         Collectors.reducing(BigDecimal.ZERO, Asset::getPurchaseValue, BigDecimal::add)
                 ))
                 .entrySet()
@@ -42,10 +41,10 @@ public class AssetsValuation implements Serializable,AssetsValuationI {
 
 
     @SummaryHtmlCard(name = "Asset Count By Category")
-    public Map<Category, Long> countAssetsByCategory(List<Asset> assetList) {
+    public Map<String, Long> countAssetsByCategory(List<Asset> assetList) {
         return assetList.stream()
                 .collect(Collectors.groupingBy(
-                        Asset::getCategory,
+                        asset -> asset.getCategory().getName(),
                         Collectors.counting()
                 ));
     }
