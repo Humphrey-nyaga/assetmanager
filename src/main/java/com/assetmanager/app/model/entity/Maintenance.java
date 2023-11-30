@@ -25,7 +25,7 @@ public class Maintenance extends BaseEntity implements Serializable {
     @NotNull
     @TableColumnHeader(header = "Maintenance Type")
     @HtmlFormField(label = "Maintenance Type")
-    private String maintenanceType;
+    private MaintenanceType maintenanceType;
     @DbColumn(name = "scheduled_maintenance_date", definition = "DATE")
     @TableColumnHeader(header = "Scheduled Date")
     @HtmlFormField(label = "Scheduled maintenance date")
@@ -45,7 +45,9 @@ public class Maintenance extends BaseEntity implements Serializable {
     @TableColumnHeader(header = "Status")
     @HtmlFormField(label = "Status")
     private String status;
-
+    @DbColumn
+    @HtmlFormField(label = "Maintenance Frequency")
+    private MaintenancePeriod maintenancePeriod;
 
     public Maintenance() {
     }
@@ -58,13 +60,6 @@ public class Maintenance extends BaseEntity implements Serializable {
         this.assetId = assetId;
     }
 
-    public String getMaintenanceType() {
-        return maintenanceType;
-    }
-
-    public void setMaintenanceType(String maintenanceType) {
-        this.maintenanceType = maintenanceType;
-    }
 
     public LocalDate getScheduledMaintenanceDate() {
         return scheduledMaintenanceDate;
@@ -104,5 +99,13 @@ public class Maintenance extends BaseEntity implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public MaintenancePeriod getMaintenancePeriod() {
+        return maintenancePeriod;
+    }
+
+    public void setMaintenancePeriod(MaintenancePeriod maintenancePeriod) {
+        this.maintenancePeriod = maintenancePeriod;
     }
 }

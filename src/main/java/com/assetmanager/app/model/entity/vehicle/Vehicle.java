@@ -7,6 +7,8 @@ import com.assetmanager.app.view.html.HtmlFormField;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 @HtmlForm(label = "Vehicle", url = "./vehicle")
@@ -27,6 +29,7 @@ public class Vehicle extends Asset {
     @Column(name = "cc",nullable = false)
     @NotNull
     @HtmlFormField(label = "CC", isRequired = true)
+    @Positive
     private int cc;
 
     @Column(name = "engine_type",nullable = false)
@@ -64,6 +67,7 @@ public class Vehicle extends Asset {
 
     @Column(name = "tyre_number",nullable = false)
     @HtmlFormField(label = "Tyre Number", isRequired = true)
+    @Positive
     private int tyreNumber;
 
     public Vehicle() {
