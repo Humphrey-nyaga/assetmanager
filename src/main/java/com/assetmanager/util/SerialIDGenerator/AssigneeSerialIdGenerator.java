@@ -1,7 +1,9 @@
 package com.assetmanager.util.SerialIDGenerator;
 
+import javax.inject.Named;
 import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;
+@Named("AssigneeID")
 public class AssigneeSerialIdGenerator implements SerialIDGenerator{
     @Override
     public String generate() {

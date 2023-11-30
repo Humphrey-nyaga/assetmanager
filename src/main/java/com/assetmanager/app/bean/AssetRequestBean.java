@@ -5,8 +5,6 @@ import com.assetmanager.app.mail.model.Mail;
 import com.assetmanager.app.mail.utility.MailFormatter;
 import com.assetmanager.app.model.entity.AssetRequest;
 import com.assetmanager.app.model.entity.Assignee;
-import com.assetmanager.util.SerialIDGenerator.EntityType;
-import com.assetmanager.util.SerialIDGenerator.SerialID;
 import com.assetmanager.util.SerialIDGenerator.SerialIDGenerator;
 import com.assetmanager.util.idgenerator.GenericIDGenerator;
 
@@ -14,6 +12,7 @@ import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.Optional;
 
 @Stateless
@@ -25,12 +24,12 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
     AssigneeBeanI assigneeBean;
     @Inject
     MailFormatter mailFormatter;
-    @Inject
-    GenericIDGenerator assetRequestId;
-
 //    @Inject
-//    @SerialID
-//    private SerialIDGenerator assigneeIDGen;
+//    GenericIDGenerator assetRequestId;
+
+    @Inject
+    @Named("RequestID")
+    private SerialIDGenerator serialIDGenerator;
 
     @Override
     public void create(AssetRequest entity) {
@@ -39,7 +38,7 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
             StringBuilder message = new StringBuilder();
 
             if (assignee.isPresent()) {
-                entity.setAssetRequestID(assetRequestId.generateId(entity));
+                entity.setAssetRequestID(serialIDGenerator.generate());
 
                 getDao().create(entity);
                 Assignee assignee1 = assignee.get();
