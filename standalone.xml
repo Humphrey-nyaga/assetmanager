@@ -39,6 +39,11 @@
         <extension module="org.wildfly.extension.security.manager"/>
         <extension module="org.wildfly.extension.undertow"/>
     </extensions>
+    <system-properties>
+        <property name="USERNAME" value="developerwhoami@gmail.com"/>
+        <property name="PASSWORD" value="jlzw zmiz whcn mdma"/>
+        <property name="FROM" value="developerwhoami@gmail.com"/>
+    </system-properties>
     <management>
         <audit-log>
             <formatters>

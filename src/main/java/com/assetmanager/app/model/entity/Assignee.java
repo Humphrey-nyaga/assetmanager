@@ -19,7 +19,7 @@ public class Assignee extends BaseEntity implements Serializable {
     @DbColumn(name = "staff_id")
     @NotNull
     @TableColumnHeader(header = "Staff Number")
-    @HtmlFormField(label = "Staff Number")
+ //   @HtmlFormField(label = "Staff Number")
     private String staffNumber;
     @DbColumn(name = "employee_type")
     @NotNull
@@ -44,7 +44,7 @@ public class Assignee extends BaseEntity implements Serializable {
     @DbColumn(name = "date_of_birth",definition = "DATE")
     @NotNull
     @TableColumnHeader(header = "Date of Birth")
-    @HtmlFormField(label = "Date of Birth")
+    @HtmlFormField(label = "Date of Birth",isRequired = true)
     private LocalDate dateOfBirth;
     @DbColumn(name = "national_id")
     @NotNull
