@@ -14,7 +14,7 @@ public enum Transmission {
         this.name = name;
     }
 
-    public String getDisplayName() {
+    public String getName() {
         return name;
     }
 }

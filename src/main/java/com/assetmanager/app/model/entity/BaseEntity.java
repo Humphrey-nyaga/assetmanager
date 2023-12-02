@@ -5,6 +5,7 @@ import com.assetmanager.database.helper.DbColumn;
 import com.assetmanager.database.helper.NotNull;
 import com.assetmanager.database.helper.PrimaryKey;
 
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -13,6 +14,7 @@ public class BaseEntity implements Serializable {
     @NotNull
     @DbColumn(name = "id", definition = "INTEGER")
     @TableColumnHeader(header = "ID")
+    @Id
     private Long id;
 
     public Long getId() {

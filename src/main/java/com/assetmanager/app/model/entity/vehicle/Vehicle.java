@@ -1,65 +1,76 @@
 package com.assetmanager.app.model.entity.vehicle;
 
 import com.assetmanager.app.model.entity.Asset;
-import com.assetmanager.database.helper.DbColumn;
-import com.assetmanager.database.helper.DbTable;
-import com.assetmanager.database.helper.NotNull;
+import com.assetmanager.app.view.html.AssetCreationCard;
+import com.assetmanager.app.view.html.HtmlForm;
+import com.assetmanager.app.view.html.HtmlFormField;
 
-@DbTable(name = "vehicles")
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+
+@Entity
+@HtmlForm(label = "Vehicle", url = "./vehicle")
+@Table(name = "vehicle",
+        indexes = {
+                @Index(name = "idx_number_plate", columnList = "number_plate"),
+                @Index(name = "idx_manufacturer", columnList = "manufacturer"),
+                @Index(name = "idx_vehicle_type_transmission", columnList = "vehicle_type, transmission")
+        }
+)
+@AssetCreationCard(label = "Vehicle",addUrl = "./vehicle?action=add")
 public class Vehicle extends Asset {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "vehicle_type",nullable = false)
+    @HtmlFormField(label = "Vehicle Type", isRequired = true)
+    private VehicleType vehicleType;
 
-    @DbColumn(name = "car_type")
+    @Column(name = "cc",nullable = false)
     @NotNull
-    private String carType;
-
-    @DbColumn(name = "cc")
-    @NotNull
+    @HtmlFormField(label = "CC", isRequired = true)
+    @Positive
     private int cc;
 
-    @DbColumn(name = "engine_type")
+    @Column(name = "engine_type",nullable = false)
+    @HtmlFormField(label = "Engine Type", isRequired = true)
     private EngineType engineType;
 
-    @DbColumn(name = "model")
+    @Column(name = "model",nullable = false)
     @NotNull
+    @HtmlFormField(label = "Vehicle Model", isRequired = true)
     private String model;
 
-    @DbColumn(name = "year")
+    @Column(name = "year",nullable = false)
     @NotNull
+    @HtmlFormField(label = "Year Manufactured", isRequired = true)
     private int year;
 
-    @DbColumn(name = "manufacturer")
+    @Column(name = "manufacturer",nullable = false)
     @NotNull
+    @HtmlFormField(label = "Manufacturer", isRequired = true)
     private String manufacturer;
 
-    @DbColumn(name = "color")
+    @Column(name = "color",nullable = false)
+    @HtmlFormField(label = "Color", isRequired = true)
     private String color;
 
-    @DbColumn(name = "transmission")
+    @Column(name = "transmission",nullable = false)
+    @HtmlFormField(label = "Transmission", isRequired = true)
     private Transmission transmission;
 
-    @DbColumn(name = "fuel_type")
-    private FuelType fuelType;
-
-    @DbColumn(name = "number_plate")
+    @Column(name = "number_plate",nullable = false)
     @NotNull
+    @HtmlFormField(label = "Number Plate", isRequired = true)
     private String numberPlate;
 
-    @DbColumn(name = "chassis_number")
-    @NotNull
-    private String chassisNumber;
 
-    @DbColumn(name = "tyre_number")
-    private String tyreNumber;
+    @Column(name = "tyre_number",nullable = false)
+    @HtmlFormField(label = "Tyre Number", isRequired = true)
+    @Positive
+    private int tyreNumber;
 
     public Vehicle() {
-    }
-
-    public String getCarType() {
-        return carType;
-    }
-
-    public void setCarType(String carType) {
-        this.carType = carType;
     }
 
     public int getCc() {
@@ -118,14 +129,6 @@ public class Vehicle extends Asset {
         this.transmission = transmission;
     }
 
-    public FuelType getFuelType() {
-        return fuelType;
-    }
-
-    public void setFuelType(FuelType fuelType) {
-        this.fuelType = fuelType;
-    }
-
     public String getNumberPlate() {
         return numberPlate;
     }
@@ -134,20 +137,20 @@ public class Vehicle extends Asset {
         this.numberPlate = numberPlate;
     }
 
-    public String getChassisNumber() {
-        return chassisNumber;
-    }
-
-    public void setChassisNumber(String chassisNumber) {
-        this.chassisNumber = chassisNumber;
-    }
-
-    public String getTyreNumber() {
+    public int getTyreNumber() {
         return tyreNumber;
     }
 
-    public void setTyreNumber(String tyreNumber) {
+    public void setTyreNumber(int tyreNumber) {
         this.tyreNumber = tyreNumber;
+    }
+
+    public VehicleType getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(VehicleType vehicleType) {
+        this.vehicleType = vehicleType;
     }
 }
 

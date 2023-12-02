@@ -8,11 +8,11 @@ public enum RequestStatus implements Serializable {
     REJECTED("Rejected"),
     APPROVED("Approved");
 
-    private final String status;
-    RequestStatus(String status) {
-        this.status = status;
+    private final String name;
+    RequestStatus(String name) {
+        this.name = name;
     }
-    public String getStatus() {
-        return status;
+    public String getName() {
+        return name;
     }
 }

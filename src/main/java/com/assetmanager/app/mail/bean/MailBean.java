@@ -5,6 +5,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Remote;
+import javax.ejb.Singleton;
 import javax.ejb.Stateless;
 import javax.mail.*;
 import javax.mail.internet.AddressException;
@@ -14,7 +15,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Properties;
 
-@Stateless
+@Singleton
 public class MailBean implements MailBeanI, Serializable {
     private int port = 465;
     private final String host = "smtp.gmail.com";
