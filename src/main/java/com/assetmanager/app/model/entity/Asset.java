@@ -127,6 +127,7 @@ public class Asset extends BaseEntity implements Serializable {
         this.assigneeStaffID = assigneeStaffID;
     }
 
+
     @Override
     public String toString() {
         return "Asset{" +

@@ -1,9 +1,7 @@
 package com.assetmanager.app.bean;
 
-import com.assetmanager.app.mail.bean.MailBeanI;
-import com.assetmanager.app.mail.model.Mail;
-import com.assetmanager.app.mail.utility.MailFormatter;
 import com.assetmanager.app.model.entity.User;
+import com.assetmanager.app.observer.Created;
 import com.assetmanager.exceptions.InvalidEmailFormatException;
 import com.assetmanager.exceptions.UserAlreadyExistsException;
 import com.assetmanager.exceptions.UserPasswordEncodingException;
@@ -13,6 +11,7 @@ import com.assetmanager.util.security.PasswordEncoderI;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
@@ -28,9 +27,9 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
     @Inject
     EmailValidator emailValidator;
     @Inject
-    MailBeanI mailBean;
-    @Inject
-    MailFormatter mailFormat;
+    @Created
+    Event<User> userEvent;
+
 
     @Override
     public Boolean registerUser(User user) {
@@ -49,25 +48,8 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
 
                 getDao().create(user);
 
-                String subject = "RE: Account Creation Confirmation" ;
-                String message = "Dear " + user.getUsername() + ", <br>" +
-                        "Thank you for registering with us 🎉. <br> Your account has been created in the Asset Management System." +
-                        "<br> Your username is: <b>" + user.getUsername() +
-                        "</b>.<br> Kindly use it to login. <br>" +
-                        "<br>" +
-                        "Kind Regards, <br> Asset Management Team <br> ✨";
+                userEvent.fire(user);
 
-                String templateContent = mailFormat.emailTemplate();
-                String fomattedMessage = templateContent.replace("%body%", message);
-
-                System.out.println("Mail Content " + fomattedMessage);
-
-                Mail mail = new Mail();
-                mail.setRecipient(user.getEmail());
-                mail.setSubject(subject);
-                mail.setMessage(fomattedMessage);
-                mailBean.sendMail(mail);
-                System.out.println("Mail Set Successfully");
                 return true;
 
             }
