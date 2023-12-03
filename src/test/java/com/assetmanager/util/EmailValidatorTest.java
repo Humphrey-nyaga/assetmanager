@@ -1,6 +1,5 @@
 package com.assetmanager.util;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,12 +18,12 @@ class EmailValidatorTest {
     }
 
     @Test
-    void testEmailWithoutDotCom() {
+    void testEmailWithoutDotComTest() {
         Assertions.assertFalse(emailValidator.isValidEmail("email@examplewithoutdotcom"));
     }
 
     @Test
-    void testInvalidEmails() {
+    void invalidEmailsTest() {
         Assertions.assertFalse(emailValidator.isValidEmail("emailexample.com"));
         Assertions.assertFalse(emailValidator.isValidEmail("email@example@google.com"));
         Assertions.assertFalse(emailValidator.isValidEmail("email2..well@example.com"));
@@ -33,7 +32,7 @@ class EmailValidatorTest {
     }
 
     @Test
-    void testValidEmails() {
+    void validEmailTest() {
         Assertions.assertTrue(emailValidator.isValidEmail("john.doe@example.com"));
         Assertions.assertTrue(emailValidator.isValidEmail("jane_smith@example.co.uk"));
         Assertions.assertTrue(emailValidator.isValidEmail("info@company.org"));
