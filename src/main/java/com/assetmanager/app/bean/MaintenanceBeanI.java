@@ -6,4 +6,5 @@ import javax.ejb.Remote;
 
 public interface MaintenanceBeanI extends GenericBeanI<Maintenance> {
 
+
 }

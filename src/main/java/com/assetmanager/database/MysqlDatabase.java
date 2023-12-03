@@ -116,8 +116,10 @@ public class MysqlDatabase {
             StringBuilder values = new StringBuilder();
             String prefix = "";
 
-            //  List<Field> fields = new ArrayList<>(Arrays.asList(clazz.getSuperclass().getDeclaredFields()));
-            Field[] fields = clazz.getDeclaredFields();
+
+            List<Field> fields = new ArrayList<>(Arrays.asList(clazz.getSuperclass().getDeclaredFields()));
+            fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
+
 
             for (Field field : fields) {
                 if (!field.isAnnotationPresent(DbColumn.class))
