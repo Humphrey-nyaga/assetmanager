@@ -13,10 +13,8 @@ import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import com.assetmanager.app.view.html.HtmlComponent;
-import com.assetmanager.util.logger.FileLogger;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.ConvertUtilsBean;
@@ -24,7 +22,6 @@ import org.apache.commons.beanutils.converters.BigDecimalConverter;
 import org.apache.commons.lang3.StringUtils;
 
 public class BaseAction extends HttpServlet {
-    private static final Logger LOGGER = FileLogger.getLogger();
 
     @SuppressWarnings("unchecked") public void serializeForm(Object bean, Map<String, ?> requestMap) {
         try {
@@ -47,7 +44,6 @@ public class BaseAction extends HttpServlet {
             ConvertUtils.register(new BigDecimalConverter(), BigDecimal.class);
             beanUtilsBean.populate(bean, requestMap);
         } catch (IllegalAccessException | InvocationTargetException e) {
-            LOGGER.warning("Serialization Error" + e);
         }
     }
     public <T> void renderPage(HttpServletRequest request, HttpServletResponse response,

@@ -4,7 +4,6 @@ import com.assetmanager.app.bean.AuthBeanI;
 import com.assetmanager.app.model.entity.User;
 import com.assetmanager.action.BaseAction;
 import com.assetmanager.app.model.entity.UserRole;
-import com.assetmanager.util.logger.FileLogger;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.ejb.EJB;
@@ -15,12 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
-import java.util.logging.Logger;
 
 
 @WebServlet(urlPatterns = "/login")
 public class LoginAction extends BaseAction {
-    private static final Logger LOGGER = FileLogger.getLogger();
    @EJB
    AuthBeanI authBean;
 

@@ -3,7 +3,6 @@ package com.assetmanager.action;
 import com.assetmanager.app.bean.UserBeanI;
 import com.assetmanager.app.model.entity.User;
 import com.assetmanager.app.model.entity.UserRole;
-import com.assetmanager.util.logger.FileLogger;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -16,7 +15,6 @@ import java.util.logging.Logger;
 
 @WebServlet("/signup")
 public class SignUpAction extends BaseAction {
-    private static final Logger LOGGER = FileLogger.getLogger();
     @EJB
     UserBeanI userBean;
 
