@@ -12,6 +12,7 @@ public interface GenericDaoI<T> extends Serializable {
     void addOrUpdate(T entity);
 
     void delete(T entity);
+   void deleteById(Class<?> clazz, Long id);
 
     default Optional<T> findById(String id) {
         return Optional.empty();

@@ -5,7 +5,7 @@ import com.assetmanager.app.model.entity.Machinery.Machinery;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 
-@Local
+@Remote
 public interface MachineryBeanI extends GenericBeanI<Machinery> {
 
 }

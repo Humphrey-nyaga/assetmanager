@@ -44,6 +44,11 @@ public abstract class GenericBean<T> implements GenericBeanI<T> {
         genericDao.setEm(em);
         return (GenericDao<T>) genericDao;
     }
+    @Override
+   public void deleteById(Class<?> clazz, Long id){
+        genericDao.setEm(em);
+        genericDao.deleteById(clazz,  id);
+    }
 
 
 

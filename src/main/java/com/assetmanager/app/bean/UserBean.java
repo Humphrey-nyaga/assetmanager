@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Stateless
-@Local
+@Remote
 public class UserBean extends GenericBean<User> implements UserBeanI, Serializable {
 
     @Inject

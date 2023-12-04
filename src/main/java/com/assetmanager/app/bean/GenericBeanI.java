@@ -14,8 +14,7 @@ public interface GenericBeanI<T> extends Serializable {
 
     void delete(T entity);
 
-    default void deleteById(Class<?> clazz, Long id) {
-    }
+    void deleteById(Class<?> clazz, Long id);
 
     default Optional<T> findById(String id) {
         return Optional.empty();

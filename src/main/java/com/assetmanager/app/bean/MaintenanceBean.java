@@ -9,7 +9,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 @Stateless
-@Local
+@Remote
 public class MaintenanceBean extends GenericBean<Maintenance> implements MaintenanceBeanI{
    @Inject
     MaintenanceScheduler maintenanceScheduler;

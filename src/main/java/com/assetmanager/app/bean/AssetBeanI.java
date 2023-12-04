@@ -7,7 +7,7 @@ import javax.ejb.Remote;
 import java.util.List;
 import java.util.Optional;
 
-@Local
+@Remote
 public interface AssetBeanI extends GenericBeanI<Asset> {
     Optional<Asset> findAssetById(String id);
 

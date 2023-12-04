@@ -50,4 +50,5 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
 
         return assets;
     }
+
 }

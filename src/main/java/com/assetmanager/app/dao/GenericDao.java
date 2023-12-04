@@ -30,6 +30,13 @@ public class GenericDao<T> implements GenericDaoI<T> {
 
     }
 
+    @Override
+    public void deleteById(Class<?> clazz, Long id) {
+        Object o = em.find(clazz, id);
+        em.remove(o);
+    }
+
+
     public void setEm(EntityManager em) {
         this.em = em;
     }

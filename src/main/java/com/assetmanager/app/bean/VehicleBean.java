@@ -6,7 +6,7 @@ import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
-@Local
+@Remote
 @Stateless
 
 public class VehicleBean extends GenericBean<Vehicle> implements VehicleBeanI {

@@ -20,7 +20,7 @@ import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 @Stateless
-@Local
+@Remote
 public class AssetRequestBean extends GenericBean<AssetRequest> implements AssetRequestBeanI {
     @EJB
     MailBeanI mailBean;
