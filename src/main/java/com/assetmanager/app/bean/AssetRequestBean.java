@@ -15,6 +15,8 @@ import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 @Stateless
@@ -28,6 +30,9 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
     MailFormatter mailFormatter;
 //    @Inject
 //    GenericIDGenerator assetRequestId;
+
+    @PersistenceContext
+    EntityManager em;
 
     @Inject
     @Named("RequestID")
@@ -46,12 +51,16 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
                 assetRequest.setAssetRequestID(serialIDGenerator.generate());
                 getDao().addOrUpdate(assetRequest);
                 Assignee assignee1 = assignee.get();
-                assetRequestEvent.fire(new AssetRequestEvent(assetRequest,assignee1));
+                assetRequestEvent.fire(new AssetRequestEvent(assetRequest, assignee1));
             }
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
         }
     }
 
-
+    @Override
+    public AssetRequest getRequest(Long id) {
+        AssetRequest assetRequest =  em.find(AssetRequest.class, id);
+        return assetRequest;
+    }
 }

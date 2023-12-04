@@ -1,4 +1,3 @@
-<%@ page import="com.assetmanager.app.model.entity.AssetRequest" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -21,15 +20,11 @@
 </head>
 <body>
 
-<%
-    String requestId = request.getParameter("id");
-    pageContext.setAttribute("requestId", requestId);
-    AssetRequest assetRequest = assetRequestBean.getRequest(Long.valueOf(requestId));
-    pageContext.setAttribute("assetRequest", assetRequest);
-%>
 <jsp:useBean id="headerMenu" class="com.assetmanager.app.view.toolbars.Header"/>
 <jsp:setProperty name="headerMenu" property="activeUrl" value='${requestScope.activeUrl}'/>
 ${headerMenu.menu}
+
+<c:set var="assetRequest" value="${requestScope.assetRequest}" />
 
 <div class="container">
     <div class="row">
@@ -40,6 +35,7 @@ ${headerMenu.menu}
                         <div class="data-form border border-1 p-3 rounded">
                             <h4 class="text-center mb-0 mt-0">Edit Asset Request</h4>
                             <div class="row">
+                                    <input type="hidden" id="assetRequestId" name="assetRequestId" value="${assetRequest.id}">
                                 <div class="col-md-4">
                                     <label for="staffId" class="form-label">Staff ID</label>
                                     <input type="text" class="form-control form-control-sm" id="staffId" name="staffId"

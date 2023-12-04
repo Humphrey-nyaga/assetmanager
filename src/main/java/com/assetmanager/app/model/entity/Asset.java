@@ -20,7 +20,7 @@ import javax.validation.constraints.Positive;
 @HtmlTable(name = "Asset Table", label = "Asset", addUrl = "./asset?action=add", url = "./asset")
 public  class Asset extends BaseEntity implements Serializable {
 
-    @Column(name = "serial_id")
+    @Column(name = "serial_id",unique = true)
     @TableColumnHeader(header = "Serial Number")
     // @HtmlFormField(label = "Serial Number", isRequired = true)
     private String serialNumber;
@@ -31,7 +31,7 @@ public  class Asset extends BaseEntity implements Serializable {
 
     @Column(name = "description")
     @TableColumnHeader(header = "Description")
-    @HtmlFormField(label = "Description")
+    @HtmlFormField(label = "Description",isTextArea = true)
     private String description;
 
     @Column(name = "date_Acquired")

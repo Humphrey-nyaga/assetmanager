@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @HtmlTable(name = "Assignee Table", label = "Assignee",addUrl = "./assignee?action=add",url = "./assignee")
 public class Assignee extends BaseEntity implements Serializable {
 
-    @Column(name = "staff_id",nullable = false)
+    @Column(name = "staff_id",nullable = false,unique = true)
     @TableColumnHeader(header = "Staff Number")
  //   @HtmlFormField(label = "Staff Number")
     private String staffNumber;

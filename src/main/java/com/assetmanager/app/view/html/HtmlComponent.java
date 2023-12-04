@@ -159,7 +159,7 @@ public class HtmlComponent implements Serializable {
             if (field.getType().isAssignableFrom(LocalDate.class)) {
                 type = "date";
             }
-            if (field.getType().isAssignableFrom(BigDecimal.class)||field.getType().isAssignableFrom(Integer.class)||field.getType().isAssignableFrom(Double.class)) {
+            if (field.getType().isAssignableFrom(BigDecimal.class) || field.getType().isAssignableFrom(Integer.class) || field.getType().isAssignableFrom(Double.class)) {
                 type = "number";
             }
             if (field.getType().isEnum()) {
@@ -184,10 +184,18 @@ public class HtmlComponent implements Serializable {
 
             htmlFormBuilder.append("<div class=\" col-md-4\">\n" +
                             " <label for=\" " + fieldName + "\" class=\"form-label\">" + label + "</label>\n")
-                    .append(htmlFormField.isRequired() ? "<span style=\"color:black;\">*</span> " : "")
-                    .append(" <input type=\"" + type + "\"").append(htmlFormField.isRequired() ? "required" : "")
-                    .append(" class=\"form-control form-control-sm\" id=\"" + fieldName + "\" name=\"" + fieldName + "\">\n" +
-                            "</div>");
+                    .append(htmlFormField.isRequired() ? "<span style=\"color:black;\">*</span> " : "");
+            if (htmlFormField.isTextArea()) {
+                htmlFormBuilder.append("<textarea rows=\"3\"");
+            } else {
+                htmlFormBuilder.append(" <input type=\"" + type + "\"").append(htmlFormField.isRequired() ? "required" : "");
+            }
+            htmlFormBuilder.append(" class=\"form-control form-control-sm\" id=\"" + fieldName + "\" name=\"" + fieldName + "\">\n");
+            if (htmlFormField.isTextArea()) {
+                htmlFormBuilder.append("</textarea>");
+            }
+            htmlFormBuilder.append("</div>");
+
 
             if (fieldsInCurrentTab >= maxFieldsPerTab) {
                 htmlFormBuilder.append("</div>");

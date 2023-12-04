@@ -45,7 +45,7 @@ public class Maintenance extends BaseEntity implements Serializable {
 
     @Column(name = "description",columnDefinition = "longtext")
     @TableColumnHeader(header = "Description")
-    @HtmlFormField(label = "Description")
+    @HtmlFormField(label = "Description",isTextArea = true)
     private String description;
 
 

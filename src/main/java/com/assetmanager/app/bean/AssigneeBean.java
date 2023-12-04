@@ -46,9 +46,11 @@ public class AssigneeBean extends GenericBean<Assignee> implements AssigneeBeanI
     }
 
     @Override
-    public Optional<Assignee> getAssigneeByStaffId(String staffID) {
-
-        return Optional.empty();
+    public Optional<Assignee> getAssigneeByStaffId(String staffToSearchID) {
+        Assignee assignee = em.createQuery("FROM Assignee a where a.staffNumber=:staffID", Assignee.class)
+                .setParameter("staffID",staffToSearchID)
+                .getSingleResult();
+        return Optional.of(assignee);
     }
 
 
