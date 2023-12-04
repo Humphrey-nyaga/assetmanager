@@ -1,13 +1,8 @@
 package com.assetmanager.util.security;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import javax.ejb.Remote;
-import javax.ejb.Stateless;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.logging.Logger;
 
 
 public class PasswordEncoder implements PasswordEncoderI {

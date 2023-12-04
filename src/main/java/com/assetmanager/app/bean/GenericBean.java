@@ -2,15 +2,11 @@ package com.assetmanager.app.bean;
 
 import com.assetmanager.app.dao.GenericDao;
 import com.assetmanager.app.dao.GenericDaoI;
-import com.assetmanager.app.model.entity.*;
-import com.assetmanager.database.Database;
-import com.assetmanager.database.MysqlDatabase;
-import com.assetmanager.database.helper.DbColumn;
-import com.assetmanager.database.helper.DbTable;
-import com.assetmanager.database.helper.PrimaryKey;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import java.util.List;
 
@@ -18,20 +14,20 @@ public abstract class GenericBean<T> implements GenericBeanI<T> {
 
     @Inject
     private GenericDaoI<T> genericDao;
-    @EJB
-    MysqlDatabase database;
+    @PersistenceContext
+    EntityManager em;
 
     @Override
     @SuppressWarnings({"unchecked", "rawtypes"})
     public List<T> list(Object entity) {
-        genericDao.setDatabase(database);
+        genericDao.setEm(em);
         return genericDao.list(entity);
     }
 
     @Override
-    public void create(T entity) {
-        genericDao.setDatabase(database);
-        genericDao.create(entity);
+    public void addOrUpdate(T entity) {
+        genericDao.setEm(em);
+        genericDao.addOrUpdate(entity);
     }
 
     @Override
@@ -45,15 +41,11 @@ public abstract class GenericBean<T> implements GenericBeanI<T> {
     }
 
     public GenericDao<T> getDao() {
-        genericDao.setDatabase(database);
+        genericDao.setEm(em);
         return (GenericDao<T>) genericDao;
     }
 
-    @Override
-    public void deleteById(Class<?> clazz, Long id) {
-        genericDao.setDatabase(database);
-        genericDao.deleteById(clazz, id);
-    }
+
 
 
 }

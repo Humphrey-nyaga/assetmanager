@@ -55,7 +55,7 @@ public class AssetAction extends BaseAction {
             Asset createAsset = new Asset();
             serializeForm(createAsset, servletRequest.getParameterMap());
 
-            assetBean.create(createAsset);
+            assetBean.addOrUpdate(createAsset);
             servletResponse.sendRedirect("./asset");
 
 

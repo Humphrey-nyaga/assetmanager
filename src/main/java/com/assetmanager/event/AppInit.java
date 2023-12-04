@@ -1,29 +1,13 @@
 package com.assetmanager.event;
 
 import com.assetmanager.app.bean.*;
-import com.assetmanager.app.model.entity.*;
-import com.assetmanager.database.MysqlDatabase;
-import com.assetmanager.database.helper.DbColumn;
-import com.assetmanager.database.helper.DbTable;
-import com.assetmanager.database.helper.NotNull;
-import com.assetmanager.database.helper.PrimaryKey;
 import com.assetmanager.util.logger.FileLogger;
-import org.reflections.Reflections;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import java.lang.reflect.Field;
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Logger;
 
 

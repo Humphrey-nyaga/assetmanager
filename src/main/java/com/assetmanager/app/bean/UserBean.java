@@ -9,6 +9,7 @@ import com.assetmanager.util.EmailValidator;
 import com.assetmanager.util.security.PasswordEncoderI;
 
 
+import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Stateless
-@Remote
+@Local
 public class UserBean extends GenericBean<User> implements UserBeanI, Serializable {
 
     @Inject
@@ -46,7 +47,7 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
             if (user.getPassword().equals(user.getConfirmPassword())) {
                 user.setPassword(passwordEncoder.encodePassword(user.getPassword()));
 
-                getDao().create(user);
+                getDao().addOrUpdate(user);
 
                 userEvent.fire(user);
 

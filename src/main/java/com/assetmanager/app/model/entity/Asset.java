@@ -8,54 +8,50 @@ import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.app.view.html.TableColumnHeader;
-import com.assetmanager.database.helper.DbColumn;
-import com.assetmanager.database.helper.DbTable;
-import com.assetmanager.database.helper.NotNull;
 import com.assetmanager.util.idgenerator.IdPrefix;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.validation.constraints.Positive;
 
-@DbTable(name = "assets")
+@Table(name = "assets")
+@MappedSuperclass
 @HtmlForm(label = "Asset", url = "./asset")
 @IdPrefix(prefix = "ASN00")
 @HtmlTable(name = "Asset Table", label = "Asset", addUrl = "./asset?action=add", url = "./asset")
-public class Asset extends BaseEntity implements Serializable {
+public  class Asset extends BaseEntity implements Serializable {
 
-    @DbColumn(name = "serial_id")
-    @NotNull
+    @Column(name = "serial_id")
     @TableColumnHeader(header = "Serial Number")
     // @HtmlFormField(label = "Serial Number", isRequired = true)
     private String serialNumber;
-    @DbColumn(name = "name")
-    @NotNull
+    @Column(name = "name")
     @TableColumnHeader(header = "Name of Asset")
     @HtmlFormField(label = "Name", isRequired = true)
     private String name;
 
-    @DbColumn(name = "description")
+    @Column(name = "description")
     @TableColumnHeader(header = "Description")
     @HtmlFormField(label = "Description")
     private String description;
 
-    @DbColumn(name = "date_Acquired", definition = "DATE")
-    @NotNull
+    @Column(name = "date_Acquired")
     @TableColumnHeader(header = "Date Acquired")
     @HtmlFormField(label = "Date Acquired", isRequired = true)
     private LocalDate dateAcquired;
 
-    @DbColumn(name = "category")
+    @Column(name = "category")
+    @Enumerated(EnumType.STRING)
     @TableColumnHeader(header = "Category")
     @HtmlFormField(label = "Category")
     private Category category;
 
-    @DbColumn(name = "purchase_value", definition = "DECIMAL(10,2)")
+    @Column(name = "purchase_value")
     @TableColumnHeader(header = "Value")
-    @HtmlFormField(label = "Purchase Value", isRequired = true)
+    @HtmlFormField(label = "Purchase Value($)", isRequired = true)
     @Positive
     private BigDecimal purchaseValue;
 
-    // @DbColumn(name = "staff_id")
+    @Transient
     @TableColumnHeader(header = "Assignee Staff ID")
     private String assigneeStaffID;
 

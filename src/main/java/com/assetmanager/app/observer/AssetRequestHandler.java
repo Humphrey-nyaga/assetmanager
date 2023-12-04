@@ -23,18 +23,17 @@ public class AssetRequestHandler {
         Assignee assignee = assetRequestEvent.assignee();
 
         String subject = "RE: Asset Request Received";
-        StringBuilder message = new StringBuilder()
-                .append("Dear ").append(assignee.getFirstName()).append(", <br> we are pleased to inform you that ")
-                .append(" your request for ")
-                .append(assetRequest.getQuantity()).append(" ")
-                .append(assetRequest.getAssetName()).append(" ")
-                .append(assetRequest.getDescription())
-                .append(" has been received and is being reviewed. <br> " +
-                        "The status will be communicated soon <br> ").
-                append("<br> Kind Regards, <br> Humphrey G, <br> Managing Director ASM ");
+        String message = "Dear " + assignee.getFirstName() + ", <br> we are pleased to inform you that " +
+                " your request for " +
+                assetRequest.getQuantity() + " " +
+                assetRequest.getAssetName() + " " +
+                assetRequest.getDescription() +
+                " has been received and is being reviewed. <br> " +
+                "The status will be communicated soon <br> " +
+                "<br> Kind Regards, <br> Humphrey G, <br> Managing Director ASM ";
 
         String htmlContent = mailFormat.emailTemplate();
-        String fomattedMessage = htmlContent.replace("%body%", message.toString());
+        String fomattedMessage = htmlContent.replace("%body%", message);
 
         System.out.println("Mail Content " + fomattedMessage);
 

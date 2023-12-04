@@ -27,7 +27,7 @@ public class MaintenanceAction extends BaseAction {
         Maintenance maintenance  = new Maintenance();
         serializeForm(maintenance, servletRequest.getParameterMap());
 
-        maintenanceBean.create(maintenance);
+        maintenanceBean.addOrUpdate(maintenance);
         servletResponse.sendRedirect("./maintenance");
 
     }

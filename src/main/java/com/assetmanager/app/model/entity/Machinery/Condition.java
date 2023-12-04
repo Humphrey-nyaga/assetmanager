@@ -5,7 +5,7 @@ public enum Condition {
     USED("Used"),
     REFURBISHED("Refurbished");
 
-    private String name;
+    private final String name;
 
     Condition(String name) {
         this.name = name;

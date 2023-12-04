@@ -1,7 +1,5 @@
 package com.assetmanager.util.ageValidator;
 
-import com.assetmanager.database.helper.PrimaryKey;
-
 import javax.annotation.Priority;
 import javax.enterprise.inject.Alternative;
 import java.time.LocalDate;

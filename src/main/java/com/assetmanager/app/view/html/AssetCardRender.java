@@ -1,6 +1,5 @@
 package com.assetmanager.app.view.html;
 
-import com.assetmanager.database.helper.DbTable;
 import org.reflections.Reflections;
 
 import java.util.List;

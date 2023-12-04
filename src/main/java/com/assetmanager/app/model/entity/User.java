@@ -1,38 +1,38 @@
 package com.assetmanager.app.model.entity;
 
 import com.assetmanager.app.view.html.HtmlTable;
-import com.assetmanager.database.helper.DbColumn;
-import com.assetmanager.database.helper.DbTable;
-import com.assetmanager.database.helper.NotNull;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
-
+@Entity
+@Getter @Setter
+@Table(name = "user")
 @HtmlTable(name = "Users")
-@DbTable(name = "users")
 public class User extends BaseEntity implements Serializable {
-    @DbColumn(name = "email")
-    @NotNull
+
+    @Column(name = "email",nullable = false,unique = true)
     private String email;
-    @DbColumn(name = "username")
-    @NotNull
+
+    @Column(name = "username",nullable = false, unique = true)
     private String username;
-    @DbColumn(name = "password")
-    @NotNull
+
+    @Column(name = "password",nullable = false)
     private String password;
+
+    @Transient
     private String confirmPassword;
-    @DbColumn(name = "isActive", definition = "BOOLEAN")
+
+    @Column(name = "isActive")
     private boolean isActive;
-    @DbColumn(name = "role")
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    public UserRole getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
-    }
 
     public User() {
     }
@@ -48,30 +48,6 @@ public class User extends BaseEntity implements Serializable {
         this.password = password;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -79,22 +55,6 @@ public class User extends BaseEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equals(getUsername(), user.getUsername());
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
     }
 
     @Override

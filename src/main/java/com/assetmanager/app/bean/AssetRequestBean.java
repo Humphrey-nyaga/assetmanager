@@ -1,16 +1,15 @@
 package com.assetmanager.app.bean;
 
 import com.assetmanager.app.mail.bean.MailBeanI;
-import com.assetmanager.app.mail.model.Mail;
 import com.assetmanager.app.mail.utility.MailFormatter;
 import com.assetmanager.app.model.entity.AssetRequest;
 import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.app.observer.AssetRequestEvent;
 import com.assetmanager.app.observer.Created;
 import com.assetmanager.util.SerialIDGenerator.SerialIDGenerator;
-import com.assetmanager.util.idgenerator.GenericIDGenerator;
 
 import javax.ejb.EJB;
+import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
@@ -19,7 +18,7 @@ import javax.inject.Named;
 import java.util.Optional;
 
 @Stateless
-@Remote
+@Local
 public class AssetRequestBean extends GenericBean<AssetRequest> implements AssetRequestBeanI {
     @EJB
     MailBeanI mailBean;
@@ -39,13 +38,13 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
     private Event<AssetRequestEvent> assetRequestEvent;
 
     @Override
-    public void create(AssetRequest assetRequest) {
+    public void addOrUpdate(AssetRequest assetRequest) {
         try {
             Optional<Assignee> assignee = assigneeBean.getAssigneeByStaffId(assetRequest.getStaffId());
 
             if (assignee.isPresent()) {
                 assetRequest.setAssetRequestID(serialIDGenerator.generate());
-                getDao().create(assetRequest);
+                getDao().addOrUpdate(assetRequest);
                 Assignee assignee1 = assignee.get();
                 assetRequestEvent.fire(new AssetRequestEvent(assetRequest,assignee1));
             }

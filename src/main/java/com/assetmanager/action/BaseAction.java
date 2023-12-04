@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,8 @@ public class BaseAction extends HttpServlet {
                         // web forms return the date in the form
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                         return LocalDate.parse(value, formatter);
+                    } else if (clazz == Year.class) {
+                        return Year.parse(value);
                     } else {
                         return super.convert(value, clazz);
                     }

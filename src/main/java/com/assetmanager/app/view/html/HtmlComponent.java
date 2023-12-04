@@ -1,10 +1,8 @@
 package com.assetmanager.app.view.html;
 
 import com.assetmanager.app.model.entity.Asset;
-import com.assetmanager.app.model.entity.computer.Computer;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.inject.Inject;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -14,7 +12,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import static com.assetmanager.app.view.html.AssetCardRender.renderAssetCards;
 
@@ -91,7 +88,12 @@ public class HtmlComponent implements Serializable {
 
                 stringBuilder.append("<td>")
                         .append("""
-                                <button type="button" class="btn btn-sm btn-success">Update</button>
+                                <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='""").append(htmlTableLabel.updateUrl())
+                        .append("?id=").append(id).append("""
+                                '">  Update</button>
+                                """)
+
+                        .append("""
                                 <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('""").append(htmlTableLabel.url())
                         .append("/").append(id).append("""
                                         ')">
@@ -157,7 +159,7 @@ public class HtmlComponent implements Serializable {
             if (field.getType().isAssignableFrom(LocalDate.class)) {
                 type = "date";
             }
-            if (field.getType().isAssignableFrom(BigDecimal.class)) {
+            if (field.getType().isAssignableFrom(BigDecimal.class)||field.getType().isAssignableFrom(Integer.class)||field.getType().isAssignableFrom(Double.class)) {
                 type = "number";
             }
             if (field.getType().isEnum()) {
@@ -201,14 +203,14 @@ public class HtmlComponent implements Serializable {
                         <div class="gap-2 p-2 d-flex justify-content-center">
                             <button class="btn btn-lg btn-primary" type="submit">Create """)
                 .append(htmlForm.label()).append("""
-                                    </button>
+                                        </button>
+                                    </div>
+                                </form>
                                 </div>
-                            </form>
-                            </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    """);
+                        """);
 
         return htmlFormBuilder.toString();
     }

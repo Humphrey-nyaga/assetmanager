@@ -4,54 +4,53 @@ import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.app.view.html.TableColumnHeader;
-import com.assetmanager.database.helper.DbColumn;
-import com.assetmanager.database.helper.DbTable;
-import com.assetmanager.database.helper.NotNull;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.ResultSet;
 import java.time.LocalDate;
-@DbTable(name = "assignee")
+@Entity
+@Table(name = "assignee")
 @HtmlForm(label = "Assignee", url = "./assignee")
 @HtmlTable(name = "Assignee Table", label = "Assignee",addUrl = "./assignee?action=add",url = "./assignee")
 public class Assignee extends BaseEntity implements Serializable {
 
-    @DbColumn(name = "staff_id")
-    @NotNull
+    @Column(name = "staff_id",nullable = false)
     @TableColumnHeader(header = "Staff Number")
  //   @HtmlFormField(label = "Staff Number")
     private String staffNumber;
-    @DbColumn(name = "employee_type")
-    @NotNull
+
+    @Column(name = "employee_type",nullable = false)
+    @Enumerated(value = EnumType.STRING)
     @TableColumnHeader(header = "Employee Type")
     @HtmlFormField(label = "Employee Type")
     private AssigneeType employeeType;
-    @DbColumn(name = "firstname")
-    @NotNull
+
+    @Column(name = "firstname",nullable = false)
     @TableColumnHeader(header = "First Name")
     @HtmlFormField(label = "First Name")
     private String firstName;
-    @DbColumn(name = "lastname")
-    @NotNull
+
+    @Column(name = "lastname",nullable = false)
     @TableColumnHeader(header = "Last Name")
     @HtmlFormField(label = "Last Name")
     private String lastName;
-    @DbColumn(name = "email")
-    @NotNull
+
+    @Column(name = "email",nullable = false)
     @TableColumnHeader(header = "Email")
     @HtmlFormField(label = "Email")
     private String email;
-    @DbColumn(name = "date_of_birth",definition = "DATE")
-    @NotNull
+
+    @Column(name = "date_of_birth",nullable = false)
     @TableColumnHeader(header = "Date of Birth")
     @HtmlFormField(label = "Date of Birth",isRequired = true)
     private LocalDate dateOfBirth;
-    @DbColumn(name = "national_id")
-    @NotNull
+
+    @Column(name = "national_id",nullable = false)
     @TableColumnHeader(header = "National ID")
     @HtmlFormField(label = "ID Number")
     private String identificationNumber;
 
+    
     public Assignee() {
     }
 

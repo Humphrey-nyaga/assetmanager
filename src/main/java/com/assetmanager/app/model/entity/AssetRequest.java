@@ -4,50 +4,50 @@ import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.app.view.html.TableColumnHeader;
-import com.assetmanager.database.helper.DbColumn;
-import com.assetmanager.database.helper.DbTable;
-import com.assetmanager.database.helper.NotNull;
 import com.assetmanager.util.idgenerator.IdPrefix;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDate;
-
-@DbTable(name = "asset_request")
+@Entity
+@Table(name = "asset_request")
 @IdPrefix(prefix = "ASR-")
 @HtmlForm(url = "./request", label = "Asset Request")
-@HtmlTable(name = "Asset Requests", label = "Asset Request", addUrl = "./request?action=add",url = "./request")
+@HtmlTable(name = "Asset Requests", label = "Asset Request", addUrl = "./request?action=add",url = "./request",updateUrl = "./app/updateRequest.jsp")
 public class AssetRequest extends BaseEntity implements Serializable {
 
-    @DbColumn(name = "staff_id")
-    @NotNull
+    @Column(name = "staff_id",nullable = false)
     @TableColumnHeader(header = "Staff ID")
     @HtmlFormField(label = "Staff ID")
     private String staffId;
-    @DbColumn(name = "asset_request_id")
-    @NotNull
+
+    @Column(name = "asset_request_id",nullable = false)
     @TableColumnHeader(header = "Request ID")
     private String assetRequestID;
-    @DbColumn(name = "asset_name")
-    @NotNull
+
+    @Column(name = "asset_name",nullable = false)
     @TableColumnHeader(header = "Asset")
     @HtmlFormField(label = "Asset Name")
     private String assetName;
-    @DbColumn(name = "description")
-    @NotNull
+
+    @Column(name = "description",nullable = false,columnDefinition = "longtext")
     @TableColumnHeader(header = "Description")
     @HtmlFormField(label = "Description")
     private String description;
-    @DbColumn(name = "date_requested",definition = "DATE")
-    @NotNull
+
+    @Column(name = "date_requested",nullable = false)
     @TableColumnHeader(header = "Request Date")
     @HtmlFormField(label = "Request Date")
     private LocalDate dateRequested;
-    @DbColumn(name = "quantity",definition = "INTEGER")
+
+    @Column(name = "quantity",nullable = false)
     @TableColumnHeader(header = "Quantity")
     @HtmlFormField(label = "Quantity")
     private int quantity;
-    @DbColumn(name = "request_status")
-    @NotNull
+
+    @Column(name = "request_status",nullable = false)
     @TableColumnHeader(header = "Status")
     @HtmlFormField(label = "Request Status")
     private RequestStatus requestStatus;
