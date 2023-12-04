@@ -17,7 +17,7 @@ import javax.validation.constraints.Positive;
 @MappedSuperclass
 @HtmlForm(label = "Asset", url = "./asset")
 @IdPrefix(prefix = "ASN00")
-@HtmlTable(name = "Asset Table", label = "Asset", addUrl = "./asset?action=add", url = "./asset")
+@HtmlTable(name = "Asset Table", label = "Asset", url = "./asset")
 public  class Asset extends BaseEntity implements Serializable {
 
     @Column(name = "serial_id",unique = true)

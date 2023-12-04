@@ -29,12 +29,15 @@ public class HtmlComponent implements Serializable {
 
         StringBuilder stringBuilder = new StringBuilder()
                 .append("<div class=\"row justify-content-center\">\n")
-                .append("<div class=\"col-md-11 mr-0\">\n")
-                .append("<div class=\"btn-toolbar\"><a href=\"" + htmlTableLabel.addUrl() + "\"><button class=\"btn btn-primary rounded-2\">Add " + htmlTableLabel.label() + "</button></a></div>\n");
+                .append("<div class=\"col-md-11 mr-0\">\n");
+
 
         if (Asset.class.equals(dataClass)) {
             stringBuilder.append(renderAssetCards());
+        } else {
+            stringBuilder.append("<div class=\"btn-toolbar\"><a href=\"" + htmlTableLabel.addUrl() + "\"><button class=\"btn btn-primary rounded-2\">Add " + htmlTableLabel.label() + "</button></a></div>\n");
         }
+
         stringBuilder.append("<div class=\"\">\n")
                 .append("<div style=\"max-height: 60vh; overflow: auto;\">\n")
                 .append("<table class=\" table table-bordered border-4 table-striped table-responsive-sm \">\n")
