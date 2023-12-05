@@ -35,7 +35,7 @@ public class OverviewRenderFormat implements Serializable {
 
                 } else if (result instanceof BigDecimal) {
                     DecimalFormat format = new DecimalFormat("#,###.##");
-                    String formattedValue = "$ <br> " + format.format((BigDecimal) result);
+                    String formattedValue = "$ <br> " + format.format(result);
                     html.append(generateSingleValueHtml(formattedValue, label));
                 } else {
                     html.append(generateSingleValueHtml(result, label));
@@ -79,7 +79,7 @@ public class OverviewRenderFormat implements Serializable {
                 "    <h5 class=\"card-header bg-secondary text-center\">" + methodLabel + "</h5>\n" +
                 "    <div class=\"d-flex align-items-center flex-column\">\n" +
                 "        <div class=\"display-4 text-center mt-0 overflow-hidden\" style=\"white-space: nowrap;\" title=\"" + value.toString() + "\">\n" +
-                "            " + value.toString() + "\n" +
+                "            " + value + "\n" +
                 "        </div>\n" +
                 "    </div>\n" +
                 "</div>";

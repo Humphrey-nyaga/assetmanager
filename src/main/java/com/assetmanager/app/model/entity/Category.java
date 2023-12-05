@@ -4,10 +4,9 @@ import java.io.Serializable;
 
 public enum Category implements Serializable {
     ELECTRONICS("Electronics"),
-    SOFTWARE("Software"),
-    DIGITAL("Digital"),
     VEHICLE("Vehicle"),
-    ART("Art"),
+    MACHINERY("Machinery"),
+
     LAND("Land"),
     BUILDING("Building");
 

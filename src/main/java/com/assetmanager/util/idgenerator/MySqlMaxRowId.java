@@ -1,25 +1,30 @@
 package com.assetmanager.util.idgenerator;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.Objects;
 
-import com.assetmanager.database.MysqlDatabase;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
-import javax.inject.Inject;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 public class MySqlMaxRowId {
-    @Inject
-    MysqlDatabase mysqlDatabase;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public synchronized long getLastGeneratedId(String tableName) {
-        String queryString = "SELECT MAX(id) FROM " + tableName;
+        String queryString = "SELECT MAX(id) FROM :tableName";
         try {
-
-            PreparedStatement preparedStatement = mysqlDatabase.getConnection().prepareStatement(queryString);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next())
-                return resultSet.getLong(1);
-        } catch (SQLException e) {
+            Query query = entityManager.createNativeQuery(queryString);
+            query.setParameter("tableName", tableName);
+            Object result = query.getSingleResult();
+            return result instanceof Number ? ((Number) result).longValue() : 1;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 1;

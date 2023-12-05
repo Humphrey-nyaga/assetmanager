@@ -2,7 +2,6 @@ package com.assetmanager.util.ageValidator;
 
 import javax.annotation.Priority;
 import javax.enterprise.inject.Alternative;
-import javax.inject.Named;
 import java.time.LocalDate;
 import java.time.Period;
 @Priority(100)

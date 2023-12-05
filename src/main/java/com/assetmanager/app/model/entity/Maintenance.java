@@ -4,58 +4,65 @@ import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.app.view.html.TableColumnHeader;
-import com.assetmanager.database.helper.DbColumn;
-import com.assetmanager.database.helper.DbTable;
-import com.assetmanager.database.helper.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+@Entity
+@Table(name = "maintenance")
 @Getter @Setter
-@DbTable(name = "maintenance")
 @HtmlForm(url = "./maintenance", label = "Maintenance")
 @HtmlTable(name = "Maintenance", label = "Maintenance", addUrl = "./maintenance?action=add",url = "./maintenance")
 public class Maintenance extends BaseEntity implements Serializable {
 
-    @DbColumn(name = "asset_serial_id")
-    @NotNull
+    @Column(name = "asset_serial_id",nullable = false)
     @TableColumnHeader(header = "Asset Serial ID")
     @HtmlFormField(label = "Asset Serial ID")
     private String assetSerialID;
 
-    @DbColumn(name = "maintenance_type")
-    @NotNull
+
+    @Column(name = "maintenance_type",nullable = false)
+    @Enumerated(value = EnumType.STRING)
     @TableColumnHeader(header = "Maintenance Type")
     @HtmlFormField(label = "Maintenance Type")
     private MaintenanceType maintenanceType;
 
-    @DbColumn(name = "scheduled_maintenance_date", definition = "DATE")
+    @Column(name = "scheduled_maintenance_date")
     @TableColumnHeader(header = "Scheduled Date")
     @HtmlFormField(label = "Scheduled maintenance date")
     private LocalDate scheduledMaintenanceDate;
 
-    @DbColumn(name = "actual_maintenance_date", definition = "DATE")
+
+    @Column(name = "actual_maintenance_date")
     @TableColumnHeader(header = "Actual Date")
     private LocalDate actualMaintenanceDate;
 
-    @DbColumn(name = "description")
+
+    @Column(name = "description",columnDefinition = "longtext")
     @TableColumnHeader(header = "Description")
-    @HtmlFormField(label = "Description")
+    @HtmlFormField(label = "Description",isTextArea = true)
     private String description;
 
-    @DbColumn(name = "cost", definition = "Decimal(10,2)")
+
+    @Column(name = "cost",nullable = false)
     @TableColumnHeader(header = "Cost")
     @HtmlFormField(label = "Cost")
     private BigDecimal cost;
 
-    @DbColumn(name = "status")
+
+    @Column(name = "status",nullable = false)
     @TableColumnHeader(header = "Status")
     @HtmlFormField(label = "Status")
     private String status;
 
-    @DbColumn(name = "maintenance_period")
+
+    @Column(name = "maintenance_period")
+    @Enumerated(value = EnumType.STRING)
     @HtmlFormField(label = "Maintenance Period")
     private MaintenanceFrequency maintenanceFrequency;
 

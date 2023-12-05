@@ -8,7 +8,7 @@ public enum ComputerType {
     TABLET("Tablet"),
     SMARTPHONE("Smartphone");
 
-    private String name;
+    private final String name;
     ComputerType(String name) {
         this.name = name;
     }

@@ -1,20 +1,22 @@
 package com.assetmanager.app.model.entity.computer;
 
 import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.app.model.entity.BaseEntity;
+import com.assetmanager.app.model.entity.Machinery.Condition;
 import com.assetmanager.app.view.html.AssetCreationCard;
+import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
 
 
+@Getter @Setter
 @Entity
-@Table(name = "computer",
-        indexes = {
-                @Index(name = "idx_computer_type", columnList = "computer_type"),
-                @Index(name = "idx_manufacturer_model", columnList = "manufacturer, model")
-        }
-)
+@Table(name = "computer")
+@HtmlForm(label = "Computer", url = "./computer")
 @AssetCreationCard(label = "Computer & Related ",addUrl = "./computer?action=add")
 public class Computer extends Asset {
 
@@ -40,9 +42,10 @@ public class Computer extends Asset {
     @Positive
     private Double storageSizeInGB;
 
-    @Column(name = "condition")
+    @Column(name = "current_condition")
     @HtmlFormField(label = "Condition", isRequired = true)
-    private String condition;
+    @Enumerated(value = EnumType.STRING)
+    private Condition currentCondition;
 
     @Column(name = "processor")
     @HtmlFormField(label = "Processor", isRequired = true)
@@ -54,67 +57,4 @@ public class Computer extends Asset {
     private ComputerType computerType;
     public Computer(){}
 
-    public Double getRamInGB() {
-        return ramInGB;
-    }
-
-    public void setRamInGB(Double ramInGB) {
-        this.ramInGB = ramInGB;
-    }
-
-    public String getScreenSize() {
-        return screenSize;
-    }
-
-    public void setScreenSize(String screenSize) {
-        this.screenSize = screenSize;
-    }
-
-    public String getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public Double getStorageSizeInGB() {
-        return storageSizeInGB;
-    }
-
-    public void setStorageSizeInGB(Double storageSizeInGB) {
-        this.storageSizeInGB = storageSizeInGB;
-    }
-
-    public String getCondition() {
-        return condition;
-    }
-
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
-
-    public String getProcessor() {
-        return processor;
-    }
-
-    public void setProcessor(String processor) {
-        this.processor = processor;
-    }
-
-    public ComputerType getComputerType() {
-        return computerType;
-    }
-
-    public void setComputerType(ComputerType computerType) {
-        this.computerType = computerType;
-    }
 }

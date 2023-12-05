@@ -37,8 +37,8 @@ public class RequestAction extends BaseAction {
         try {
             AssetRequest assetRequest = new AssetRequest();
             serializeForm(assetRequest, servletRequest.getParameterMap());
-            System.out.println("ASSET REQUEST >>>>>" + assetRequest.toString());
-            assetRequestBean.create(assetRequest);
+            System.out.println("ASSET REQUEST >>>>>" + assetRequest);
+            assetRequestBean.addOrUpdate(assetRequest);
             servletResponse.sendRedirect("./");
         }catch(AssigneeDoesNotExistException e) {
             servletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "ERROR" +  e.getMessage());

@@ -1,14 +1,9 @@
 package com.assetmanager.app.mail.bean;
 
 import com.assetmanager.app.mail.model.Mail;
-import io.github.cdimascio.dotenv.Dotenv;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.Remote;
 import javax.ejb.Singleton;
-import javax.ejb.Stateless;
 import javax.mail.*;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.Serializable;
@@ -17,12 +12,12 @@ import java.util.Properties;
 
 @Singleton
 public class MailBean implements MailBeanI, Serializable {
-    private int port = 465;
+    private final int port = 465;
     private final String host = "smtp.gmail.com";
 
     private final String from = System.getProperty("FROM");
-    private boolean auth = true;
-    private  Session session;
+    private final boolean auth = true;
+    private final Session session;
     private final String password = System.getProperty("PASSWORD");
     private final String username = System.getProperty("USERNAME");
     private final boolean debug = true;
