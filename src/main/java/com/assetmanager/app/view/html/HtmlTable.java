@@ -12,4 +12,5 @@ public @interface HtmlTable {
     String label() default "";
     String addUrl() default "";
     String url() default "";
+    String updateUrl() default "";
 }

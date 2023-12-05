@@ -13,5 +13,6 @@ public @interface HtmlFormField {
     String name() default "";
     String id() default "";
     boolean isRequired() default false;
+    boolean isTextArea() default false;
 
 }

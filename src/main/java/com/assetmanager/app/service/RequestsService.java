@@ -1,11 +1,8 @@
 package com.assetmanager.app.service;
 
-import com.assetmanager.app.bean.AssetRequestBean;
-import com.assetmanager.app.bean.AssetRequestBeanI;
 import com.assetmanager.app.model.entity.*;
 import com.assetmanager.app.view.html.SummaryHtmlCard;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

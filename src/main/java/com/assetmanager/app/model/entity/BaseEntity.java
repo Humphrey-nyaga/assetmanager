@@ -1,20 +1,18 @@
 package com.assetmanager.app.model.entity;
 
 import com.assetmanager.app.view.html.TableColumnHeader;
-import com.assetmanager.database.helper.DbColumn;
-import com.assetmanager.database.helper.NotNull;
-import com.assetmanager.database.helper.PrimaryKey;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-public class BaseEntity implements Serializable {
-    @PrimaryKey
-    @NotNull
-    @DbColumn(name = "id", definition = "INTEGER")
-    @TableColumnHeader(header = "ID")
+@MappedSuperclass
+public abstract class BaseEntity implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @TableColumnHeader(header = "ID")
     private Long id;
 
     public Long getId() {
@@ -25,9 +23,12 @@ public class BaseEntity implements Serializable {
         this.id = id;
     }
 
-    //@DbColumn(name = "created_at" ,definition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at")
+    @CreationTimestamp
     private LocalDateTime createdAt;
-    //@DbColumn(name = "modified_at",definition = "DATETIME ON UPDATE CURRENT_TIMESTAMP")
+
+    @Column(name = "modified_at")
+    @UpdateTimestamp
     private LocalDateTime lastModifiedAt;
 
     public LocalDateTime getCreatedAt() {

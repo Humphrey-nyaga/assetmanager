@@ -1,8 +1,9 @@
 package com.assetmanager.action;
 
-
-import com.assetmanager.app.bean.MachineryBeanI;
-import com.assetmanager.app.model.entity.Machinery.Machinery;
+import com.assetmanager.app.bean.ComputerBeanI;
+import com.assetmanager.app.bean.VehicleBeanI;
+import com.assetmanager.app.model.entity.computer.Computer;
+import com.assetmanager.app.model.entity.vehicle.Vehicle;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -11,25 +12,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/machinery/*")
-public class MachineryAction extends BaseAction {
+@WebServlet("/computer/*")
+public class ComputerAndRelatedAction extends BaseAction {
     @EJB
-    MachineryBeanI machineryBean;
+    ComputerBeanI computerBean;
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
         renderPage(servletRequest,
                 servletResponse,
                 "./asset",
-                Machinery.class,
-                machineryBean.list(new Machinery()));
+                Computer.class,
+                computerBean.list(new Computer()));
     }
     public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
-
-        Machinery machinery = new Machinery();
-        serializeForm(machinery, servletRequest.getParameterMap());
-        machineryBean.addOrUpdate(machinery);
+        Computer computer = new Computer();
+        serializeForm(computer, servletRequest.getParameterMap());
+        computerBean.addOrUpdate(computer);
         servletResponse.sendRedirect("./asset");
     }
-
 }

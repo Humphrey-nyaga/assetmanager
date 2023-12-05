@@ -7,7 +7,7 @@ public enum UserRole implements Serializable {
     ADMIN("Admin"),
     REGULAR("Regular");
 
-    private String name;
+    private final String name;
 
     UserRole(String name) {
         this.name = name;

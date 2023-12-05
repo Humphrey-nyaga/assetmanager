@@ -1,25 +1,28 @@
 package com.assetmanager.app.dao;
 
-import com.assetmanager.database.MysqlDatabase;
+import lombok.Getter;
 
+import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
-public class GenericDao<T> implements GenericDaoI<T>  {
-    private MysqlDatabase database;
+@Getter
+public class GenericDao<T> implements GenericDaoI<T> {
+    private EntityManager em;
+
+    @SuppressWarnings({"unchecked"})
     @Override
     public List<T> list(Object entity) {
-        return (List<T>) database.select(entity);
-    }
-
-    @Override
-    public void create(T entity) {
-        database.insert(entity);
+        String jpql = "FROM " + entity.getClass().getSimpleName() + " e";
+        return (List<T>) em.createQuery(jpql, entity.getClass()).getResultList();
 
     }
 
+
     @Override
-    public T update(T entity) {
-        return null;
+    public void addOrUpdate(T entity) {
+        em.merge(entity);
+
     }
 
     @Override
@@ -27,16 +30,14 @@ public class GenericDao<T> implements GenericDaoI<T>  {
 
     }
 
-    public MysqlDatabase getDatabase() {
-        return database;
-    }
-
     @Override
-    public void deleteById(Class<?> clazz,Long id) {
-        database.deleteById(clazz,id);
+    public void deleteById(Class<?> clazz, Long id) {
+        Object o = em.find(clazz, id);
+        em.remove(o);
     }
 
-    public void setDatabase(MysqlDatabase database) {
-        this.database = database;
+
+    public void setEm(EntityManager em) {
+        this.em = em;
     }
 }

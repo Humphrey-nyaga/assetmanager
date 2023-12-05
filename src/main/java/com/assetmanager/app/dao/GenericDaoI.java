@@ -1,7 +1,6 @@
 package com.assetmanager.app.dao;
 
-import com.assetmanager.database.MysqlDatabase;
-
+import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -10,19 +9,15 @@ public interface GenericDaoI<T> extends Serializable {
 
     List<T> list(Object entity);
 
-    void create(T entity);
-
-    T update(T entity);
+    void addOrUpdate(T entity);
 
     void delete(T entity);
+   void deleteById(Class<?> clazz, Long id);
 
     default Optional<T> findById(String id) {
         return Optional.empty();
     }
+    public EntityManager getEm();
 
-    void setDatabase(MysqlDatabase database);
-
-    MysqlDatabase getDatabase();
-    void deleteById(Class<?> clazz, Long id);
-
+    public void setEm(EntityManager em);
 }

@@ -1,7 +1,6 @@
 package com.assetmanager.app.service;
 
 import com.assetmanager.app.model.entity.Asset;
-import com.assetmanager.app.model.entity.Category;
 
 import java.math.BigDecimal;
 import java.util.List;

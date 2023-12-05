@@ -4,53 +4,59 @@ import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.app.view.html.TableColumnHeader;
-import com.assetmanager.database.helper.DbColumn;
-import com.assetmanager.database.helper.DbTable;
-import com.assetmanager.database.helper.NotNull;
 import com.assetmanager.util.idgenerator.IdPrefix;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-
-@DbTable(name = "asset_request")
+@Entity
+@Table(name = "asset_request")
 @IdPrefix(prefix = "ASR-")
+@Getter @Setter
 @HtmlForm(url = "./request", label = "Asset Request")
-@HtmlTable(name = "Asset Requests", label = "Asset Request", addUrl = "./request?action=add",url = "./request")
-public class AssetRequest extends BaseEntity implements Serializable {
+@HtmlTable(name = "Asset Requests", label = "Asset Request", addUrl = "./request?action=add",url = "./request",updateUrl = "./updateRequest")
+public class AssetRequest extends BaseEntity {
 
-    @DbColumn(name = "staff_id")
-    @NotNull
+    @Column(name = "staff_id",nullable = false)
     @TableColumnHeader(header = "Staff ID")
-    @HtmlFormField(label = "Staff ID")
+    @HtmlFormField(label = "Staff ID",isRequired = true)
     private String staffId;
-    @DbColumn(name = "asset_request_id")
-    @NotNull
+
+    @Column(name = "asset_request_id",nullable = false)
     @TableColumnHeader(header = "Request ID")
     private String assetRequestID;
-    @DbColumn(name = "asset_name")
-    @NotNull
+
+    @Column(name = "asset_name",nullable = false)
     @TableColumnHeader(header = "Asset")
-    @HtmlFormField(label = "Asset Name")
+    @HtmlFormField(label = "Asset Name",isRequired = true)
     private String assetName;
-    @DbColumn(name = "description")
-    @NotNull
+
+    @Column(name = "description",nullable = false, columnDefinition = "longtext")
     @TableColumnHeader(header = "Description")
-    @HtmlFormField(label = "Description")
+    @HtmlFormField(label = "Description", isTextArea = true)
     private String description;
-    @DbColumn(name = "date_requested",definition = "DATE")
-    @NotNull
+
+    @Column(name = "date_requested",nullable = false)
     @TableColumnHeader(header = "Request Date")
-    @HtmlFormField(label = "Request Date")
+    @HtmlFormField(label = "Request Date",isRequired = true)
     private LocalDate dateRequested;
-    @DbColumn(name = "quantity",definition = "INTEGER")
+
+    @Column(name = "quantity",nullable = false)
     @TableColumnHeader(header = "Quantity")
-    @HtmlFormField(label = "Quantity")
-    private int quantity;
-    @DbColumn(name = "request_status")
-    @NotNull
+    @HtmlFormField(label = "Quantity",isRequired = true)
+    private Integer quantity;
+
+    @Column(name = "request_status",nullable = false)
     @TableColumnHeader(header = "Status")
     @HtmlFormField(label = "Request Status")
     private RequestStatus requestStatus;
+
+    @Column(name="asset_category")
+    @Enumerated(EnumType.STRING)
+    @HtmlFormField(label = "Asset Type", isRequired = true)
+    private Category category;
 
     public AssetRequest() {
     }
@@ -65,62 +71,7 @@ public class AssetRequest extends BaseEntity implements Serializable {
         this.requestStatus = requestStatus;
     }
 
-    public String getAssetRequestID() {
-        return assetRequestID;
-    }
 
-    public void setAssetRequestID(String assetRequestID) {
-        this.assetRequestID = assetRequestID;
-    }
-
-    public String getStaffId() {
-        return staffId;
-    }
-
-    public void setStaffId(String staffId) {
-        this.staffId = staffId;
-    }
-
-    public String getAssetName() {
-        return assetName;
-    }
-
-    public void setAssetName(String assetName) {
-        this.assetName = assetName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDate getDateRequested() {
-        return dateRequested;
-    }
-
-    public void setDateRequested(LocalDate dateRequested) {
-        this.dateRequested = dateRequested;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-
-    public RequestStatus getRequestStatus() {
-        return requestStatus;
-    }
-
-    public void setRequestStatus(RequestStatus requestStatus) {
-        this.requestStatus = requestStatus;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
 
     @Override
     public String toString() {
