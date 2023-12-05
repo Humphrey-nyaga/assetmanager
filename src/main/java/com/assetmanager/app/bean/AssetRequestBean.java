@@ -45,13 +45,11 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
     @Override
     public void addOrUpdate(AssetRequest assetRequest) {
         try {
-            Optional<Assignee> assignee = assigneeBean.getAssigneeByStaffId(assetRequest.getStaffId());
-
-            if (assignee.isPresent()) {
+            Assignee assignee = assigneeBean.getAssigneeByStaffId(assetRequest.getStaffId());
+            if (assignee!= null) {
                 assetRequest.setAssetRequestID(serialIDGenerator.generate());
                 getDao().addOrUpdate(assetRequest);
-                Assignee assignee1 = assignee.get();
-                assetRequestEvent.fire(new AssetRequestEvent(assetRequest, assignee1));
+                assetRequestEvent.fire(new AssetRequestEvent(assetRequest, assignee));
             }
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
@@ -60,7 +58,6 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
 
     @Override
     public AssetRequest getRequest(Long id) {
-        AssetRequest assetRequest =  em.find(AssetRequest.class, id);
-        return assetRequest;
+        return em.find(AssetRequest.class, id);
     }
 }

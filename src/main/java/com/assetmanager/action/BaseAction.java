@@ -23,7 +23,8 @@ import org.apache.commons.lang3.StringUtils;
 
 public class BaseAction extends HttpServlet {
 
-    @SuppressWarnings("unchecked") public void serializeForm(Object bean, Map<String, ?> requestMap) {
+    @SuppressWarnings("unchecked")
+    public void serializeForm(Object bean, Map<String, ?> requestMap) {
         try {
             BeanUtilsBean beanUtilsBean = new BeanUtilsBean(new ConvertUtilsBean() {
                 @Override
@@ -46,14 +47,15 @@ public class BaseAction extends HttpServlet {
         } catch (IllegalAccessException | InvocationTargetException e) {
         }
     }
+
     public <T> void renderPage(HttpServletRequest request, HttpServletResponse response,
-                               String activeUrl, Class<T> entity,List<T> entityDataList) throws IOException, ServletException {
+                               String activeUrl, Class<T> entity, List<T> entityDataList) throws IOException, ServletException {
 
         request.setAttribute("activeUrl", activeUrl);
         if (StringUtils.trimToEmpty(request.getParameter("action")).equals("add"))
             request.setAttribute("content", HtmlComponent.form(entity));
         else
-            request.setAttribute("content", HtmlComponent.table(entityDataList,entity));
+            request.setAttribute("content", HtmlComponent.table(entityDataList, entity));
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("./app/index.jsp");
         requestDispatcher.forward(request, response);
@@ -62,7 +64,7 @@ public class BaseAction extends HttpServlet {
 
     public void renderPageWithoutTables(HttpServletRequest request, HttpServletResponse response, String content, String activeUrl) throws ServletException, IOException {
         request.setAttribute("activeUrl", activeUrl);
-        request.setAttribute("content",content);
+        request.setAttribute("content", content);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("./app/index.jsp");
         requestDispatcher.forward(request, response);
 

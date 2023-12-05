@@ -29,11 +29,10 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
     @Override
     @SuppressWarnings("unchecked")
     public List<Asset> list(Object entity) {
-        String jpql = "FROM " + entity.getClass().getName() + " e";
+        String jpql = "FROM " + entity.getClass().getName() + " e ORDER BY e.createdAt DESC";
         return em.createQuery(jpql, Asset.class)
                 .getResultList();
     }
-
 
     @Override
     public Optional<Asset> findAssetById(String id) {

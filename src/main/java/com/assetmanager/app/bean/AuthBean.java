@@ -29,10 +29,10 @@ public class AuthBean implements AuthBeanI, Serializable {
     public User authenticate(User userToAuthenticate) {
 
         try {
-            String hashedPassword = passwordEncoder.encodePassword(userToAuthenticate.getPassword());
+            userToAuthenticate.setPassword(passwordEncoder.encodePassword(userToAuthenticate.getPassword()));
 
             return em.createQuery("FROM User u WHERE u.password=:password AND u.username=:username", User.class)
-                    .setParameter("password", hashedPassword)
+                    .setParameter("password", userToAuthenticate.getPassword())
                     .setParameter("username", userToAuthenticate.getUsername()).getSingleResult();
         } catch (NoSuchAlgorithmException e) {
             throw new UserPasswordEncodingException("Password decoding algorithm failed: " + e.getMessage());

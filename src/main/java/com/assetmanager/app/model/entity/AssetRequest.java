@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Getter @Setter
 @HtmlForm(url = "./request", label = "Asset Request")
 @HtmlTable(name = "Asset Requests", label = "Asset Request", addUrl = "./request?action=add",url = "./request",updateUrl = "./updateRequest")
-public class AssetRequest extends BaseEntity implements Serializable {
+public class AssetRequest extends BaseEntity {
 
     @Column(name = "staff_id",nullable = false)
     @TableColumnHeader(header = "Staff ID")

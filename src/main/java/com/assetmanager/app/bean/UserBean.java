@@ -41,8 +41,8 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
             if (findUserByEmail(user.getEmail()).isPresent())
                 throw new UserAlreadyExistsException("Failed!!. User with email " + user.getEmail() + " already exists.");
 
-            if (!emailValidator.isValidEmail(user.getEmail()))
-                throw new InvalidEmailFormatException("Failed!!. Invalid Email Format");
+//            if (!emailValidator.isValidEmail(user.getEmail()))
+//                throw new InvalidEmailFormatException("Failed!!. Invalid Email Format");
 
             if (user.getPassword().equals(user.getConfirmPassword())) {
                 user.setPassword(passwordEncoder.encodePassword(user.getPassword()));

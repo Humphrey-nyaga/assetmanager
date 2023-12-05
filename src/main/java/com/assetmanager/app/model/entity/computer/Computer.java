@@ -4,6 +4,7 @@ import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.BaseEntity;
 import com.assetmanager.app.model.entity.Machinery.Condition;
 import com.assetmanager.app.view.html.AssetCreationCard;
+import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import javax.validation.constraints.Positive;
 @Getter @Setter
 @Entity
 @Table(name = "computer")
+@HtmlForm(label = "Computer", url = "./computer")
 @AssetCreationCard(label = "Computer & Related ",addUrl = "./computer?action=add")
 public class Computer extends Asset {
 

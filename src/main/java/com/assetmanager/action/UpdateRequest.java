@@ -29,7 +29,8 @@ public class UpdateRequest extends BaseAction {
         AssetRequest assetRequest = new AssetRequest();
         serializeForm(assetRequest, request.getParameterMap());
         assetRequest.setId(Long.valueOf(request.getParameter("assetRequestId")));
-
+        System.out.println("ASSET UPDATED>>>>" + assetRequest);
         assetRequestBean.addOrUpdate(assetRequest);
+        response.sendRedirect("./request");
     }
 }
