@@ -55,6 +55,9 @@ public  class Asset extends BaseEntity implements Serializable {
     @TableColumnHeader(header = "Assignee Staff ID")
     private String assigneeStaffID;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Assignee assignee;
+
     public Asset() {
     }
 

@@ -30,10 +30,10 @@ public class AssigneeBean extends GenericBean<Assignee> implements AssigneeBeanI
     ValidAgeI validAge;
 
     @Override
-    public void addOrUpdate(Assignee assignee) {
+    public Assignee addOrUpdate(Assignee assignee) {
         if (validAge.validWorkingAge(assignee.getDateOfBirth())) {
             assignee.setStaffNumber(serialIDGenerator.generate());
-            getDao().addOrUpdate(assignee);
+           return getDao().addOrUpdate(assignee);
         } else {
             throw new RuntimeException("Invalid Age for employee");
         }

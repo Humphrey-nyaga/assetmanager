@@ -21,9 +21,9 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
     EntityManager em;
 
     @Override
-    public void addOrUpdate(Asset entity) {
+    public Asset addOrUpdate(Asset entity) {
         entity.setSerialNumber(generate.generateId(entity));
-        getDao().addOrUpdate(entity);
+        return getDao().addOrUpdate(entity);
     }
 
     @Override

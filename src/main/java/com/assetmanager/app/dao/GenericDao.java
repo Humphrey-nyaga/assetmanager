@@ -1,5 +1,6 @@
 package com.assetmanager.app.dao;
 
+import com.assetmanager.app.model.entity.AssetRequest;
 import lombok.Getter;
 
 import javax.persistence.EntityManager;
@@ -20,8 +21,8 @@ public class GenericDao<T> implements GenericDaoI<T> {
 
 
     @Override
-    public void addOrUpdate(T entity) {
-        em.merge(entity);
+    public T addOrUpdate(T entity) {
+        return em.merge(entity);
 
     }
 
@@ -34,6 +35,12 @@ public class GenericDao<T> implements GenericDaoI<T> {
     public void deleteById(Class<?> clazz, Long id) {
         Object o = em.find(clazz, id);
         em.remove(o);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public T findById(Class<?> clazz, Long id) {
+        return (T) em.find(clazz, id);
     }
 
 

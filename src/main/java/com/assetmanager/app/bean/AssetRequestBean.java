@@ -43,17 +43,18 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
     private Event<AssetRequestEvent> assetRequestEvent;
 
     @Override
-    public void addOrUpdate(AssetRequest assetRequest) {
+    public AssetRequest addOrUpdate(AssetRequest assetRequest) {
         try {
             Assignee assignee = assigneeBean.getAssigneeByStaffId(assetRequest.getStaffId());
             if (assignee!= null) {
                 assetRequest.setAssetRequestID(serialIDGenerator.generate());
-                getDao().addOrUpdate(assetRequest);
+               getDao().addOrUpdate(assetRequest);
                 assetRequestEvent.fire(new AssetRequestEvent(assetRequest, assignee));
             }
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
         }
+        return assetRequest;
     }
 
     @Override

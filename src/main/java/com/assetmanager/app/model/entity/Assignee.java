@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "assignee")
 @HtmlForm(label = "Assignee", url = "./assignee")
-@HtmlTable(name = "Assignee Table", label = "Assignee",addUrl = "./assignee?action=add",url = "./assignee")
+@HtmlTable(name = "Assignee Table", label = "Assignee",addUrl = "./assignee?action=add",updateUrl = "./updateAssignee")
 public class Assignee extends BaseEntity {
 
     @Column(name = "staff_id",nullable = false,unique = true)
