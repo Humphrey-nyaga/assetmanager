@@ -46,7 +46,6 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
     public List<Asset> findAssetsByAssigneeID(String staffID) {
 
         List<Asset> assets = new ArrayList<>();
-
         return assets;
     }
 

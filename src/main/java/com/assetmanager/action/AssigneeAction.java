@@ -39,7 +39,8 @@ public class AssigneeAction extends BaseAction {
 
             try {
                 Long id = Long.parseLong(idString);
-                assigneeBean.deleteById(Assignee.class, id);
+                Assignee assignee = assigneeBean.findById(Assignee.class, id);
+                assigneeBean.delete(assignee);
 
                 response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 

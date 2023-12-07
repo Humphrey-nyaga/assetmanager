@@ -24,12 +24,13 @@ public  class Asset extends BaseEntity implements Serializable {
     @TableColumnHeader(header = "Serial Number")
     // @HtmlFormField(label = "Serial Number", isRequired = true)
     private String serialNumber;
-    @Column(name = "name")
+
+    @Column
     @TableColumnHeader(header = "Name of Asset")
     @HtmlFormField(label = "Name", isRequired = true)
     private String name;
 
-    @Column(name = "description")
+    @Column
     @TableColumnHeader(header = "Description")
     @HtmlFormField(label = "Description",isTextArea = true)
     private String description;
@@ -39,7 +40,7 @@ public  class Asset extends BaseEntity implements Serializable {
     @HtmlFormField(label = "Date Acquired", isRequired = true)
     private LocalDate dateAcquired;
 
-    @Column(name = "category")
+    @Column
     @Enumerated(EnumType.STRING)
     @TableColumnHeader(header = "Category")
     @HtmlFormField(label = "Category")
@@ -56,6 +57,7 @@ public  class Asset extends BaseEntity implements Serializable {
     private String assigneeStaffID;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assignee_id")
     private Assignee assignee;
 
     public Asset() {

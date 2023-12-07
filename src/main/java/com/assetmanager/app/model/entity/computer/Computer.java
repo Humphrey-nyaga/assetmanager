@@ -55,6 +55,7 @@ public class Computer extends Asset {
     @Column(name = "computer_type")
     @HtmlFormField(label = "Type", isRequired = true)
     private ComputerType computerType;
+
     public Computer(){}
 
 }

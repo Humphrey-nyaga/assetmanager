@@ -1,6 +1,7 @@
 package com.assetmanager.app.model.entity.vehicle;
 
 import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.app.model.entity.Maintenance;
 import com.assetmanager.app.view.html.AssetCreationCard;
 import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
@@ -11,6 +12,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
 import java.time.Year;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -55,6 +58,7 @@ public class Vehicle extends Asset {
     @HtmlFormField(label = "Transmission", isRequired = true)
     private Transmission transmission;
 
+
     @Column(name = "number_plate",nullable = false)
     @HtmlFormField(label = "Number Plate", isRequired = true)
     private String numberPlate;
@@ -64,6 +68,9 @@ public class Vehicle extends Asset {
     @HtmlFormField(label = "Tyre Number", isRequired = true)
     @Positive
     private Integer tyreNumber;
+
+    @OneToMany(mappedBy = "vehicle")
+    List<Maintenance> maintenances = new ArrayList<>();
 
     public Vehicle() {
     }

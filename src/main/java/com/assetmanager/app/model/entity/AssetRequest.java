@@ -24,39 +24,49 @@ public class AssetRequest extends BaseEntity {
     @HtmlFormField(label = "Staff ID",isRequired = true)
     private String staffId;
 
+
     @Column(name = "asset_request_id",nullable = false)
     @TableColumnHeader(header = "Request ID")
     private String assetRequestID;
+
 
     @Column(name = "asset_name",nullable = false)
     @TableColumnHeader(header = "Asset")
     @HtmlFormField(label = "Asset Name",isRequired = true)
     private String assetName;
 
+
     @Column(name = "description",nullable = false, columnDefinition = "longtext")
     @TableColumnHeader(header = "Description")
     @HtmlFormField(label = "Description", isTextArea = true)
     private String description;
+
 
     @Column(name = "date_requested",nullable = false)
     @TableColumnHeader(header = "Request Date")
     @HtmlFormField(label = "Request Date",isRequired = true)
     private LocalDate dateRequested;
 
+
     @Column(name = "quantity",nullable = false)
     @TableColumnHeader(header = "Quantity")
     @HtmlFormField(label = "Quantity",isRequired = true)
     private Integer quantity;
+
 
     @Column(name = "request_status",nullable = false)
     @TableColumnHeader(header = "Status")
     @HtmlFormField(label = "Request Status")
     private RequestStatus requestStatus;
 
+
     @Column(name="asset_category")
     @Enumerated(EnumType.STRING)
     @HtmlFormField(label = "Asset Type", isRequired = true)
     private Category category;
+
+    @ManyToOne
+    private Assignee assignee;
 
     public AssetRequest() {
     }

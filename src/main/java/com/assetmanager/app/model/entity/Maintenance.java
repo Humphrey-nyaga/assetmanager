@@ -1,5 +1,7 @@
 package com.assetmanager.app.model.entity;
 
+import com.assetmanager.app.model.entity.Machinery.Machinery;
+import com.assetmanager.app.model.entity.vehicle.Vehicle;
 import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.app.view.html.HtmlTable;
@@ -66,6 +68,10 @@ public class Maintenance extends BaseEntity implements Serializable {
     @HtmlFormField(label = "Maintenance Period")
     private MaintenanceFrequency maintenanceFrequency;
 
+    @ManyToOne
+    private Vehicle vehicle;
+    @ManyToOne
+    private Machinery machinery;
     public Maintenance() {
     }
 

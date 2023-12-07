@@ -8,49 +8,53 @@ import com.assetmanager.app.view.html.TableColumnHeader;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "assignee")
 @HtmlForm(label = "Assignee", url = "./assignee")
-@HtmlTable(name = "Assignee Table", label = "Assignee",addUrl = "./assignee?action=add",updateUrl = "./updateAssignee")
+@HtmlTable(name = "Assignee Table", label = "Assignee", addUrl = "./assignee?action=add", updateUrl = "./updateAssignee", url = "./assignee")
 public class Assignee extends BaseEntity {
 
-    @Column(name = "staff_id",nullable = false,unique = true)
+    @Column(name = "staff_id", nullable = false, unique = true)
     @TableColumnHeader(header = "Staff Number")
- //   @HtmlFormField(label = "Staff Number")
+    //   @HtmlFormField(label = "Staff Number")
     private String staffNumber;
 
-    @Column(name = "employee_type",nullable = false)
+    @Column(name = "employee_type", nullable = false)
     @Enumerated(value = EnumType.STRING)
     @TableColumnHeader(header = "Employee Type")
     @HtmlFormField(label = "Employee Type")
     private AssigneeType employeeType;
 
-    @Column(name = "firstname",nullable = false)
+    @Column(name = "firstname", nullable = false)
     @TableColumnHeader(header = "First Name")
     @HtmlFormField(label = "First Name")
     private String firstName;
 
-    @Column(name = "lastname",nullable = false)
+    @Column(name = "lastname", nullable = false)
     @TableColumnHeader(header = "Last Name")
     @HtmlFormField(label = "Last Name")
     private String lastName;
 
-    @Column(name = "email",nullable = false)
+    @Column(name = "email", nullable = false)
     @TableColumnHeader(header = "Email")
     @HtmlFormField(label = "Email")
     private String email;
 
-    @Column(name = "date_of_birth",nullable = false)
+    @Column(name = "date_of_birth", nullable = false)
     @TableColumnHeader(header = "Date of Birth")
-    @HtmlFormField(label = "Date of Birth",isRequired = true)
+    @HtmlFormField(label = "Date of Birth", isRequired = true)
     private LocalDate dateOfBirth;
 
-    @Column(name = "national_id",nullable = false)
+    @Column(name = "national_id", nullable = false)
     @TableColumnHeader(header = "National ID")
     @HtmlFormField(label = "ID Number")
     private String identificationNumber;
+    @OneToMany(mappedBy = "assignee",fetch = FetchType.LAZY)
+    private List<AssetRequest> assetRequests = new ArrayList<>();
 
-    
     public Assignee() {
     }
 
@@ -63,8 +67,6 @@ public class Assignee extends BaseEntity {
         this.identificationNumber = identificationNumber;
         this.employeeType = employeeType;
     }
-
-
 
 
     public String getStaffNumber() {

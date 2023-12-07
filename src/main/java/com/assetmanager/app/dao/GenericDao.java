@@ -28,7 +28,7 @@ public class GenericDao<T> implements GenericDaoI<T> {
 
     @Override
     public void delete(T entity) {
-
+        em.remove(entity);
     }
 
     @Override
