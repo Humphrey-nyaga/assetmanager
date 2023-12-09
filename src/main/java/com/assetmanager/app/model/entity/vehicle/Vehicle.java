@@ -1,16 +1,28 @@
 package com.assetmanager.app.model.entity.vehicle;
 
 import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.app.model.entity.Category;
 import com.assetmanager.app.model.entity.Maintenance;
 import com.assetmanager.app.view.html.AssetCreationCard;
 import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.util.YearConverter;
+import com.assetmanager.util.idgenerator.IdPrefix;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.JSR310DateTimeDeserializerBase;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.YearDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.YearSerializer;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +32,7 @@ import java.util.List;
 @Setter
 @HtmlForm(label = "Vehicle", url = "./vehicle")
 @Table(name = "vehicle")
+@IdPrefix(prefix = "ASN-VHC00")
 @AssetCreationCard(label = "Vehicle",addUrl = "./vehicle?action=add")
 public class Vehicle extends Asset {
 
@@ -44,6 +57,9 @@ public class Vehicle extends Asset {
     @Column(name = "year",nullable = false)
     @HtmlFormField(label = "Year Manufactured", isRequired = true)
     @Convert(converter = YearConverter.class)
+    @JsonSerialize(using = YearSerializer.class)
+    @JsonDeserialize(using = YearDeserializer.class)
+    @JsonFormat(pattern = "yyyy")
     private Year year;
 
     @Column(name = "manufacturer",nullable = false)
@@ -69,11 +85,12 @@ public class Vehicle extends Asset {
     @Positive
     private Integer tyreNumber;
 
-    @OneToMany(mappedBy = "vehicle")
+    @OneToMany(mappedBy = "vehicle",fetch = FetchType.EAGER)
     List<Maintenance> maintenances = new ArrayList<>();
 
     public Vehicle() {
     }
+
 
 }
 

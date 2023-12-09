@@ -27,7 +27,8 @@ import java.util.List;
 @AssetCreationCard(label = "Machinery",addUrl = "./machinery?action=add")
 @HtmlForm(label = "Machinery", url = "./machinery")
 @Getter @Setter
-@IdPrefix(prefix = "MCH000")
+@IdPrefix(prefix = "ASN-MCH000")
+
 public class Machinery  extends Asset {
 
 

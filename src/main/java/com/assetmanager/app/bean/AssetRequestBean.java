@@ -9,7 +9,6 @@ import com.assetmanager.app.observer.Created;
 import com.assetmanager.util.SerialIDGenerator.SerialIDGenerator;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
@@ -17,7 +16,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Optional;
 
 @Stateless
 @Remote

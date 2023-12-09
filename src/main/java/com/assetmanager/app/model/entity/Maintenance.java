@@ -78,6 +78,7 @@ public class Maintenance extends BaseEntity implements Serializable {
 
     @ManyToOne
     private Vehicle vehicle;
+
     @ManyToOne
     private Machinery machinery;
     public Maintenance() {

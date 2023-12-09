@@ -1,8 +1,6 @@
 package com.assetmanager.action;
 
-import com.assetmanager.app.bean.AssetRequestBeanI;
 import com.assetmanager.app.bean.AssigneeBeanI;
-import com.assetmanager.app.model.entity.AssetRequest;
 import com.assetmanager.app.model.entity.Assignee;
 
 import javax.ejb.EJB;
@@ -24,7 +22,8 @@ public class updateAssigneeAction extends BaseAction{
         RequestDispatcher dispatcher = request.getRequestDispatcher("./app/updateAssignee.jsp");
         dispatcher.forward(request, response);
     }
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String requestId = request.getParameter("id");
 
         Assignee assignee = new Assignee();

@@ -2,6 +2,7 @@ package com.assetmanager.app.model.entity;
 
 import com.assetmanager.app.view.html.TableColumnHeader;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -35,6 +36,7 @@ public abstract class BaseEntity implements Serializable {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss,SSS")
+    @JsonIgnore
     private LocalDateTime createdAt;
 
     @Column(name = "modified_at")
@@ -42,13 +44,16 @@ public abstract class BaseEntity implements Serializable {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss,SSS")
+    @JsonIgnore
     private LocalDateTime lastModifiedAt;
 
+    @JsonIgnore
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    @JsonIgnore
+    public LocalDateTime getLastModifiedAt() {
+        return lastModifiedAt;
     }
 }

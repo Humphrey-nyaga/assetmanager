@@ -1,5 +1,6 @@
 package com.assetmanager.action;
 
+import com.assetmanager.app.bean.AssetBeanI;
 import com.assetmanager.app.bean.AssigneeBeanI;
 import com.assetmanager.app.model.entity.Assignee;
 

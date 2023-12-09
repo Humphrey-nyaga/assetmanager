@@ -9,6 +9,7 @@ import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.app.view.html.TableColumnHeader;
 import com.assetmanager.util.idgenerator.IdPrefix;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -44,6 +45,7 @@ public  class Asset extends BaseEntity implements Serializable {
     @HtmlFormField(label = "Date Acquired", isRequired = true)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateAcquired;
 
     @Column

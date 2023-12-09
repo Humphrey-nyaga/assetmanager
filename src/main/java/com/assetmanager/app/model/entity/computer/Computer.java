@@ -6,6 +6,7 @@ import com.assetmanager.app.model.entity.Machinery.Condition;
 import com.assetmanager.app.view.html.AssetCreationCard;
 import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
+import com.assetmanager.util.idgenerator.IdPrefix;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ import javax.validation.constraints.Positive;
 @Table(name = "computer")
 @HtmlForm(label = "Computer", url = "./computer")
 @AssetCreationCard(label = "Computer & Related ",addUrl = "./computer?action=add")
+@IdPrefix(prefix = "ASN-COMP000")
 public class Computer extends Asset {
 
     @Column(name = "ram_in_gb")
