@@ -1,6 +1,7 @@
 package com.assetmanager.app.model.entity.vehicle;
 
 import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.app.model.entity.Category;
 import com.assetmanager.app.model.entity.Maintenance;
 import com.assetmanager.app.view.html.AssetCreationCard;
@@ -18,6 +19,8 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.YearSerializer;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
@@ -32,7 +35,6 @@ import java.util.List;
 @Setter
 @HtmlForm(label = "Vehicle", url = "./vehicle")
 @Table(name = "vehicle")
-@IdPrefix(prefix = "ASN-VHC00")
 @AssetCreationCard(label = "Vehicle",addUrl = "./vehicle?action=add")
 public class Vehicle extends Asset {
 
@@ -85,8 +87,12 @@ public class Vehicle extends Asset {
     @Positive
     private Integer tyreNumber;
 
-    @OneToMany(mappedBy = "vehicle",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "vehicle")
+    @LazyCollection(LazyCollectionOption.FALSE)
     List<Maintenance> maintenances = new ArrayList<>();
+//
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    private Assignee vehicleAssignee;
 
     public Vehicle() {
     }

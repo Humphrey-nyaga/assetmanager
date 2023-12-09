@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
@@ -64,9 +65,13 @@ public  class Asset extends BaseEntity implements Serializable {
     @TableColumnHeader(header = "Assignee Staff ID")
     private String assigneeStaffID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "assignee_id")
     private Assignee assignee;
+
+    @TableColumnHeader(header = "Assignee")
+    @Formula("(select concat( a.firstname, ' ',a.lastname) from assignee a where a.id=assignee_id)")
+    private String assigneeName;
 
     public Asset() {
     }
@@ -136,6 +141,14 @@ public  class Asset extends BaseEntity implements Serializable {
         this.assigneeStaffID = assigneeStaffID;
     }
 
+
+    public String getAssigneeName() {
+        return assigneeName;
+    }
+
+    public void setAssigneeName(String assigneeName) {
+        this.assigneeName = assigneeName;
+    }
 
     @Override
     public String toString() {

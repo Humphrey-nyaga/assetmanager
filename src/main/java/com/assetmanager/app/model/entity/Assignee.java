@@ -1,5 +1,7 @@
 package com.assetmanager.app.model.entity;
 
+import com.assetmanager.app.model.entity.Machinery.Machinery;
+import com.assetmanager.app.model.entity.vehicle.Vehicle;
 import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.app.view.html.HtmlTable;
@@ -10,6 +12,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -63,8 +69,16 @@ public class Assignee extends BaseEntity {
     @TableColumnHeader(header = "National ID")
     @HtmlFormField(label = "ID Number")
     private String identificationNumber;
-    @OneToMany(mappedBy = "assignee",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "assignee")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<AssetRequest> assetRequests = new ArrayList<>();
+
+    @OneToMany(mappedBy = "assignee",fetch = FetchType.EAGER)
+    private List<Vehicle> assignedVehicles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "assignee",fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SELECT)
+    private List<Machinery> assignedMachinery = new ArrayList<>();
 
     public Assignee() {
     }
@@ -126,6 +140,14 @@ public class Assignee extends BaseEntity {
 
     public void setIdentificationNumber(String identificationNumber) {
         this.identificationNumber = identificationNumber;
+    }
+
+    public List<Vehicle> getAssignedVehicles() {
+        return assignedVehicles;
+    }
+
+    public List<Machinery> getAssignedMachinery() {
+        return assignedMachinery;
     }
 
     public AssigneeType getEmployeeType() {

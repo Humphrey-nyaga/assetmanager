@@ -11,8 +11,15 @@ import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.util.YearConverter;
 import com.assetmanager.util.idgenerator.IdPrefix;
 import com.assetmanager.util.ValidYear;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.YearDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.YearSerializer;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.jboss.jandex.Main;
 
 import javax.persistence.*;
@@ -35,6 +42,9 @@ public class Machinery  extends Asset {
     @Column(name = "year_of_production",nullable = false)
     @HtmlFormField(label = "Year Produced", isRequired = true)
     @Convert(converter = YearConverter.class)
+    @JsonSerialize(using = YearSerializer.class)
+    @JsonDeserialize(using = YearDeserializer.class)
+    @JsonFormat(pattern = "yyyy")
     private Year yearOfProduction;
 
 
@@ -84,7 +94,8 @@ public class Machinery  extends Asset {
     private MaintenanceFrequency maintenanceFrequency;
     
     @OneToMany(mappedBy = "machinery")
-    List<Maintenance> mmachineryMaintenance = new ArrayList<>();
+    @LazyCollection(LazyCollectionOption.FALSE)
+    List<Maintenance> machineryMaintenance = new ArrayList<>();
     public Machinery() {
     }
 
