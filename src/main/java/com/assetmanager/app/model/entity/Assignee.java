@@ -4,8 +4,15 @@ import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.app.view.html.TableColumnHeader;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -39,6 +46,7 @@ public class Assignee extends BaseEntity {
     private String lastName;
 
     @Column(name = "email", nullable = false)
+    @Email
     @TableColumnHeader(header = "Email")
     @HtmlFormField(label = "Email")
     private String email;
@@ -46,6 +54,9 @@ public class Assignee extends BaseEntity {
     @Column(name = "date_of_birth", nullable = false)
     @TableColumnHeader(header = "Date of Birth")
     @HtmlFormField(label = "Date of Birth", isRequired = true)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
 
     @Column(name = "national_id", nullable = false)

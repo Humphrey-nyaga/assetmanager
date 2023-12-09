@@ -1,6 +1,8 @@
 package com.assetmanager.event;
 
 import com.assetmanager.app.bean.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContextEvent;
@@ -19,10 +21,12 @@ public class AppInit implements ServletContextListener {
     @EJB
     AssigneeBeanI assigneeBean;
 
+    public static ObjectMapper mapper = new ObjectMapper();
 
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+
 
 ////        /*Create some default assignees*/
 //        assigneeBean.create(new Assignee( "Hans", "Schmidt", "hans@example0.com",

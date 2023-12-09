@@ -2,10 +2,12 @@ package com.assetmanager.app.model.entity;
 
 import com.assetmanager.app.view.html.HtmlTable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.util.Objects;
 @Entity
@@ -15,6 +17,7 @@ import java.util.Objects;
 public class User extends BaseEntity implements Serializable {
 
     @Column(name = "email",nullable = false,unique = true)
+    @Email
     private String email;
 
     @Column(name = "username",nullable = false, unique = true)
@@ -24,6 +27,7 @@ public class User extends BaseEntity implements Serializable {
     private String password;
 
     @Transient
+
     private String confirmPassword;
 
     @Column(name = "isActive")

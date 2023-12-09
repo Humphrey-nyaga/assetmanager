@@ -13,7 +13,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Optional;
 
 @Stateless
@@ -31,25 +30,22 @@ public class AssigneeBean extends GenericBean<Assignee> implements AssigneeBeanI
 
     @Override
     public Assignee addOrUpdate(Assignee assignee) {
-        if (validAge.validWorkingAge(assignee.getDateOfBirth())) {
+        if (findById(assignee.getClass(), assignee.getId()) == null)
             assignee.setStaffNumber(serialIDGenerator.generate());
-           return getDao().addOrUpdate(assignee);
+
+        if (validAge.validWorkingAge(assignee.getDateOfBirth())) {
+            return getDao().addOrUpdate(assignee);
         } else {
             throw new RuntimeException("Invalid Age for employee");
         }
-
 
     }
 
     @Override
     public Assignee getAssigneeByStaffId(String staffToSearchID) {
         TypedQuery<Assignee> query = em.createQuery("FROM Assignee a WHERE a.staffNumber = :staffId", Assignee.class)
-                    .setParameter("staffId", staffToSearchID);
+                .setParameter("staffId", staffToSearchID);
         return query.getSingleResult();
-
     }
-
-
-
 
 }
