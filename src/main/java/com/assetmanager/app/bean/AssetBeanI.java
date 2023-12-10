@@ -2,14 +2,15 @@ package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.Asset;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @Remote
 public interface AssetBeanI extends GenericBeanI<Asset> {
-    Optional<Asset> findAssetById(String id);
+    Asset findAssetBySerialNumber(String id, Object entity);
 
     List<Asset> findAssetsByAssigneeID(String staffID);
+
+    Map<String, String> assetsValueByCategory();
 }
