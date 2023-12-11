@@ -51,4 +51,14 @@ public class AssetApi {
         statistics.put("Total Assets",assetsValuation.totalAssets(assetBean.list(new Asset())));
         return Response.status(Response.Status.OK).entity(statistics).build();
     }
+    @DELETE
+    @Path("/serialNo/{serialNo}")
+    public Response delete(@PathParam("serialNo") String serialNo) {
+        try {
+            assetBean.deleteBySerialNumber(new Asset(), serialNo);
+            return Response.status(Response.Status.OK).entity("Success").build();
+        }catch (IllegalArgumentException ex) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Not Found").build();
+        }
+    }
 }

@@ -71,4 +71,12 @@ public class VehicleApi {
         }
     }
 
+    @Path("/")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updatedVehicle(Vehicle vehicle) {
+        Vehicle updatedVehicle = vehicleBean.addOrUpdate(vehicle);
+        return Response.status(Response.Status.CREATED).entity(updatedVehicle).build();
+    }
 }

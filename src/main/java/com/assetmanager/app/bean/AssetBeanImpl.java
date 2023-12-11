@@ -8,7 +8,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,4 +51,9 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
         return assetsValuation.totalAssetValueByCategory(list(new Asset()));
     }
 
+    @Override
+    public void deleteBySerialNumber(Object entity, String serialNumber) {
+        Asset asset = findAssetBySerialNumber(serialNumber, entity);
+        em.remove(asset);
+    }
 }

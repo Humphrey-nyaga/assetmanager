@@ -70,5 +70,13 @@ public class AssigneeApi {
             return Response.status(Response.Status.NOT_FOUND).entity("Not Found").build();
         }
     }
+    @Path("/")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateAssignee(Assignee assignee) {
+        Assignee updatedAssignee = assigneeBean.addOrUpdate(assignee);
+        return Response.status(Response.Status.CREATED).entity(updatedAssignee).build();
+    }
 
 }

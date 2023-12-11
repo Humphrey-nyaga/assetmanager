@@ -57,4 +57,13 @@ public class ComputerApi {
         }
     }
 
+    @Path("/")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateComputer(Computer computer) {
+        Computer updatedComputer = computerBean.addOrUpdate(computer);
+        return Response.status(Response.Status.CREATED).entity(updatedComputer).build();
+    }
+
 }
