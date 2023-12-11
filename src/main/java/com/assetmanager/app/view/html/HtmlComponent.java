@@ -26,8 +26,15 @@ public class HtmlComponent implements Serializable {
 
         HtmlTable htmlTableLabel = dataClass.getAnnotation(HtmlTable.class);
 
-        List<Field> fields = new ArrayList<>(Arrays.asList(dataClass.getSuperclass().getDeclaredFields()));
-        fields.addAll(Arrays.asList(dataClass.getDeclaredFields()));
+//        List<Field> fields = new ArrayList<>(Arrays.asList(dataClass.getSuperclass().getDeclaredFields()));
+//        fields.addAll(Arrays.asList(dataClass.getDeclaredFields()));
+        List<Field> fields = new ArrayList<>();
+        Class<?> currentClass = dataClass;
+
+        while (currentClass != null) {
+            fields.addAll(Arrays.asList(currentClass.getDeclaredFields()));
+            currentClass = currentClass.getSuperclass();
+        }
 
         StringBuilder stringBuilder = new StringBuilder()
                 .append("<div class=\"row justify-content-center\">\n")

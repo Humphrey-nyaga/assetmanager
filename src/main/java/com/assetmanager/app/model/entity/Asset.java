@@ -32,12 +32,12 @@ public  class Asset extends BaseEntity implements Serializable {
     private String serialNumber;
 
     @Column
-    @TableColumnHeader(header = "Name of Asset")
+    //@TableColumnHeader(header = "Name of Asset")
     @HtmlFormField(label = "Name", isRequired = true)
     private String name;
 
     @Column
-    @TableColumnHeader(header = "Description")
+    //@TableColumnHeader(header = "Description")
     @HtmlFormField(label = "Description",isTextArea = true)
     private String description;
 
@@ -71,7 +71,7 @@ public  class Asset extends BaseEntity implements Serializable {
     private String assigneeName;
 
     @Formula("(assignee_id)")
-    @TableColumnHeader(header = "Assignee ID")
+    //@TableColumnHeader(header = "Assignee ID")
     private Long assigneeId;
 
     public Asset() {

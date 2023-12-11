@@ -1,5 +1,6 @@
 package com.assetmanager.app.bean;
 
+import com.assetmanager.app.dto.AssetDTO;
 import com.assetmanager.app.model.entity.Asset;
 
 import javax.ejb.Remote;
@@ -15,4 +16,7 @@ public interface AssetBeanI extends GenericBeanI<Asset> {
     Map<String, String> assetsValueByCategory();
 
     void deleteBySerialNumber(Object entity, String serialNumber);
+
+    List<AssetDTO> findAllAssetsNameAndSerialNo();
+
 }

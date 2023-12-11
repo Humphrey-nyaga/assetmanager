@@ -1,7 +1,9 @@
 package com.assetmanager.app.rest.apis;
 
 import com.assetmanager.app.bean.AssigneeBeanI;
+import com.assetmanager.app.dto.AssigneeDTO;
 import com.assetmanager.app.model.entity.Assignee;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -35,6 +37,13 @@ public class AssigneeApi {
         return Response.status(Response.Status.OK).entity(assignees).build();
     }
 
+    @Path("/assignee-name-and-id")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAssigneeNameAndID() {
+        List<AssigneeDTO> assignees = assigneeBean.findAssigneeNameAndId();
+        return Response.status(Response.Status.OK).entity(assignees).build();
+    }
 
     @GET
     @Path("/assigneeByStaffId")
@@ -78,5 +87,6 @@ public class AssigneeApi {
         Assignee updatedAssignee = assigneeBean.addOrUpdate(assignee);
         return Response.status(Response.Status.CREATED).entity(updatedAssignee).build();
     }
+
 
 }

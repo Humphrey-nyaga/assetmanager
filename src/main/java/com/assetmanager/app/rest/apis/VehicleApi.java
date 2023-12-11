@@ -34,9 +34,9 @@ public class VehicleApi {
 
 
     @GET
-    @Path("/")
+    @Path("/serialNo/{serialNumber}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getVehicleBySerialNumber(@QueryParam("serialNumber") String serialNumber) {
+    public Response getVehicleBySerialNumber(@PathParam("serialNumber") String serialNumber) {
         if (serialNumber != null && !serialNumber.isEmpty()) {
             Vehicle vehicle = vehicleBean.getVehicleBySerialNumber(serialNumber);
             if (vehicle != null) {
@@ -48,7 +48,7 @@ public class VehicleApi {
     // select * from tours where destination = 'nairobi' and date=2023-12-12 and limit=50;
 
 
-    @Path("{id}")
+    @Path("/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVehicleById(@PathParam("id") Long id) {

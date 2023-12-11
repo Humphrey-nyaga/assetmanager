@@ -1,6 +1,7 @@
 package com.assetmanager.app.rest.apis;
 
 import com.assetmanager.app.bean.AssetBeanI;
+import com.assetmanager.app.dto.AssetDTO;
 import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.app.service.AssetsValuationI;
@@ -33,6 +34,15 @@ public class AssetApi {
         List<Asset> assetList = assetBean.list(new Asset());
         return Response.status(Response.Status.OK).entity(assetList).build();
     }
+
+    @Path("/assets-name-and-serial-no")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllAssetsNameAndSerialNo() {
+        List<AssetDTO> assets = assetBean.findAllAssetsNameAndSerialNo();
+        return Response.status(Response.Status.OK).entity(assets).build();
+    }
+
     @Path("/serialNo/{serialNo}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

@@ -16,6 +16,7 @@ import org.hibernate.annotations.*;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import java.io.Serializable;
@@ -27,7 +28,13 @@ import java.util.List;
 @Table(name = "assignee")
 @HtmlForm(label = "Assignee", url = "./assignee")
 @HtmlTable(name = "Assignee Table", label = "Assignee", addUrl = "./assignee?action=add", updateUrl = "./updateAssignee", url = "./assignee")
+@NamedQuery(
+        name = Assignee.AssigneeNameAndId,
+        query = "SELECT a.id, concat(a.firstName, ' ', a.lastName) FROM Assignee a"
+)
 public class Assignee extends BaseEntity {
+
+    public static final String AssigneeNameAndId = "Assignee.AssigneeNameAndId";
 
     @Column(name = "staff_id", nullable = false, unique = true)
     @TableColumnHeader(header = "Staff Number")
@@ -153,6 +160,10 @@ public class Assignee extends BaseEntity {
 
     public void setEmployeeType(AssigneeType employeeType) {
         this.employeeType = employeeType;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     @Override
