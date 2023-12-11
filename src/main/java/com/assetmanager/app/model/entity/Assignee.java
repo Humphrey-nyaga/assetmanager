@@ -51,6 +51,10 @@ public class Assignee extends BaseEntity {
     private String lastName;
 
 
+    //@TableColumnHeader(header = "Requester Name")
+    @Formula("(select concat(a.firstname, ' ', a.lastname) from assignee a where a.staff_id = staff_id)")
+    private String fullName;
+
     @Column(name = "email", nullable = false)
     @Email
     @TableColumnHeader(header = "Email")

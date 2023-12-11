@@ -26,9 +26,12 @@ public class AssetRequest extends BaseEntity {
 
     @Column(name = "staff_id",nullable = false)
     //@TableColumnHeader(header = "Assignee")
-    @HtmlFormField(label = "Assignee",isRequired = true,selectList = "assignees", selectValue = "staffNumber", selectValueInSuper=false, selectDisplay = "fullName")
+    @HtmlFormField(label = "Assignee",isRequired = true, selectList = "assignees", selectValue = "staffNumber", selectValueInSuper=false, selectDisplay = "fullName")
     private String staffId;
 
+    @TableColumnHeader(header = "Requester Name")
+    @Formula("(select concat(a.firstname, ' ', a.lastname) from assignee a where a.staff_id = staff_id)")
+    private String fullName;
 
     @Column(name = "asset_request_serial_no",nullable = false)
     @TableColumnHeader(header = "Request Serial No")
@@ -73,9 +76,6 @@ public class AssetRequest extends BaseEntity {
     @HtmlFormField(label = "Asset Type", isRequired = true)
     private Category category;
 
-    @TableColumnHeader(header = "Requester Name")
-    @Formula("(select concat(a.firstname, ' ', a.lastname) from assignee a where a.staff_id = staff_id)")
-    private String fullName;
 
     @ManyToOne
     private Assignee assignee;

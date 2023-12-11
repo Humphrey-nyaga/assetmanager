@@ -183,12 +183,13 @@ public class HtmlComponent implements Serializable {
                         throw new RuntimeException(e);
                     }
                 }
-                htmlFormBuilder.append(" </select></div>");
+                htmlFormBuilder.append(" </select> </div>");
                 continue;
             }
             if (StringUtils.isNotBlank(htmlFormField.selectList())
                     && StringUtils.isNotBlank(htmlFormField.selectValue())
-                    && StringUtils.isNotBlank(htmlFormField.selectDisplay())){
+                    && StringUtils.isNotBlank(htmlFormField.selectDisplay()))
+            {
                     try {
 
                         htmlFormBuilder.append("<div class=\"col-md-4\">\n" +
@@ -228,7 +229,7 @@ public class HtmlComponent implements Serializable {
                                     .append(displayField.get(option)).append("</option>)");
                         }
 
-                        htmlFormBuilder.append("</select></div>");
+                        htmlFormBuilder.append("</select> </div>");
                         continue;
                     } catch (NoSuchFieldException | NoSuchMethodException | IllegalAccessException |
                              InvocationTargetException ex) {
