@@ -2,6 +2,7 @@ package com.assetmanager.app.rest.apis;
 
 import com.assetmanager.app.bean.ComputerBeanI;
 import com.assetmanager.app.bean.VehicleBeanI;
+import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.app.model.entity.computer.Computer;
 import com.assetmanager.app.model.entity.vehicle.Vehicle;
 
@@ -44,4 +45,16 @@ public class ComputerApi {
         }
         return Response.status(Response.Status.NOT_FOUND).entity("Not Found").build();
     }
+
+    @DELETE
+    @Path("{id}")
+    public Response delete(@PathParam("id") Long id) {
+        try {
+            computerBean.deleteById(Assignee.class, id);
+            return Response.status(Response.Status.OK).entity("Success").build();
+        }catch (IllegalArgumentException ex) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Not Found").build();
+        }
+    }
+
 }

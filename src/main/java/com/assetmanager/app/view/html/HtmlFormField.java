@@ -15,4 +15,13 @@ public @interface HtmlFormField {
     boolean isRequired() default false;
     boolean isTextArea() default false;
 
+    String selectList() default "";
+
+    String selectValue() default "";
+
+    String selectDisplay() default "";
+
+    boolean selectValueInSuper() default false;
+
+    boolean selectDisplayInSuper() default false;
 }

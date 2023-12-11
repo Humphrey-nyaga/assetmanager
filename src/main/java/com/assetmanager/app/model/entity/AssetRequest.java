@@ -12,6 +12,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -24,13 +25,13 @@ import java.time.LocalDate;
 public class AssetRequest extends BaseEntity {
 
     @Column(name = "staff_id",nullable = false)
-    @TableColumnHeader(header = "Staff ID")
-    @HtmlFormField(label = "Staff ID",isRequired = true)
+    //@TableColumnHeader(header = "Assignee")
+    @HtmlFormField(label = "Assignee",isRequired = true,selectList = "assignees", selectValue = "staffNumber", selectValueInSuper=false, selectDisplay = "fullName")
     private String staffId;
 
 
     @Column(name = "asset_request_serial_no",nullable = false)
-    @TableColumnHeader(header = "Request ID")
+    @TableColumnHeader(header = "Request Serial No")
     private String assetRequestSerialNumber;
 
 
@@ -71,6 +72,10 @@ public class AssetRequest extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @HtmlFormField(label = "Asset Type", isRequired = true)
     private Category category;
+
+    @TableColumnHeader(header = "Requester Name")
+    @Formula("(select concat(a.firstname, ' ', a.lastname) from assignee a where a.staff_id = staff_id)")
+    private String fullName;
 
     @ManyToOne
     private Assignee assignee;

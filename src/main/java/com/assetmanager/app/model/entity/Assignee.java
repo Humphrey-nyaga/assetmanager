@@ -12,12 +12,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -50,6 +49,7 @@ public class Assignee extends BaseEntity {
     @TableColumnHeader(header = "Last Name")
     @HtmlFormField(label = "Last Name")
     private String lastName;
+
 
     @Column(name = "email", nullable = false)
     @Email
@@ -142,13 +142,6 @@ public class Assignee extends BaseEntity {
         this.identificationNumber = identificationNumber;
     }
 
-    public List<Vehicle> getAssignedVehicles() {
-        return assignedVehicles;
-    }
-
-    public List<Machinery> getAssignedMachinery() {
-        return assignedMachinery;
-    }
 
     public AssigneeType getEmployeeType() {
         return employeeType;

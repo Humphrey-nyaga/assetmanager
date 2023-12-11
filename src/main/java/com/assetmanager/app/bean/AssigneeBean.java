@@ -29,16 +29,17 @@ public class AssigneeBean extends GenericBean<Assignee> implements AssigneeBeanI
 
     @Override
     public Assignee addOrUpdate(Assignee assignee) {
-        if (findById(assignee.getClass(), assignee.getId()) == null)
+        if (assignee.getId() == null) {
             assignee.setStaffNumber(serialIDGenerator.generate());
+        }
 
         if (validAge.validWorkingAge(assignee.getDateOfBirth())) {
             return getDao().addOrUpdate(assignee);
         } else {
             throw new RuntimeException("Invalid Age for employee");
         }
-
     }
+
 
     @Override
     public Assignee getAssigneeByStaffId(String staffToSearchID) {
