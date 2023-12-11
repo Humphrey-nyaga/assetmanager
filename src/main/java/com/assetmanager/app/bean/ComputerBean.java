@@ -1,8 +1,8 @@
 package com.assetmanager.app.bean;
 
+import com.assetmanager.app.model.entity.Category;
 import com.assetmanager.app.model.entity.computer.Computer;
 import com.assetmanager.util.SerialIDGenerator.SerialIDGenerator;
-import com.assetmanager.util.idgenerator.GenericIDGenerator;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -18,6 +18,7 @@ public class ComputerBean extends GenericBean<Computer> implements ComputerBeanI
     @Override
     public Computer addOrUpdate(Computer computer) {
         computer.setSerialNumber(serialIDGenerator.generate());
+        computer.setCategory(Category.COMPUTER);
         return super.addOrUpdate(computer);
     }
 }

@@ -52,7 +52,7 @@ public  class Asset extends BaseEntity implements Serializable {
     @Column
     @Enumerated(EnumType.STRING)
     @TableColumnHeader(header = "Category")
-    @HtmlFormField(label = "Category")
+   // @HtmlFormField(label = "Category")
     private Category category;
 
     @Column(name = "purchase_value")
@@ -61,9 +61,6 @@ public  class Asset extends BaseEntity implements Serializable {
     @Positive
     private BigDecimal purchaseValue;
 
-    @Transient
-    @TableColumnHeader(header = "Assignee Staff ID")
-    private String assigneeStaffID;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "assignee_id")
@@ -72,6 +69,10 @@ public  class Asset extends BaseEntity implements Serializable {
     @TableColumnHeader(header = "Assignee")
     @Formula("(select concat( a.firstname, ' ',a.lastname) from assignee a where a.id=assignee_id)")
     private String assigneeName;
+
+    @Formula("(assignee_id)")
+    @TableColumnHeader(header = "Assignee ID")
+    private Long assigneeId;
 
     public Asset() {
     }
@@ -133,21 +134,20 @@ public  class Asset extends BaseEntity implements Serializable {
         this.purchaseValue = purchaseValue;
     }
 
-    public String getAssigneeStaffID() {
-        return assigneeStaffID;
-    }
-
-    public void setAssigneeStaffID(String assigneeStaffID) {
-        this.assigneeStaffID = assigneeStaffID;
-    }
-
-
     public String getAssigneeName() {
         return assigneeName;
     }
 
     public void setAssigneeName(String assigneeName) {
         this.assigneeName = assigneeName;
+    }
+
+    public Long getAssigneeId() {
+        return assigneeId;
+    }
+
+    public void setAssigneeId(Long assigneeId) {
+        this.assigneeId = assigneeId;
     }
 
     @Override
@@ -159,7 +159,9 @@ public  class Asset extends BaseEntity implements Serializable {
                 ", dateAcquired=" + dateAcquired +
                 ", category=" + category +
                 ", purchaseValue=" + purchaseValue +
-                ", assigneeStaffID='" + assigneeStaffID + '\'' +
+                ", assignee=" + assignee +
+                ", assigneeName='" + assigneeName + '\'' +
+                ", assigneeId=" + assigneeId +
                 '}';
     }
 }

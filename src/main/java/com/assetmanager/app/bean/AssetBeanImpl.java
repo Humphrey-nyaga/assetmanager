@@ -41,12 +41,10 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
 
     // TODO Implement and observer for asset of type vehicle insertion to create a maintenance schedule.
     @Override
-    public List<Asset> findAssetsByAssigneeID(String staffID) {
-//        String jpql = "FROM Asset a WHERE a.serialNumber=:serialNumber";
-//        return em.createQuery(jpql, Asset.class).setParameter("serialNumber",serialNumber)
-//                .getResultList();
-        List<Asset> assets = new ArrayList<>();
-        return assets;
+    public List<Asset> findAssetsByAssigneeID(Long assigneeID) {
+        String jpql = "FROM Asset a WHERE a.assigneeID=:assigneeID";
+        return em.createQuery(jpql, Asset.class).setParameter("assigneeID",assigneeID)
+                .getResultList();
     }
 
     @Override

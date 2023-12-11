@@ -3,12 +3,14 @@ package com.assetmanager.app.model.entity;
 import java.io.Serializable;
 
 public enum Category implements Serializable {
-    ELECTRONICS("Electronics"),
+    COMPUTER("Computer & Related"),
     VEHICLE("Vehicle"),
     MACHINERY("Machinery"),
 
     LAND("Land"),
     BUILDING("Building");
+
+
 
     private final String name;
 

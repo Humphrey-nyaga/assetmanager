@@ -1,6 +1,7 @@
 package com.assetmanager.event;
 
 import com.assetmanager.app.bean.*;
+import com.assetmanager.app.model.entity.AssetRequest;
 import com.assetmanager.app.model.entity.vehicle.Vehicle;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,7 +29,7 @@ public class AppInit implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         // Creating object of Organisation
-        Vehicle org = new Vehicle();
+        AssetRequest org = new AssetRequest();
 
         ObjectMapper Obj = new ObjectMapper();
 

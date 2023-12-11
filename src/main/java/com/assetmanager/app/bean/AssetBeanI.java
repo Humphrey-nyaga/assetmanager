@@ -10,7 +10,7 @@ import java.util.Map;
 public interface AssetBeanI extends GenericBeanI<Asset> {
     Asset findAssetBySerialNumber(String id, Object entity);
 
-    List<Asset> findAssetsByAssigneeID(String staffID);
+    List<Asset> findAssetsByAssigneeID(Long assigneeID);
 
     Map<String, String> assetsValueByCategory();
 }

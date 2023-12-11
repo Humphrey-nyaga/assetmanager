@@ -5,6 +5,7 @@ import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.app.view.html.TableColumnHeader;
 import com.assetmanager.util.idgenerator.IdPrefix;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -13,7 +14,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 @Entity
 @Table(name = "asset_request")
@@ -29,9 +29,9 @@ public class AssetRequest extends BaseEntity {
     private String staffId;
 
 
-    @Column(name = "asset_request_id",nullable = false)
+    @Column(name = "asset_request_serial_no",nullable = false)
     @TableColumnHeader(header = "Request ID")
-    private String assetRequestID;
+    private String assetRequestSerialNumber;
 
 
     @Column(name = "asset_name",nullable = false)
@@ -51,6 +51,7 @@ public class AssetRequest extends BaseEntity {
     @HtmlFormField(label = "Request Date",isRequired = true)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateRequested;
 
 

@@ -34,7 +34,7 @@ public class VehicleApi {
 
 
     @GET
-    @Path("/serialNumber")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVehicleBySerialNumber(@QueryParam("serialNumber") String serialNumber) {
         if (serialNumber != null && !serialNumber.isEmpty()) {

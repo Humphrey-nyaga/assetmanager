@@ -42,10 +42,11 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
 
     @Override
     public AssetRequest addOrUpdate(AssetRequest assetRequest) {
+
         try {
             Assignee assignee = assigneeBean.getAssigneeByStaffId(assetRequest.getStaffId());
             if (assignee!= null) {
-                assetRequest.setAssetRequestID(serialIDGenerator.generate());
+                assetRequest.setAssetRequestSerialNumber(serialIDGenerator.generate());
                getDao().addOrUpdate(assetRequest);
                 assetRequestEvent.fire(new AssetRequestEvent(assetRequest, assignee));
             }

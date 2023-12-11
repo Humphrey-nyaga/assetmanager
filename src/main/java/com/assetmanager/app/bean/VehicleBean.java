@@ -1,5 +1,6 @@
 package com.assetmanager.app.bean;
 
+import com.assetmanager.app.model.entity.Category;
 import com.assetmanager.app.model.entity.vehicle.Vehicle;
 import com.assetmanager.util.SerialIDGenerator.SerialIDGenerator;
 import com.assetmanager.util.idgenerator.GenericIDGenerator;
@@ -25,6 +26,7 @@ public class VehicleBean extends GenericBean<Vehicle> implements VehicleBeanI {
     @Override
     public Vehicle addOrUpdate(Vehicle vehicle) {
         vehicle.setSerialNumber(serialIDGenerator.generate());
+        vehicle.setCategory(Category.VEHICLE);
         return getDao().addOrUpdate(vehicle);
     }
 
