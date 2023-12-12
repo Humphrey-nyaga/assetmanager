@@ -8,7 +8,7 @@ public interface GenericBeanI<T> extends Serializable {
 
     List<T> list(Object entity);
 
-    void addOrUpdate(T entity);
+    T addOrUpdate(T entity);
 
     T update(T entity);
 
@@ -16,9 +16,7 @@ public interface GenericBeanI<T> extends Serializable {
 
     void deleteById(Class<?> clazz, Long id);
 
-    default Optional<T> findById(String id) {
-        return Optional.empty();
-    }
+    T findById(Class<?> clazz, Long id);
 
 
 }

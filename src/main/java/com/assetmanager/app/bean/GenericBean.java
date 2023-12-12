@@ -25,9 +25,9 @@ public abstract class GenericBean<T> implements GenericBeanI<T> {
     }
 
     @Override
-    public void addOrUpdate(T entity) {
+    public T addOrUpdate(T entity) {
         genericDao.setEm(em);
-        genericDao.addOrUpdate(entity);
+        return genericDao.addOrUpdate(entity);
     }
 
     @Override
@@ -37,7 +37,8 @@ public abstract class GenericBean<T> implements GenericBeanI<T> {
 
     @Override
     public void delete(T entity) {
-
+        genericDao.setEm(em);
+         genericDao.delete(entity);
     }
 
     public GenericDao<T> getDao() {
@@ -49,7 +50,11 @@ public abstract class GenericBean<T> implements GenericBeanI<T> {
         genericDao.setEm(em);
         genericDao.deleteById(clazz,  id);
     }
-
+    @Override
+    public T findById(Class<?> clazz, Long id){
+        genericDao.setEm(em);
+       return genericDao.findById(clazz,  id);
+    }
 
 
 
