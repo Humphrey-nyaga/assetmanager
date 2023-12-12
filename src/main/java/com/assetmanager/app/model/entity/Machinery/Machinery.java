@@ -1,16 +1,12 @@
 package com.assetmanager.app.model.entity.Machinery;
 
 import com.assetmanager.app.model.entity.Asset;
-import com.assetmanager.app.model.entity.BaseEntity;
 import com.assetmanager.app.model.entity.Maintenance;
 import com.assetmanager.app.model.entity.MaintenanceFrequency;
-import com.assetmanager.app.view.html.AssetCreationCard;
-import com.assetmanager.app.view.html.HtmlForm;
-import com.assetmanager.app.view.html.HtmlFormField;
+import com.assetmanager.app.view.html.*;
 
 import com.assetmanager.util.YearConverter;
 import com.assetmanager.util.idgenerator.IdPrefix;
-import com.assetmanager.util.ValidYear;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -20,21 +16,21 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.jboss.jandex.Main;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "machinery")
-@AssetCreationCard(label = "Machinery",addUrl = "./machinery?action=add")
-@HtmlForm(label = "Machinery", url = "./machinery")
 @Getter @Setter
+
+@Table(name = "machinery")
+@AssetCreationCard(label = "Machinery", servletUrl = "./machinery")
+@HtmlForm(label = "Machinery", url = "./machinery")
 @IdPrefix(prefix = "ASN-MCH000")
+@HtmlTable(name = "Machinery Table", label = "Machinery", url = "./machinery", addUrl = "./machinery?action=add")
 
 public class Machinery  extends Asset {
 
@@ -50,6 +46,7 @@ public class Machinery  extends Asset {
 
     @Column(name = "model",nullable = false)
     @HtmlFormField(label = "Model", isRequired = true)
+    @TableColumnHeader(header = "Model")
     private String model;
 
 
@@ -79,12 +76,14 @@ public class Machinery  extends Asset {
     @Enumerated(EnumType.STRING)
     @Column(name = "current_condition",nullable = false)
     @HtmlFormField(label = "Condition", isRequired = true)
+    @TableColumnHeader(header = "Condition")
     private Condition currentCondition;
 
 
     @Enumerated(EnumType.STRING)
     @Column(name = "operational_status",nullable = false)
     @HtmlFormField(label = "Operation Status", isRequired = true)
+    @TableColumnHeader(header = "Status")
     private OperationalStatus operationalStatus;
 
 

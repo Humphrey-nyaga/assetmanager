@@ -17,11 +17,11 @@ public class AssetCardRender {
 
         for (Class<?> clazz : entities) {
             AssetCreationCard assetCreationCard = clazz.getAnnotation(AssetCreationCard.class);
-            String url = assetCreationCard.addUrl();
+            String url = assetCreationCard.servletUrl();
             String label = assetCreationCard.label();
 
             cardHtml.append(
-                    "    <a href=\"" + url + "\" class=\"btn btn-primary rounded-2\">Add " + label + "</a>"
+                    "    <a href=\"" + url + "\" class=\"btn btn-primary rounded-2\">View " + label + "</a>"
                     );
         }
         cardHtml.append(

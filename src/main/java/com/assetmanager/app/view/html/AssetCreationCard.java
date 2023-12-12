@@ -9,5 +9,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface AssetCreationCard {
     String label() default "";
-    String addUrl() default "";
+    String servletUrl() default "";
 }

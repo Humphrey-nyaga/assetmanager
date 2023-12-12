@@ -1,19 +1,13 @@
 package com.assetmanager.app.model.entity.vehicle;
 
 import com.assetmanager.app.model.entity.Asset;
-import com.assetmanager.app.model.entity.Assignee;
-import com.assetmanager.app.model.entity.Category;
 import com.assetmanager.app.model.entity.Maintenance;
 import com.assetmanager.app.view.html.*;
 import com.assetmanager.util.YearConverter;
-import com.assetmanager.util.idgenerator.IdPrefix;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.JSR310DateTimeDeserializerBase;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.YearDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.YearSerializer;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +16,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +25,7 @@ import java.util.List;
 @Setter
 @HtmlForm(label = "Vehicle", url = "./vehicle")
 @Table(name = "vehicle")
-@AssetCreationCard(label = "Vehicle",addUrl = "./vehicle")
+@AssetCreationCard(label = "Vehicle", servletUrl = "./vehicle")
 @HtmlTable(name = "Vehicles Table", label = "Vehicle", url = "./vehicle", addUrl = "./vehicle?action=add")
 public class Vehicle extends Asset {
 
