@@ -19,14 +19,13 @@ public class VehicleAction extends BaseAction {
     VehicleBeanI vehicleBean;
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
-//        System.out.println(">>>>>>>>>>>vehicle " + vehicleBean.list(new Vehicle()));
-//        renderPage(servletRequest,
-//                servletResponse,
-//                "./vehicle",
-//                Vehicle.class,
-//               vehicleBean.list(new Vehicle()));
-        RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("./app/assignasset.jsp");
-        requestDispatcher.forward(servletRequest,servletResponse);
+        System.out.println(">>>>>>>>>>>vehicle " + vehicleBean.list(new Vehicle()));
+        renderPage(servletRequest,
+                servletResponse,
+                "./vehicle",
+                Vehicle.class,
+               vehicleBean.list(new Vehicle()));
+
 
     }
     public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)

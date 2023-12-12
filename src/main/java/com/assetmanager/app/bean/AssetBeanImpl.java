@@ -5,12 +5,14 @@ import com.assetmanager.app.dto.AssetDTO;
 import com.assetmanager.app.dto.AssignAssetDTO;
 import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.Assignee;
+import com.assetmanager.app.observer.*;
 import com.assetmanager.app.service.AssetsValuationI;
 import com.assetmanager.exceptions.AssetAlreadyAssignedException;
 import com.assetmanager.util.idgenerator.GenericIDGenerator;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -32,6 +34,15 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
 
     @EJB
     AssigneeBeanI assigneeBean;
+
+    @Inject
+    @Assigned
+    private Event<AssetAssignmentEvent> assignAssetEvent;
+
+    @Inject
+    @UnAssigned
+    private Event<AssetAssignmentEvent> unassignAssetEvent;
+
 
     @Override
     @SuppressWarnings("unchecked")
@@ -90,13 +101,21 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
             if (assignAssetDTO.getAssignaction().equals(AssetAssignAction.UNASSIGN)) {
                 asset.setAssignee(null);
                 getDao().addOrUpdate(asset);
+
+                AssetAssignmentEvent assetAssignmentEvent = new AssetAssignmentEvent(asset, assignee, assignAssetDTO.getAssignaction());
+                unassignAssetEvent.fire(assetAssignmentEvent);
             }
+
             if (!isAssetAssigned(asset)) {
                 if (assignAssetDTO.getAssignaction().equals(AssetAssignAction.ASSIGN)) {
                     asset.setAssignee(assignee);
                     getDao().addOrUpdate(asset);
+
+                    AssetAssignmentEvent assetAssignmentEvent = new AssetAssignmentEvent(asset, assignee, assignAssetDTO.getAssignaction());
+                    assignAssetEvent.fire(assetAssignmentEvent);
                 }
             }
+
             throw new AssetAlreadyAssignedException("Failed!. Asset is already Assigned!");
 
         } catch (AssetAlreadyAssignedException ex) {

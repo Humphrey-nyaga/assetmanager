@@ -84,12 +84,12 @@ public class Assignee extends BaseEntity {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<AssetRequest> assetRequests = new ArrayList<>();
 
-    @OneToMany(mappedBy = "assignee",fetch = FetchType.EAGER)
-    private List<Vehicle> assignedVehicles = new ArrayList<>();
-
-    @OneToMany(mappedBy = "assignee",fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SELECT)
-    private List<Machinery> assignedMachinery = new ArrayList<>();
+//    @OneToMany(mappedBy = "assignee",fetch = FetchType.EAGER)
+//    private List<Vehicle> assignedVehicles = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "assignee",fetch = FetchType.EAGER)
+//    @Fetch(value = FetchMode.SELECT)
+//    private List<Machinery> assignedMachinery = new ArrayList<>();
 
     public Assignee() {
     }

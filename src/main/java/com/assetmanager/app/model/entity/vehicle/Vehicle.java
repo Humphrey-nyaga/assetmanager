@@ -53,6 +53,7 @@ public class Vehicle extends Asset {
     @Column(name = "engine_type",nullable = false)
     @HtmlFormField(label = "Engine Type", isRequired = true)
     @TableColumnHeader(header = "Engine Type")
+    @Enumerated(EnumType.STRING)
     private EngineType engineType;
 
     @Column(name = "model",nullable = false)
@@ -82,6 +83,7 @@ public class Vehicle extends Asset {
     @Column(name = "transmission",nullable = false)
     @HtmlFormField(label = "Transmission", isRequired = true)
     @TableColumnHeader(header = "Transmission")
+    @Enumerated(EnumType.STRING)
     private Transmission transmission;
 
 
