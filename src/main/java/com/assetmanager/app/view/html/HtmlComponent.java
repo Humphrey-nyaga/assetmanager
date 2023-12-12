@@ -44,7 +44,7 @@ public class HtmlComponent implements Serializable {
         if (Asset.class.equals(dataClass)) {
             stringBuilder.append(renderAssetCards());
         } else {
-            stringBuilder.append("<div class=\"btn-toolbar\"><a href=\"" + htmlTableLabel.addUrl() + "\"><button class=\"btn btn-primary rounded-2\">Add " + htmlTableLabel.label() + "</button></a></div>\n");
+            stringBuilder.append("<div class=\"btn-toolbar d-grid gap-2 d-md-block mb-2\"><a href=\"" + htmlTableLabel.addUrl() + "\"><button class=\"btn btn-primary rounded-2\">Add " + htmlTableLabel.label() + "</button></a></div>\n");
         }
 
         stringBuilder.append("<div class=\"\">\n")
