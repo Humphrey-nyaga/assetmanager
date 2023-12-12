@@ -12,7 +12,7 @@ import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 
 
-@WebFilter(urlPatterns = "/*")
+//@WebFilter(urlPatterns = "/*")
 public class SessionFilter implements Filter {
 
     @Override

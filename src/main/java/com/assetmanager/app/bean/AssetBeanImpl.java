@@ -1,10 +1,15 @@
 package com.assetmanager.app.bean;
 
+import com.assetmanager.app.dto.AssetAssignAction;
 import com.assetmanager.app.dto.AssetDTO;
+import com.assetmanager.app.dto.AssignAssetDTO;
 import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.app.service.AssetsValuationI;
+import com.assetmanager.exceptions.AssetAlreadyAssignedException;
 import com.assetmanager.util.idgenerator.GenericIDGenerator;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -25,6 +30,9 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
     @Inject
     AssetsValuationI assetsValuation;
 
+    @EJB
+    AssigneeBeanI assigneeBean;
+
     @Override
     @SuppressWarnings("unchecked")
     public List<Asset> list(Object entity) {
@@ -36,7 +44,7 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
     @Override
     public Asset findAssetBySerialNumber(String serialNumber, Object entity) {
         String jpql = "FROM  " + entity.getClass().getName() + " e WHERE e.serialNumber=:serialNumber";
-        return em.createQuery(jpql, Asset.class).setParameter("serialNumber",serialNumber)
+        return em.createQuery(jpql, Asset.class).setParameter("serialNumber", serialNumber)
                 .getSingleResult();
     }
 
@@ -44,12 +52,12 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
     @Override
     public List<Asset> findAssetsByAssigneeID(Long assigneeID) {
         String jpql = "FROM Asset a WHERE a.assigneeID=:assigneeID";
-        return em.createQuery(jpql, Asset.class).setParameter("assigneeID",assigneeID)
+        return em.createQuery(jpql, Asset.class).setParameter("assigneeID", assigneeID)
                 .getResultList();
     }
 
     @Override
-    public Map<String, String> assetsValueByCategory(){
+    public Map<String, String> assetsValueByCategory() {
         return assetsValuation.totalAssetValueByCategory(list(new Asset()));
     }
 
@@ -63,9 +71,40 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
 
     @Override
     public List<AssetDTO> findAllAssetsNameAndSerialNo() {
-        List<Asset> assets  = list(new Asset());
-       return  assets.stream()
+        List<Asset> assets = list(new Asset());
+        return assets.stream()
                 .map(asset -> new AssetDTO(asset.getSerialNumber(), asset.getName()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void assignAssetToAssignee(AssignAssetDTO assignAssetDTO) {
+        Asset asset = findAssetBySerialNumber(assignAssetDTO.getAssetSerialId(), new Asset());
+        System.out.println(">>>>>>>>ASSET" + asset);
+        System.out.println("ASSET ID = " + asset.getId());
+        Assignee assignee = assigneeBean.findById(Assignee.class, Long.valueOf(assignAssetDTO.getAssigneeId()));
+        System.out.println(">>>>>>>>ASSIGNEE" + assignee);
+        System.out.println(">>>>>>>>ASSIGNEE " + assignee.getId());
+
+        try {
+            if (assignAssetDTO.getAssignaction().equals(AssetAssignAction.UNASSIGN)) {
+                asset.setAssignee(null);
+                getDao().addOrUpdate(asset);
+            }
+            if (!isAssetAssigned(asset)) {
+                if (assignAssetDTO.getAssignaction().equals(AssetAssignAction.ASSIGN)) {
+                    asset.setAssignee(assignee);
+                    getDao().addOrUpdate(asset);
+                }
+            }
+            throw new AssetAlreadyAssignedException("Failed!. Asset is already Assigned!");
+
+        } catch (AssetAlreadyAssignedException ex) {
+            System.out.println("Error + " + ex.getMessage());
+        }
+    }
+
+    private Boolean isAssetAssigned(Asset asset) {
+        return asset.getAssigneeId() != null;
     }
 }

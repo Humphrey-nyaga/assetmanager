@@ -60,4 +60,18 @@ public class Computer extends Asset {
 
     public Computer(){}
 
+    @Override
+    public String toString() {
+        return "Computer{" +
+                super.toString()+
+                "ramInGB=" + ramInGB +
+                ", screenSize='" + screenSize + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", model='" + model + '\'' +
+                ", storageSizeInGB=" + storageSizeInGB +
+                ", currentCondition=" + currentCondition +
+                ", processor='" + processor + '\'' +
+                ", computerType=" + computerType +
+                '}';
+    }
 }

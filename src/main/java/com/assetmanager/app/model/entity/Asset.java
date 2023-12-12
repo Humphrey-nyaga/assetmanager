@@ -32,7 +32,7 @@ public  class Asset extends BaseEntity implements Serializable {
     private String serialNumber;
 
     @Column
-    //@TableColumnHeader(header = "Name of Asset")
+    @TableColumnHeader(header = "Name of Asset")
     @HtmlFormField(label = "Name", isRequired = true)
     private String name;
 
@@ -65,6 +65,10 @@ public  class Asset extends BaseEntity implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "assignee_id")
     private Assignee assignee;
+
+    public void setAssignee(Assignee assignee) {
+        this.assignee = assignee;
+    }
 
     @TableColumnHeader(header = "Assignee")
     @Formula("(select concat( a.firstname, ' ',a.lastname) from assignee a where a.id=assignee_id)")

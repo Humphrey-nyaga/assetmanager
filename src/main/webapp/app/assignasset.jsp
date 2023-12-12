@@ -50,7 +50,7 @@
         }
 
         function populateAssigneeDropdown(data) {
-            let selectAssignee = document.getElementById('staffId');
+            let selectAssignee = document.getElementById('assigneeId');
             data.forEach(assignee => {
                 let option = document.createElement('option');
                 option.value = assignee.id;
@@ -60,11 +60,11 @@
         }
 
         function populateAssetDropdown(data) {
-            let selectAsset = document.getElementById('assetSerialID');
+            let selectAsset = document.getElementById('assetSerialId');
             data.forEach(asset => {
                 let option = document.createElement('option');
                 option.value = asset.serialNumber;
-                option.text = asset.name;
+                option.text = asset.name +" "+ asset.serialNumber ;
                 selectAsset.appendChild(option);
             });
         }
@@ -82,38 +82,32 @@
 ${headerMenu.menu}
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10 p-2 ml-2">
-            <div class=" bg-white asset-container mx-auto" style="">
+        <div class="col-md-9 p-2 ml-2">
+            <div class=" mt-4 bg-white asset-container mx-auto" style="">
                 <form method="POST" action="./assignAsset">
                 <div class=" data-form border border-1 p-3 rounded">
-                <h4 class="text-center mb-0 mt-0">Assign Asset</h4>
-                <div class="mt-2 row">
-                    <div class="col-md-4">
-                        <label for="staffId" class="form-label">Assignee</label>
-                        <select class="form-select form-select-sm" id="staffId" name="staffId" required="">
+                <h4 class="text-center mb-0 mt-0">Assign/Unassign Asset</h4>
+                <div class="mt-6 row">
+                    <div class="col-md-4 h-4 mt-4">
+                        <label for="assigneeId" class="form-label fs-5">Assignee</label>
+                        <select class="form-select form-select-md fs-5" id="assigneeId" name="assigneeId" required="">
                         </select>
                     </div>
-
-
-                    <div class="col-md-4">
-                        <label for="assetSerialID" class="form-label">Asset</label>
-                        <select class="form-select form-select-sm" id="assetSerialID" name="assetSerialID">
-                        </select></div>
-                    <div class="col-md-4">
-                        <label for="assignaction" class="form-label">Action</label>
-                        <select class="form-select form-select-sm" id="assignaction" name="assignaction">
+                    <div class="col-md-6 h-4 mt-4">
+                        <label for="assetSerialId" class="form-label fs-5">Asset</label>
+                        <select class="form-select form-select-md fs-5" id="assetSerialId" name="assetSerialId">
+                        </select>
+                    </div>
+                    <div class="col-md-4 h-4 mt-4">
+                        <label for="assignaction" class="form-label fs-5">Action</label>
+                        <select class="form-select form-select-md fs-5" id="assignaction" name="assignaction">
                             <option value="ASSIGN">Assign</option>
                             <option value="UNASSIGN">Unassign</option>
                         </select></div>
                 </div>
-                <div class=" mt-2 col-md-4">
-                    <label for="dateRequested" class="form-label">Date</label>
-                    <span style="color:black;">*</span> <input type="date" required=""
-                                                               class="form-control form-control-sm" id="dateRequested"
-                                                               name="dateRequested">
-                </div>
-                <div class="gap-2 p-2 d-flex justify-content-center">
+                <div class="gap-2 p-2 d-flex justify-content-center mt-4">
                     <button class="btn btn-lg btn-primary" type="submit">Assign/Unassign</button>
+                </div>
                 </div>
                 </form>
             </div>
