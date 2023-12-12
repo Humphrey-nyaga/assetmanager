@@ -9,7 +9,6 @@ import com.assetmanager.app.observer.Created;
 import com.assetmanager.util.SerialIDGenerator.SerialIDGenerator;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
@@ -17,7 +16,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Optional;
 
 @Stateless
 @Remote
@@ -43,17 +41,19 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
     private Event<AssetRequestEvent> assetRequestEvent;
 
     @Override
-    public void addOrUpdate(AssetRequest assetRequest) {
+    public AssetRequest addOrUpdate(AssetRequest assetRequest) {
+
         try {
             Assignee assignee = assigneeBean.getAssigneeByStaffId(assetRequest.getStaffId());
             if (assignee!= null) {
-                assetRequest.setAssetRequestID(serialIDGenerator.generate());
-                getDao().addOrUpdate(assetRequest);
+                assetRequest.setAssetRequestSerialNumber(serialIDGenerator.generate());
+               getDao().addOrUpdate(assetRequest);
                 assetRequestEvent.fire(new AssetRequestEvent(assetRequest, assignee));
             }
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
         }
+        return assetRequest;
     }
 
     @Override

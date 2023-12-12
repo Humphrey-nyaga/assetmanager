@@ -1,5 +1,6 @@
 package com.assetmanager.action;
 
+import com.assetmanager.app.bean.AssetBeanI;
 import com.assetmanager.app.bean.AssigneeBeanI;
 import com.assetmanager.app.model.entity.Assignee;
 
@@ -39,7 +40,8 @@ public class AssigneeAction extends BaseAction {
 
             try {
                 Long id = Long.parseLong(idString);
-                assigneeBean.deleteById(Assignee.class, id);
+                Assignee assignee = assigneeBean.findById(Assignee.class, id);
+                assigneeBean.deleteById(Assignee.class,id);
 
                 response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 

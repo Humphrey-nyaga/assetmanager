@@ -9,7 +9,7 @@ public class AssetCardRender {
 
         StringBuilder cardHtml = new StringBuilder()
                 .append(
-                        "<div class=\"d-grid gap-2 d-md-block\">\n");
+                        "<div class=\"d-grid gap-2 d-md-block mb-2\">\n");
 
         Reflections reflections = new Reflections("com.assetmanager.app.model");
         List<Class<?>> entities = reflections.getTypesAnnotatedWith(AssetCreationCard.class)
@@ -17,13 +17,16 @@ public class AssetCardRender {
 
         for (Class<?> clazz : entities) {
             AssetCreationCard assetCreationCard = clazz.getAnnotation(AssetCreationCard.class);
-            String url = assetCreationCard.addUrl();
+            String url = assetCreationCard.servletUrl();
             String label = assetCreationCard.label();
 
             cardHtml.append(
-                    "    <a href=\"" + url + "\" class=\"btn btn-primary rounded-2\">Add " + label + "</a>"
+                    "    <a href=\"" + url + "\" class=\"btn btn-primary rounded-2\">View " + label + "</a>"
                     );
         }
+        cardHtml.append(
+                "    <a href=\"" + "./app/assignasset.jsp" + "\" class=\"btn btn-success rounded-2\">Assign Assets</a>"
+        );
         cardHtml.append("</div>\n");
 
         return cardHtml.toString();

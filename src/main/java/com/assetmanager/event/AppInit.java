@@ -1,13 +1,17 @@
 package com.assetmanager.event;
 
 import com.assetmanager.app.bean.*;
+import com.assetmanager.app.model.entity.AssetRequest;
+import com.assetmanager.app.model.entity.vehicle.Vehicle;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-
-import java.util.logging.Logger;
 
 
 @WebListener
@@ -19,10 +23,27 @@ public class AppInit implements ServletContextListener {
     @EJB
     AssigneeBeanI assigneeBean;
 
+    public static ObjectMapper mapper = new ObjectMapper();
 
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        // Creating object of Organisation
+        AssetRequest org = new AssetRequest();
+
+        ObjectMapper Obj = new ObjectMapper();
+
+        // Try block to check for exceptions
+        try {
+
+            // Getting organisation object as a json string
+            String jsonStr = Obj.writeValueAsString(org);
+
+            // Displaying JSON String on console
+            System.out.println(jsonStr);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
 ////        /*Create some default assignees*/
 //        assigneeBean.create(new Assignee( "Hans", "Schmidt", "hans@example0.com",

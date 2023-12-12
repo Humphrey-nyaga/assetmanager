@@ -11,6 +11,6 @@ public class MachinerySerialIDGenerator implements SerialIDGenerator {
         long id = ThreadLocalRandom.current().nextInt(1, 100);
         int currentYear = LocalDate.now().getYear();
         int dayOfYear = LocalDate.now().getDayOfYear();
-        return "MCH" + id + "-" + dayOfYear + currentYear;
+        return "ASN-MCH" + id + "-" + dayOfYear + currentYear;
     }
 }

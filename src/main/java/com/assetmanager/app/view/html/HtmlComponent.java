@@ -1,8 +1,10 @@
 package com.assetmanager.app.view.html;
 
 import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.util.SelectBoxStore;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.enterprise.inject.spi.CDI;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -24,8 +26,15 @@ public class HtmlComponent implements Serializable {
 
         HtmlTable htmlTableLabel = dataClass.getAnnotation(HtmlTable.class);
 
-        List<Field> fields = new ArrayList<>(Arrays.asList(dataClass.getSuperclass().getDeclaredFields()));
-        fields.addAll(Arrays.asList(dataClass.getDeclaredFields()));
+//        List<Field> fields = new ArrayList<>(Arrays.asList(dataClass.getSuperclass().getDeclaredFields()));
+//        fields.addAll(Arrays.asList(dataClass.getDeclaredFields()));
+        List<Field> fields = new ArrayList<>();
+        Class<?> currentClass = dataClass;
+
+        while (currentClass != null) {
+            fields.addAll(Arrays.asList(currentClass.getDeclaredFields()));
+            currentClass = currentClass.getSuperclass();
+        }
 
         StringBuilder stringBuilder = new StringBuilder()
                 .append("<div class=\"row justify-content-center\">\n")
@@ -181,23 +190,76 @@ public class HtmlComponent implements Serializable {
                         throw new RuntimeException(e);
                     }
                 }
-                htmlFormBuilder.append(" </select></div>");
+                htmlFormBuilder.append(" </select> </div>");
                 continue;
             }
+            if (StringUtils.isNotBlank(htmlFormField.selectList())
+                    && StringUtils.isNotBlank(htmlFormField.selectValue())
+                    && StringUtils.isNotBlank(htmlFormField.selectDisplay()))
+            {
+                    try {
 
-            htmlFormBuilder.append("<div class=\" col-md-4\">\n" +
-                            " <label for=\" " + fieldName + "\" class=\"form-label\">" + label + "</label>\n")
-                    .append(htmlFormField.isRequired() ? "<span style=\"color:black;\">*</span> " : "");
-            if (htmlFormField.isTextArea()) {
-                htmlFormBuilder.append("<textarea rows=\"3\"");
-            } else {
-                htmlFormBuilder.append(" <input type=\"" + type + "\"").append(htmlFormField.isRequired() ? "required" : "");
+                        htmlFormBuilder.append("<div class=\"col-md-4\">\n" +
+                                        " <label for=\" " + fieldName + "\" class=\"form-label\">" + label + "</label>\n")
+                                .append("<select class=\"form-select form-select-sm\"")
+                                .append(" id=\"").append(fieldName)
+                                .append("\" name=\"").append(fieldName).append("\" ")
+                                .append(htmlFormField.isRequired() ? "required" : "")
+                                .append(">");
+
+                        SelectBoxStore genericCombo = CDI.current().select(SelectBoxStore.class).get();
+
+                        Method selectListMethod = SelectBoxStore.class.getDeclaredMethod(htmlFormField.selectList());
+
+                        List<?> options = (List<?>) selectListMethod.invoke(genericCombo);
+
+                        System.out.println("Assignees>>>>>>>>>>>>" + options.toString());
+
+                        for (Object option : options) {
+                            Field valueField = htmlFormField.selectValueInSuper() ?
+                                    option.getClass().getSuperclass().getDeclaredField(htmlFormField.selectValue()) :
+                                    option.getClass().getDeclaredField(htmlFormField.selectValue());
+                            valueField.setAccessible(true);
+                            System.out.println("Field Name: " + valueField.getName());
+                            System.out.println("Field Value: " + valueField.get(option));
+
+                            Field displayField = htmlFormField.selectDisplayInSuper() ?
+                                    option.getClass().getSuperclass().getDeclaredField(htmlFormField.selectDisplay()) :
+                                    option.getClass().getDeclaredField(htmlFormField.selectDisplay());
+                            displayField.setAccessible(true);
+                            System.out.println("Field Name: " + valueField.getName());
+                            System.out.println("Field Value: " + valueField.get(option));
+                            System.out.println(">>>>>>>>>Display Field "+ displayField.get(option));
+
+                            htmlFormBuilder.append("<option value=\"")
+                                    .append(valueField.get(option)).append("\">")
+                                    .append(displayField.get(option)).append("</option>)");
+                        }
+
+                        htmlFormBuilder.append("</select> </div>");
+                        continue;
+                    } catch (NoSuchFieldException | NoSuchMethodException | IllegalAccessException |
+                             InvocationTargetException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+
             }
-            htmlFormBuilder.append(" class=\"form-control form-control-sm\" id=\"" + fieldName + "\" name=\"" + fieldName + "\">\n");
-            if (htmlFormField.isTextArea()) {
-                htmlFormBuilder.append("</textarea>");
+
+            else {
+                htmlFormBuilder.append("<div class=\" col-md-4\">\n" +
+                                " <label for=\" " + fieldName + "\" class=\"form-label\">" + label + "</label>\n")
+                        .append(htmlFormField.isRequired() ? "<span style=\"color:black;\">*</span> " : "");
+                if (htmlFormField.isTextArea()) {
+                    htmlFormBuilder.append("<textarea rows=\"3\"");
+                } else {
+                    htmlFormBuilder.append(" <input type=\"" + type + "\"").append(htmlFormField.isRequired() ? "required" : "");
+                }
+                htmlFormBuilder.append(" class=\"form-control form-control-sm\" id=\"" + fieldName + "\" name=\"" + fieldName + "\">\n");
+                if (htmlFormField.isTextArea()) {
+                    htmlFormBuilder.append("</textarea>");
+                }
+                htmlFormBuilder.append("</div>");
             }
-            htmlFormBuilder.append("</div>");
 
 
             if (fieldsInCurrentTab >= maxFieldsPerTab) {
@@ -226,5 +288,8 @@ public class HtmlComponent implements Serializable {
         return htmlFormBuilder.toString();
     }
 
+    private static String ifBlank(String target, String alternative) {
+        return StringUtils.isBlank(target) ? alternative : StringUtils.trimToEmpty(target);
+    }
 
 }

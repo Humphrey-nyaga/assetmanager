@@ -1,10 +1,16 @@
 package com.assetmanager.app.model.entity;
 
+import com.assetmanager.app.model.entity.Machinery.Machinery;
+import com.assetmanager.app.model.entity.vehicle.Vehicle;
 import com.assetmanager.app.view.html.HtmlForm;
 import com.assetmanager.app.view.html.HtmlFormField;
 import com.assetmanager.app.view.html.HtmlTable;
 import com.assetmanager.app.view.html.TableColumnHeader;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,11 +41,15 @@ public class Maintenance extends BaseEntity implements Serializable {
     @Column(name = "scheduled_maintenance_date")
     @TableColumnHeader(header = "Scheduled Date")
     @HtmlFormField(label = "Scheduled maintenance date")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate scheduledMaintenanceDate;
 
 
     @Column(name = "actual_maintenance_date")
     @TableColumnHeader(header = "Actual Date")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate actualMaintenanceDate;
 
 
@@ -66,6 +76,11 @@ public class Maintenance extends BaseEntity implements Serializable {
     @HtmlFormField(label = "Maintenance Period")
     private MaintenanceFrequency maintenanceFrequency;
 
+    @ManyToOne
+    private Vehicle vehicle;
+
+    @ManyToOne
+    private Machinery machinery;
     public Maintenance() {
     }
 

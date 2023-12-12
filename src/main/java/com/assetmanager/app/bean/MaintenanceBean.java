@@ -14,7 +14,7 @@ public class MaintenanceBean extends GenericBean<Maintenance> implements Mainten
    @Inject
     MaintenanceScheduler maintenanceScheduler;
     @Override
-    public void addOrUpdate(Maintenance maintenance) {
-        getDao().addOrUpdate(maintenance);
+    public Maintenance addOrUpdate(Maintenance maintenance) {
+        return getDao().addOrUpdate(maintenance);
     }
 }
