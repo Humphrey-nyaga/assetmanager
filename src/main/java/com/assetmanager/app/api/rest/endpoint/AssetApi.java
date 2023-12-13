@@ -76,4 +76,12 @@ public class AssetApi {
             return Response.status(Response.Status.NOT_FOUND).entity("Not Found").build();
         }
     }
+
+    @Path("/vehicle-and-machinery")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVehiclesAndMachinery() {
+        List<Asset> assetList = assetBean.vehicleAndMachineryOnlyList(new Asset());
+        return Response.status(Response.Status.OK).entity(assetList).build();
+    }
 }

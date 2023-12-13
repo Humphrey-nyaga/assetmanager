@@ -5,6 +5,8 @@ import com.assetmanager.app.dto.AssetDTO;
 import com.assetmanager.app.dto.AssignAssetDTO;
 import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.Assignee;
+import com.assetmanager.app.model.entity.Machinery.Machinery;
+import com.assetmanager.app.model.entity.vehicle.Vehicle;
 import com.assetmanager.app.observer.*;
 import com.assetmanager.app.service.AssetsValuationI;
 import com.assetmanager.exceptions.AssetAlreadyAssignedException;
@@ -16,6 +18,7 @@ import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -84,7 +87,7 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
     public List<AssetDTO> findAllAssetsNameAndSerialNo() {
         List<Asset> assets = list(new Asset());
         return assets.stream()
-                .map(asset -> new AssetDTO(asset.getSerialNumber(), asset.getName(),asset.getAssigneeId()))
+                .map(asset -> new AssetDTO(asset.getSerialNumber(), asset.getName(), asset.getAssigneeId()))
                 .collect(Collectors.toList());
     }
 
@@ -130,6 +133,17 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
         } catch (AssetAlreadyAssignedException ex) {
             System.out.println("Error + " + ex.getMessage());
         }
+    }
+
+    @Override
+    public List<Asset> vehicleAndMachineryOnlyList(Object entity) {
+        String jpql = "FROM " + entity.getClass().getName() + " e ORDER BY e.createdAt DESC";
+        List<Asset> resultList = em.createQuery(jpql, Asset.class)
+                .getResultList();
+
+        return resultList.stream()
+                .filter(asset -> asset instanceof Vehicle || asset instanceof Machinery)
+                .collect(Collectors.toList());
     }
 
     private Boolean isAssetAssigned(Asset asset) {

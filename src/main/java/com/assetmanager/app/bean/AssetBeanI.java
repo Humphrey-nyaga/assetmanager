@@ -22,4 +22,6 @@ public interface AssetBeanI extends GenericBeanI<Asset> {
 
     void assignAssetToAssignee(AssignAssetDTO assignAssetDTO);
 
+    List<Asset> vehicleAndMachineryOnlyList(Object entity);
+
 }
