@@ -37,23 +37,23 @@ public class Assignee extends BaseEntity {
     public static final String AssigneeNameAndId = "Assignee.AssigneeNameAndId";
 
     @Column(name = "staff_id", nullable = false, unique = true)
-    @TableColumnHeader(header = "Staff Number")
+    @TableColumnHeader(header = "Staff Number" ,sortable = true)
     //   @HtmlFormField(label = "Staff Number")
     private String staffNumber;
 
     @Column(name = "employee_type", nullable = false)
     @Enumerated(value = EnumType.STRING)
-    @TableColumnHeader(header = "Employee Type")
+    @TableColumnHeader(header = "Employee Type", sortable = true)
     @HtmlFormField(label = "Employee Type")
     private AssigneeType employeeType;
 
     @Column(name = "firstname", nullable = false)
-    @TableColumnHeader(header = "First Name")
+    @TableColumnHeader(header = "First Name", sortable = true)
     @HtmlFormField(label = "First Name")
     private String firstName;
 
     @Column(name = "lastname", nullable = false)
-    @TableColumnHeader(header = "Last Name")
+    @TableColumnHeader(header = "Last Name" ,sortable = true)
     @HtmlFormField(label = "Last Name")
     private String lastName;
 

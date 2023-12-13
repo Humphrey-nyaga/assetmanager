@@ -29,12 +29,12 @@ public class AssetRequest extends BaseEntity {
     @HtmlFormField(label = "Assignee",isRequired = true, selectList = "assignees", selectValue = "staffNumber", selectValueInSuper=false, selectDisplay = "fullName")
     private String staffId;
 
-    @TableColumnHeader(header = "Requester Name")
+    @TableColumnHeader(header = "Requester Name", sortable = true)
     @Formula("(select concat(a.firstname, ' ', a.lastname) from assignee a where a.staff_id = staff_id)")
     private String fullName;
 
     @Column(name = "asset_request_serial_no",nullable = false)
-    @TableColumnHeader(header = "Request Serial No")
+    @TableColumnHeader(header = "Request Serial No" ,sortable = true)
     private String assetRequestSerialNumber;
 
 
@@ -51,7 +51,7 @@ public class AssetRequest extends BaseEntity {
 
 
     @Column(name = "date_requested",nullable = false)
-    @TableColumnHeader(header = "Request Date")
+    @TableColumnHeader(header = "Request Date" ,sortable = true)
     @HtmlFormField(label = "Request Date",isRequired = true)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
@@ -66,7 +66,7 @@ public class AssetRequest extends BaseEntity {
 
 
     @Column(name = "request_status",nullable = false)
-    @TableColumnHeader(header = "Status")
+    @TableColumnHeader(header = "Status" ,sortable = true)
     @HtmlFormField(label = "Request Status")
     private RequestStatus requestStatus;
 

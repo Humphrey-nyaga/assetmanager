@@ -71,6 +71,7 @@ public class HtmlComponent implements Serializable {
             field.setAccessible(true);
             stringBuilder.append("<th scope=\"col\">")
                     .append(StringUtils.isBlank(columnHeader.header()) ? fieldName : columnHeader.header())
+                    .append(columnHeader.sortable() ? "<i class=\"fas fa-sort text-right\">" : "")
                     .append("</th>");
 
         }
