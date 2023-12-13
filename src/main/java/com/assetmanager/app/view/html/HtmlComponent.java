@@ -48,15 +48,12 @@ public class HtmlComponent implements Serializable {
                     "  <div class=\"row align-items-center\">\n" +
                     "    <div class=\"col-md-8 mb-2\">");
             stringBuilder.append("<a href=\"" + htmlTableLabel.addUrl() + "\"><button class=\"btn btn-primary rounded-2\">Add " + htmlTableLabel.label() + "</button></a>")
-                    .append(" </div>\n" +
-                    "    <div class=\"col-md-4\">\n" +
-                    "      <input class=\"form-control\" id=\"myInput\" type=\"text\" placeholder=\"Search..\">\n" +
-                    "    </div>");
+                    .append(" </div>\n");
         }
 
         stringBuilder.append("<div class=\"\">\n")
                 .append("<div style=\"max-height: 60vh; overflow: auto;\">\n")
-                .append("<table class=\" table table-bordered border-4 table-striped table-responsive-sm \">\n")
+                .append("<table id=\"dataTable\" class=\" display table table-bordered border-4 table-striped table-responsive-sm \">\n")
                 .append("<thead class=\"table-success\">\n")
                 .append("<tr>\n");
 
@@ -71,7 +68,7 @@ public class HtmlComponent implements Serializable {
             field.setAccessible(true);
             stringBuilder.append("<th scope=\"col\">")
                     .append(StringUtils.isBlank(columnHeader.header()) ? fieldName : columnHeader.header())
-                    .append(columnHeader.sortable() ? "<i class=\"fas fa-sort text-right\">" : "")
+                    //.append(columnHeader.sortable() ? "<i class=\"fas fa-sort text-right\">" : "")
                     .append("</th>");
 
         }
