@@ -90,7 +90,7 @@
 <jsp:setProperty name="headerMenu" property="activeUrl" value='${requestScope.activeUrl}'/>
 <%--<c:when test='${sessionScope.role eq UserRole.ADMIN}'>--%>
     ${headerMenu.menu}
-    <h5> Welcome <c:out value="${sessionScope.username}"/></h5>
+<%--    <h5> Welcome <c:out value="${sessionScope.username}"/></h5>--%>
 
     ${requestScope.content}
 

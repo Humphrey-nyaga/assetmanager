@@ -48,7 +48,7 @@ public class HtmlComponent implements Serializable {
                     "  <div class=\"row align-items-center\">\n" +
                     "    <div class=\"col-md-8 mb-2\">");
             stringBuilder.append("<a href=\"" + htmlTableLabel.addUrl() + "\"><button class=\"btn btn-primary rounded-2\">Add " + htmlTableLabel.label() + "</button></a>")
-                    .append(" </div>\n");
+                    .append(" </div>\n" + "    </div>");
         }
 
         stringBuilder.append("<div class=\"\">\n")
@@ -68,7 +68,6 @@ public class HtmlComponent implements Serializable {
             field.setAccessible(true);
             stringBuilder.append("<th scope=\"col\">")
                     .append(StringUtils.isBlank(columnHeader.header()) ? fieldName : columnHeader.header())
-                    //.append(columnHeader.sortable() ? "<i class=\"fas fa-sort text-right\">" : "")
                     .append("</th>");
 
         }
