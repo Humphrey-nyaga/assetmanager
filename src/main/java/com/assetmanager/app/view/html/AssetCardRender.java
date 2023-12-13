@@ -29,7 +29,7 @@ public class AssetCardRender {
                     );
         }
         cardHtml.append(
-                "    <a href=\"" + "./app/assignasset.jsp" + "\" class=\"btn btn-success rounded-2\">Assign Assets</a>"
+                "    <a href=\"" + "./assignAsset" + "\" class=\"btn btn-success rounded-2\">Assign Assets</a>"
         );
 
 //        cardHtml.append("  <input class=\"form-control col-md-2\" id=\"myInput\" type=\"text\" placeholder=\"Search..\">\n");

@@ -84,7 +84,7 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
     public List<AssetDTO> findAllAssetsNameAndSerialNo() {
         List<Asset> assets = list(new Asset());
         return assets.stream()
-                .map(asset -> new AssetDTO(asset.getSerialNumber(), asset.getName()))
+                .map(asset -> new AssetDTO(asset.getSerialNumber(), asset.getName(),asset.getAssigneeId()))
                 .collect(Collectors.toList());
     }
 
@@ -97,8 +97,17 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
         System.out.println(">>>>>>>>ASSIGNEE" + assignee);
         System.out.println(">>>>>>>>ASSIGNEE " + assignee.getId());
 
+
         try {
+
             if (assignAssetDTO.getAssignaction().equals(AssetAssignAction.UNASSIGN)) {
+
+                System.out.println("DTO Assignee ID >>" + assignAssetDTO.getAssigneeId() + "  Asset Assigne" + asset.getAssigneeId());
+                if (asset.getAssigneeId() != Long.valueOf(assignAssetDTO.getAssigneeId())) {
+                    assignee = assigneeBean.findById(Assignee.class, asset.getAssigneeId());
+                } else {
+                    System.out.println("Ids Match Correctly");
+                }
                 asset.setAssignee(null);
                 getDao().addOrUpdate(asset);
 

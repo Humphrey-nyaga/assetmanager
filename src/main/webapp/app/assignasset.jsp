@@ -101,7 +101,7 @@ ${headerMenu.menu}
     <div class="row justify-content-center">
         <div class="col-md-9 p-2 ml-2">
             <div class=" mt-4 bg-white asset-container mx-auto" style="">
-                <form method="POST" action="../assignAsset">
+                <form method="POST" action="./assignAsset">
                     <div class=" data-form border border-1 p-3 rounded">
                         <h4 class="text-center mb-0 mt-0">Assign/Unassign Asset</h4>
                         <div class="mt-6 row">
