@@ -1,10 +1,8 @@
-package com.assetmanager.app.rest.apis;
+package com.assetmanager.app.api.rest.endpoint;
 
 import com.assetmanager.app.bean.ComputerBeanI;
-import com.assetmanager.app.bean.VehicleBeanI;
 import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.app.model.entity.computer.Computer;
-import com.assetmanager.app.model.entity.vehicle.Vehicle;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;

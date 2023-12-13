@@ -41,7 +41,7 @@
     <div class="row h-100 justify-content-center align-items-center">
     <div>
     </div>
-        <form class=" form-group w-75 justify-content-center" action="./login" method="POST">
+        <form id="loginForm" class=" form-group w-75 justify-content-center">
             <section class="py-5">
                 <div class="container py-4">
                     <div class="row d-flex justify-content-center align-items-center">
@@ -70,8 +70,7 @@
                                         </div>
 
                                         <p class="medium mb-2"><a class="text-white" href="#!">Forgot password?</a></p>
-                                        <button class="btn btn-primary btn-lg btn-outline-light px-4 mt-3 mb-3"
-                                                type="submit">LOGIN
+                                        <button id="loginButton" class="btn btn-primary btn-lg btn-outline-light px-4 mt-3 mb-3" type="submit">LOGIN
                                         </button>
                                         <div>
                                             <p class="mb-0">Don't have an account? <a href="./signup.jsp"
@@ -90,6 +89,49 @@
         </form>
     </div>
 </div>
+        <script>
+            document.getElementById('loginForm').addEventListener("submit", (e) => {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                const formData = new URLSearchParams();
+                formData.append('username', username);
+                formData.append('password', password);
+
+                fetch('./login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData.toString(),
+                 })
+                //     .then(response => {
+                //         const authToken = response.headers.get('Authorization');
+                //
+                //         if (authToken) {
+                //             localStorage.setItem('authToken', authToken);
+                //             console.log('Login successful! Token:', authToken);
+                //         } else {
+                //             console.error('No Authorization header found in the response.');
+                //         }
+                //     })
+                    .then(response => response.json())
+                    .then(data => {
+                        const authToken = data.authToken;
+
+                        if (authToken) {
+                            localStorage.setItem('authToken', authToken);
+                            console.log('Login successful!');
+                            window.location.href = './home';
+
+                        } else {
+                            console.error('No authToken found in the response.');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>

@@ -44,7 +44,14 @@ public class HtmlComponent implements Serializable {
         if (Asset.class.equals(dataClass)) {
             stringBuilder.append(renderAssetCards());
         } else {
-            stringBuilder.append("<div class=\"btn-toolbar d-grid gap-2 d-md-block mb-2\"><a href=\"" + htmlTableLabel.addUrl() + "\"><button class=\"btn btn-primary rounded-2\">Add " + htmlTableLabel.label() + "</button></a></div>\n");
+            stringBuilder .append("<div class=\"container\">\n" +
+                    "  <div class=\"row align-items-center\">\n" +
+                    "    <div class=\"col-md-8 mb-2\">");
+            stringBuilder.append("<a href=\"" + htmlTableLabel.addUrl() + "\"><button class=\"btn btn-primary rounded-2\">Add " + htmlTableLabel.label() + "</button></a>")
+                    .append(" </div>\n" +
+                    "    <div class=\"col-md-4\">\n" +
+                    "      <input class=\"form-control\" id=\"myInput\" type=\"text\" placeholder=\"Search..\">\n" +
+                    "    </div>");
         }
 
         stringBuilder.append("<div class=\"\">\n")
@@ -68,7 +75,7 @@ public class HtmlComponent implements Serializable {
 
         }
         stringBuilder.append(" <th scope=\"col\">Actions</th>\n");
-        stringBuilder.append("</tr></thead>");
+        stringBuilder.append("</tr></thead><tbody id=\"myTable\">\n");
 
         for (T model : data) {
             stringBuilder.append("<tr>");
@@ -119,7 +126,7 @@ public class HtmlComponent implements Serializable {
             stringBuilder.append("</tr>");
         }
         stringBuilder.append("""
-                <tbody></table>
+                </tbody></table>
                 </div></div></div></div>
                 """);
 

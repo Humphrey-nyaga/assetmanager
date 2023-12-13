@@ -8,8 +8,12 @@ public class AssetCardRender {
     public static String renderAssetCards() {
 
         StringBuilder cardHtml = new StringBuilder()
-                .append(
-                        "<div class=\"d-grid gap-2 d-md-block mb-2\">\n");
+                .append("<div class=\"container\">\n" +
+                        "  <div class=\"row align-items-center\">\n" +
+                        "    <div class=\"col-md-8 mb-2\">");
+//                .append(
+//                        "<div class=\"d-grid gap-2 d-md-block mb-2\">\n");
+
 
         Reflections reflections = new Reflections("com.assetmanager.app.model");
         List<Class<?>> entities = reflections.getTypesAnnotatedWith(AssetCreationCard.class)
@@ -27,7 +31,13 @@ public class AssetCardRender {
         cardHtml.append(
                 "    <a href=\"" + "./app/assignasset.jsp" + "\" class=\"btn btn-success rounded-2\">Assign Assets</a>"
         );
-        cardHtml.append("</div>\n");
+
+//        cardHtml.append("  <input class=\"form-control col-md-2\" id=\"myInput\" type=\"text\" placeholder=\"Search..\">\n");
+//        cardHtml.append("</div>\n");
+        cardHtml.append(" </div>\n" +
+                "    <div class=\"col-md-4\">\n" +
+                "      <input class=\"form-control\" id=\"myInput\" type=\"text\" placeholder=\"Search..\">\n" +
+                "    </div>");
 
         return cardHtml.toString();
     }
