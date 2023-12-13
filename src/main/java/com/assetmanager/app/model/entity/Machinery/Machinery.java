@@ -46,7 +46,7 @@ public class Machinery  extends Asset {
 
     @Column(name = "model",nullable = false)
     @HtmlFormField(label = "Model", isRequired = true)
-    @TableColumnHeader(header = "Model")
+    @TableColumnHeader(header = "Model",sortable = true)
     private String model;
 
 
@@ -76,7 +76,7 @@ public class Machinery  extends Asset {
     @Enumerated(EnumType.STRING)
     @Column(name = "current_condition",nullable = false)
     @HtmlFormField(label = "Condition", isRequired = true)
-    @TableColumnHeader(header = "Condition")
+    @TableColumnHeader(header = "Condition" ,sortable = true)
     private Condition currentCondition;
 
 

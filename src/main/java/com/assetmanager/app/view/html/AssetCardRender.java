@@ -34,10 +34,7 @@ public class AssetCardRender {
 
 //        cardHtml.append("  <input class=\"form-control col-md-2\" id=\"myInput\" type=\"text\" placeholder=\"Search..\">\n");
 //        cardHtml.append("</div>\n");
-        cardHtml.append(" </div>\n" +
-                "    <div class=\"col-md-4\">\n" +
-                "      <input class=\"form-control\" id=\"myInput\" type=\"text\" placeholder=\"Search..\">\n" +
-                "    </div>");
+        cardHtml.append(" </div>\n");
 
         return cardHtml.toString();
     }

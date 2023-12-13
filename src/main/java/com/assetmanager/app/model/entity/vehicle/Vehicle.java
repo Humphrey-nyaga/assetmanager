@@ -38,13 +38,13 @@ public class Vehicle extends Asset {
 
     @Column(name = "cc",nullable = false)
     @HtmlFormField(label = "CC ", isRequired = true)
-    @TableColumnHeader(header = " Engine cc")
+    @TableColumnHeader(header = " Engine cc",sortable = true)
     @Positive
     private Integer cc;
 
     @Column(name = "engine_type",nullable = false)
     @HtmlFormField(label = "Engine Type", isRequired = true)
-    @TableColumnHeader(header = "Engine Type")
+    @TableColumnHeader(header = "Engine Type" ,sortable = true)
     @Enumerated(EnumType.STRING)
     private EngineType engineType;
 
@@ -87,7 +87,7 @@ public class Vehicle extends Asset {
 
     @Column(name = "tyre_number",nullable = false)
     @HtmlFormField(label = "Tyre Number", isRequired = true)
-    @TableColumnHeader(header = "Tyres No.")
+    @TableColumnHeader(header = "Tyres No." ,sortable = true)
     @Positive
     private Integer tyreNumber;
 

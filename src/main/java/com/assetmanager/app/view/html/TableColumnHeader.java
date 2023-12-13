@@ -9,4 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TableColumnHeader {
     String header() default "";
+    boolean sortable() default false;
+
 }
