@@ -24,15 +24,16 @@ import javax.validation.constraints.Positive;
 @HtmlForm(label = "Asset", url = "./asset")
 @IdPrefix(prefix = "ASN00")
 @HtmlTable(name = "Asset Table", label = "Asset", url = "./asset")
+
 public  class Asset extends BaseEntity implements Serializable {
 
     @Column(name = "serial_id",unique = true)
-    @TableColumnHeader(header = "Serial Number")
+    @TableColumnHeader(header = "Serial Number",sortable = true)
     // @HtmlFormField(label = "Serial Number", isRequired = true)
     private String serialNumber;
 
     @Column
-    @TableColumnHeader(header = "Name of Asset")
+    @TableColumnHeader(header = "Name of Asset",sortable = true)
     @HtmlFormField(label = "Name", isRequired = true)
     private String name;
 
@@ -42,7 +43,7 @@ public  class Asset extends BaseEntity implements Serializable {
     private String description;
 
     @Column(name = "date_Acquired")
-    @TableColumnHeader(header = "Date Acquired")
+    @TableColumnHeader(header = "Date Acquired",sortable = true)
     @HtmlFormField(label = "Date Acquired", isRequired = true)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
@@ -51,12 +52,12 @@ public  class Asset extends BaseEntity implements Serializable {
 
     @Column
     @Enumerated(EnumType.STRING)
-    @TableColumnHeader(header = "Category")
+    @TableColumnHeader(header = "Category",sortable = true)
    // @HtmlFormField(label = "Category")
     private Category category;
 
     @Column(name = "purchase_value")
-    @TableColumnHeader(header = "Value")
+    @TableColumnHeader(header = "Value",sortable = true)
     @HtmlFormField(label = "Purchase Value($)", isRequired = true)
     @Positive
     private BigDecimal purchaseValue;

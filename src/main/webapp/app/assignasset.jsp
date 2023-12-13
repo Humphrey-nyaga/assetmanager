@@ -15,11 +15,20 @@
         </jsp:include>
     </style>
     <script>
+
         async function getAssigneeNameAndID() {
-            let url = 'http://localhost:8080/assetmanager/api/v1/assignee/assignee-name-and-id';
+            const authToken = localStorage.getItem('authToken');
+
+            let url = 'http://localhost:8080/assetmanager/api/v1/assignee/assignee-name-and-id'
 
             try {
-                let response = await fetch(url, { method: 'GET' });
+                let response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Basic '.concat(authToken),
+                        'Content-Type': 'application/json'
+                    }
+                });
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -33,10 +42,18 @@
         }
 
         async function getAllAssetsNameAndSerialNo() {
-            let url = 'http://localhost:8080/assetmanager/api/v1/asset/assets-name-and-serial-no';
+            const authToken = localStorage.getItem('authToken');
+
+            let url = 'http://localhost:8080/assetmanager/api/v1/asset/assets-name-and-serial-no'
 
             try {
-                let response = await fetch(url, { method: 'GET' });
+                let response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Basic '.concat(authToken),
+                        'Content-Type': 'application/json'
+                    }
+                });
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -64,7 +81,7 @@
             data.forEach(asset => {
                 let option = document.createElement('option');
                 option.value = asset.serialNumber;
-                option.text = asset.name +" "+ asset.serialNumber ;
+                option.text = asset.name + " " + asset.serialNumber;
                 selectAsset.appendChild(option);
             });
         }
@@ -85,39 +102,40 @@ ${headerMenu.menu}
         <div class="col-md-9 p-2 ml-2">
             <div class=" mt-4 bg-white asset-container mx-auto" style="">
                 <form method="POST" action="./assignAsset">
-                <div class=" data-form border border-1 p-3 rounded">
-                <h4 class="text-center mb-0 mt-0">Assign/Unassign Asset</h4>
-                <div class="mt-6 row">
-                    <div class="col-md-4 h-4 mt-4">
-                        <label for="assigneeId" class="form-label fs-5">Assignee</label>
-                        <select class="form-select form-select-md fs-5" id="assigneeId" name="assigneeId" required="">
-                        </select>
+                    <div class=" data-form border border-1 p-3 rounded">
+                        <h4 class="text-center mb-0 mt-0">Assign/Unassign Asset</h4>
+                        <div class="mt-6 row">
+                            <div class="col-md-4 h-4 mt-4">
+                                <label for="assigneeId" class="form-label fs-5">Assignee</label>
+                                <select class="form-select form-select-md fs-5" id="assigneeId" name="assigneeId"
+                                        required="">
+                                </select>
+                            </div>
+                            <div class="col-md-6 h-4 mt-4">
+                                <label for="assetSerialId" class="form-label fs-5">Asset</label>
+                                <select class="form-select form-select-md fs-5" id="assetSerialId" name="assetSerialId">
+                                </select>
+                            </div>
+                            <div class="col-md-4 h-4 mt-4">
+                                <label for="assignaction" class="form-label fs-5">Action</label>
+                                <select class="form-select form-select-md fs-5" id="assignaction" name="assignaction">
+                                    <option value="ASSIGN">Assign</option>
+                                    <option value="UNASSIGN">Unassign</option>
+                                </select></div>
+                        </div>
+                        <div class="gap-2 p-2 d-flex justify-content-center mt-4">
+                            <button class="btn btn-lg btn-primary" type="submit">Assign/Unassign</button>
+                        </div>
                     </div>
-                    <div class="col-md-6 h-4 mt-4">
-                        <label for="assetSerialId" class="form-label fs-5">Asset</label>
-                        <select class="form-select form-select-md fs-5" id="assetSerialId" name="assetSerialId">
-                        </select>
-                    </div>
-                    <div class="col-md-4 h-4 mt-4">
-                        <label for="assignaction" class="form-label fs-5">Action</label>
-                        <select class="form-select form-select-md fs-5" id="assignaction" name="assignaction">
-                            <option value="ASSIGN">Assign</option>
-                            <option value="UNASSIGN">Unassign</option>
-                        </select></div>
-                </div>
-                <div class="gap-2 p-2 d-flex justify-content-center mt-4">
-                    <button class="btn btn-lg btn-primary" type="submit">Assign/Unassign</button>
-                </div>
-                </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
 
-    </script>
+</script>
 </body>
 </html>

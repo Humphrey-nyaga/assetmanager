@@ -13,21 +13,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Date;
 
 
 @WebServlet(urlPatterns = "/login")
 public class LoginAction extends BaseAction {
-   @EJB
-   AuthBeanI authBean;
+    @EJB
+    AuthBeanI authBean;
 
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
         HttpSession httpSession = servletRequest.getSession();
         if (StringUtils.isNotBlank((String) httpSession.getAttribute("loggedInId"))) {
             servletResponse.sendRedirect("./home");
-        }
-        else {
+        } else {
             servletResponse.sendRedirect("./");
         }
     }
@@ -40,14 +41,22 @@ public class LoginAction extends BaseAction {
         User authenticatedUser = authBean.authenticate(user);
 
 
-        if (authenticatedUser!=null && StringUtils.isNotBlank(authenticatedUser.getUsername())) {
+        if (authenticatedUser != null && StringUtils.isNotBlank(authenticatedUser.getUsername())) {
             HttpSession httpSession = servletRequest.getSession(true);
             httpSession.setAttribute("loggedInId", new Date().getTime() + "");
             httpSession.setAttribute("username", authenticatedUser.getUsername());
-            httpSession.setAttribute("role",authenticatedUser.getUserRole());
+            httpSession.setAttribute("role", authenticatedUser.getUserRole());
+
+            String username = servletRequest.getParameter("username");
+            String password = servletRequest.getParameter("password");
+
+            String authToken = Base64.getEncoder().encodeToString((username + ":" + password).getBytes(StandardCharsets.UTF_8));
+            servletResponse.setHeader("Authorization", "Basic " + authToken);
+
 
             if (authenticatedUser.getUserRole() == UserRole.ADMIN)
-                servletResponse.sendRedirect("./home");
+                servletResponse.getWriter().write("{\"authToken\": \"" + authToken + "\"}");
+            servletResponse.setStatus(HttpServletResponse.SC_OK);
             if (authenticatedUser.getUserRole() == UserRole.REGULAR)
                 servletResponse.sendRedirect("./asset");
         } else {

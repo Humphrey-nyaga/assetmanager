@@ -25,9 +25,8 @@ public class VehicleAction extends BaseAction {
                 "./vehicle",
                 Vehicle.class,
                vehicleBean.list(new Vehicle()));
-
-
     }
+
     public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
         Vehicle vehicle = new Vehicle();
@@ -35,6 +34,7 @@ public class VehicleAction extends BaseAction {
         vehicleBean.addOrUpdate(vehicle);
         servletResponse.sendRedirect("./asset");
     }
+
     public void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String pathInfo = request.getPathInfo();

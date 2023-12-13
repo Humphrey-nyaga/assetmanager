@@ -38,18 +38,22 @@ public class HtmlComponent implements Serializable {
 
         StringBuilder stringBuilder = new StringBuilder()
                 .append("<div class=\"row justify-content-center\">\n")
-                .append("<div class=\"col-md-11 mr-0\">\n");
+                .append("<div class=\"\">\n");
 
 
         if (Asset.class.equals(dataClass)) {
             stringBuilder.append(renderAssetCards());
         } else {
-            stringBuilder.append("<div class=\"btn-toolbar d-grid gap-2 d-md-block mb-2\"><a href=\"" + htmlTableLabel.addUrl() + "\"><button class=\"btn btn-primary rounded-2\">Add " + htmlTableLabel.label() + "</button></a></div>\n");
+            stringBuilder .append("<div class=\"container\">\n" +
+                    "  <div class=\"row align-items-center\">\n" +
+                    "    <div class=\"col-md-8 mb-2\">");
+            stringBuilder.append("<a href=\"" + htmlTableLabel.addUrl() + "\"><button class=\"btn btn-primary rounded-2\">Add " + htmlTableLabel.label() + "</button></a>")
+                    .append(" </div>\n" + "    </div>");
         }
 
         stringBuilder.append("<div class=\"\">\n")
                 .append("<div style=\"max-height: 60vh; overflow: auto;\">\n")
-                .append("<table class=\" table table-bordered border-4 table-striped table-responsive-sm \">\n")
+                .append("<table id=\"dataTable\" class=\" display nowrap table table-bordered border-4 table-striped table-responsive-sm \" style=\"width:100%\">\n")
                 .append("<thead class=\"table-success\">\n")
                 .append("<tr>\n");
 
@@ -68,7 +72,7 @@ public class HtmlComponent implements Serializable {
 
         }
         stringBuilder.append(" <th scope=\"col\">Actions</th>\n");
-        stringBuilder.append("</tr></thead>");
+        stringBuilder.append("</tr></thead><tbody id=\"myTable\">\n");
 
         for (T model : data) {
             stringBuilder.append("<tr>");
@@ -119,7 +123,7 @@ public class HtmlComponent implements Serializable {
             stringBuilder.append("</tr>");
         }
         stringBuilder.append("""
-                <tbody></table>
+                </tbody></table>
                 </div></div></div></div>
                 """);
 

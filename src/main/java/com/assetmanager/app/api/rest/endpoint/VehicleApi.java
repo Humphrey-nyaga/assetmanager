@@ -1,4 +1,4 @@
-package com.assetmanager.app.rest.apis;
+package com.assetmanager.app.api.rest.endpoint;
 
 import com.assetmanager.app.bean.VehicleBeanI;
 import com.assetmanager.app.model.entity.vehicle.Vehicle;

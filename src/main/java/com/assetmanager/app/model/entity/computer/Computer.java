@@ -23,7 +23,7 @@ public class Computer extends Asset {
     @Column(name = "ram_in_gb")
     @HtmlFormField(label = "RAM(GB)", isRequired = true)
     @Positive
-    @TableColumnHeader(header = "RAM(GB)")
+    @TableColumnHeader(header = "RAM(GB)", sortable = true)
     private Double ramInGB;
 
     @Column(name = "screen_size")
@@ -36,13 +36,13 @@ public class Computer extends Asset {
 
     @Column(name = "model")
     @HtmlFormField(label = "Model", isRequired = true)
-    @TableColumnHeader(header = "Model")
+    @TableColumnHeader(header = "Model", sortable = true)
     private String model;
 
     @Column(name = "storage_size_in_gb")
     @HtmlFormField(label = "Storage(GB)", isRequired = true)
     @Positive
-    @TableColumnHeader(header = "Storage(GB)")
+    @TableColumnHeader(header = "Storage(GB)", sortable = true)
     private Double storageSizeInGB;
 
     @Column(name = "current_condition")
@@ -57,7 +57,7 @@ public class Computer extends Asset {
     @Enumerated(EnumType.STRING)
     @Column(name = "computer_type")
     @HtmlFormField(label = "Type", isRequired = true)
-    @TableColumnHeader(header = "Type")
+    @TableColumnHeader(header = "Type", sortable = true)
     private ComputerType computerType;
 
     public Computer(){}

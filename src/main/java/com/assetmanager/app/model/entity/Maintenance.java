@@ -28,7 +28,7 @@ public class Maintenance extends BaseEntity implements Serializable {
 
     @Column(name = "asset_serial_id",nullable = false)
     @TableColumnHeader(header = "Asset Serial ID")
-    @HtmlFormField(label = "Asset Serial ID")
+    @HtmlFormField(label = "Asset Serial ID",selectList = "assets", selectValueInSuper = true, selectDisplayInSuper = true,selectValue = "serialNumber", selectDisplay = "name")
     private String assetSerialID;
 
 

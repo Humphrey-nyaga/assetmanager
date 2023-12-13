@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="4dfabc16-5a12-40f3-8309-9e56689b3ceb" activeEnvironment="Default" name="AssetManager" resourceRoot="${projectDir}" soapui-version="5.7.2" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="5d4b1ef7-b9bd-4459-ac12-4b8803ade3ee" wsaVersion="NONE" name="SoapWebServiceApiServiceSoapBinding" type="wsdl" bindingName="{http://soap.api.app.assetmanager.com/}SoapWebServiceApiServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/assetmanager/SoapWebServiceApi?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/assetmanager/SoapWebServiceApi?wsdl"><con:part><con:url>http://localhost:8080/assetmanager/SoapWebServiceApi?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="SoapWebServiceApiService" targetNamespace="http://soap.api.app.assetmanager.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://soap.api.app.assetmanager.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://soap.api.app.assetmanager.com/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="getAllAssets" type="tns:getAllAssets"/>
+      <xs:element name="getAllAssetsResponse" type="tns:getAllAssetsResponse"/>
+      <xs:element name="getAllAssignees" type="tns:getAllAssignees"/>
+      <xs:element name="getAllAssigneesResponse" type="tns:getAllAssigneesResponse"/>
+      <xs:element name="getAssigneeById" type="tns:getAssigneeById"/>
+      <xs:element name="getAssigneeByIdResponse" type="tns:getAssigneeByIdResponse"/>
+      <xs:complexType name="getAssigneeById">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getAssigneeByIdResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:assignee"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="assignee">
+        <xs:complexContent>
+          <xs:extension base="tns:baseEntity">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="dateOfBirth" type="tns:localDate"/>
+              <xs:element minOccurs="0" name="email" type="xs:string"/>
+              <xs:element minOccurs="0" name="employeeType" type="tns:assigneeType"/>
+              <xs:element minOccurs="0" name="firstName" type="xs:string"/>
+              <xs:element minOccurs="0" name="identificationNumber" type="xs:string"/>
+              <xs:element minOccurs="0" name="lastName" type="xs:string"/>
+              <xs:element minOccurs="0" name="staffNumber" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType abstract="true" name="baseEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType final="extension restriction" name="localDate">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="getAllAssignees">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="getAllAssigneesResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:assignee"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getAllAssets">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="getAllAssetsResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:asset"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="asset">
+        <xs:complexContent>
+          <xs:extension base="tns:baseEntity">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="assigneeId" type="xs:long"/>
+              <xs:element minOccurs="0" name="assigneeName" type="xs:string"/>
+              <xs:element minOccurs="0" name="category" type="tns:category"/>
+              <xs:element minOccurs="0" name="dateAcquired" type="tns:localDate"/>
+              <xs:element minOccurs="0" name="description" type="xs:string"/>
+              <xs:element minOccurs="0" name="name" type="xs:string"/>
+              <xs:element minOccurs="0" name="purchaseValue" type="xs:decimal"/>
+              <xs:element minOccurs="0" name="serialNumber" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:simpleType name="assigneeType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="PART_TIME"/>
+          <xs:enumeration value="FULL_TIME"/>
+          <xs:enumeration value="SEASONAL"/>
+          <xs:enumeration value="TEMPORARY"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="category">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="COMPUTER"/>
+          <xs:enumeration value="VEHICLE"/>
+          <xs:enumeration value="MACHINERY"/>
+          <xs:enumeration value="LAND"/>
+          <xs:enumeration value="BUILDING"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getAllAssignees">
+    <wsdl:part element="tns:getAllAssignees" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAssigneeByIdResponse">
+    <wsdl:part element="tns:getAssigneeByIdResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllAssigneesResponse">
+    <wsdl:part element="tns:getAllAssigneesResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAssigneeById">
+    <wsdl:part element="tns:getAssigneeById" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllAssetsResponse">
+    <wsdl:part element="tns:getAllAssetsResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllAssets">
+    <wsdl:part element="tns:getAllAssets" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SoapWebServiceApi">
+    <wsdl:operation name="getAssigneeById">
+      <wsdl:input message="tns:getAssigneeById" name="getAssigneeById"></wsdl:input>
+      <wsdl:output message="tns:getAssigneeByIdResponse" name="getAssigneeByIdResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllAssignees">
+      <wsdl:input message="tns:getAllAssignees" name="getAllAssignees"></wsdl:input>
+      <wsdl:output message="tns:getAllAssigneesResponse" name="getAllAssigneesResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllAssets">
+      <wsdl:input message="tns:getAllAssets" name="getAllAssets"></wsdl:input>
+      <wsdl:output message="tns:getAllAssetsResponse" name="getAllAssetsResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SoapWebServiceApiServiceSoapBinding" type="tns:SoapWebServiceApi">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getAssigneeById">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getAssigneeById">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAssigneeByIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllAssignees">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getAllAssignees">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllAssigneesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllAssets">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getAllAssets">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllAssetsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SoapWebServiceApiService">
+    <wsdl:port binding="tns:SoapWebServiceApiServiceSoapBinding" name="SoapWebServiceApiPort">
+      <soap:address location="http://localhost:8080/assetmanager/SoapWebServiceApi"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/assetmanager/SoapWebServiceApi</con:endpoint></con:endpoints><con:operation id="0be4a7d7-72c6-4bf2-8d91-94a623d64020" isOneWay="false" action="" name="getAllAssets" bindingOperationName="getAllAssets" type="Request-Response" outputName="getAllAssetsResponse" inputName="getAllAssets" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="273b0be7-8af2-47a1-a00a-4a3f8e4058d9" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/assetmanager/SoapWebServiceApi</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://soap.api.app.assetmanager.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <soap:getAllAssets/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soap.api.app.assetmanager.com/SoapWebServiceApi/getAllAssets"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="e2988f66-9397-41be-8632-91b7524a928a" isOneWay="false" action="" name="getAllAssignees" bindingOperationName="getAllAssignees" type="Request-Response" outputName="getAllAssigneesResponse" inputName="getAllAssignees" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="bd2a96ea-4a32-4186-96ab-c8b75d00818d" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/assetmanager/SoapWebServiceApi</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://soap.api.app.assetmanager.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <soap:getAllAssignees/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soap.api.app.assetmanager.com/SoapWebServiceApi/getAllAssignees"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="3648c3fb-591b-4b1d-9db8-e47084858665" isOneWay="false" action="" name="getAssigneeById" bindingOperationName="getAssigneeById" type="Request-Response" outputName="getAssigneeByIdResponse" inputName="getAssigneeById" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="b5fba67f-bf78-435d-99f1-00f4230916d8" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/assetmanager/SoapWebServiceApi</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://soap.api.app.assetmanager.com/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <soap:getAssigneeById>
+         <!--Optional:-->
+         <id>3</id>
+      </soap:getAssigneeById>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://soap.api.app.assetmanager.com/SoapWebServiceApi/getAssigneeById"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

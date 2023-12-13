@@ -1,4 +1,4 @@
-package com.assetmanager.app.rest.config;
+package com.assetmanager.app.api.rest.config;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
