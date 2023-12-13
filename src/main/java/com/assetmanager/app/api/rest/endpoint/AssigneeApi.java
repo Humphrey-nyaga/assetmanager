@@ -1,9 +1,8 @@
-package com.assetmanager.app.rest.apis;
+package com.assetmanager.app.api.rest.endpoint;
 
 import com.assetmanager.app.bean.AssigneeBeanI;
 import com.assetmanager.app.dto.AssigneeDTO;
 import com.assetmanager.app.model.entity.Assignee;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;

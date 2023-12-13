@@ -21,7 +21,6 @@
         <jsp:param name="pageBackground" value="#f5f5f5"/>
         </jsp:include>
     </style>
-
     <title>Dashboard</title>
 </head>
 <body >

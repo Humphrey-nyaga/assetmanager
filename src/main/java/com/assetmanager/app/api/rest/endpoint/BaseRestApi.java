@@ -1,4 +1,4 @@
-package com.assetmanager.app.rest.apis;
+package com.assetmanager.app.api.rest.endpoint;
 
 import javax.ws.rs.core.Response;
 
