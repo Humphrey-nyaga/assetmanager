@@ -38,7 +38,7 @@ public class HtmlComponent implements Serializable {
 
         StringBuilder stringBuilder = new StringBuilder()
                 .append("<div class=\"row justify-content-center\">\n")
-                .append("<div class=\"col-md-11 mr-0\">\n");
+                .append("<div class=\"\">\n");
 
 
         if (Asset.class.equals(dataClass)) {
@@ -53,7 +53,7 @@ public class HtmlComponent implements Serializable {
 
         stringBuilder.append("<div class=\"\">\n")
                 .append("<div style=\"max-height: 60vh; overflow: auto;\">\n")
-                .append("<table id=\"dataTable\" class=\" display table table-bordered border-4 table-striped table-responsive-sm \">\n")
+                .append("<table id=\"dataTable\" class=\" display nowrap table table-bordered border-4 table-striped table-responsive-sm \" style=\"width:100%\">\n")
                 .append("<thead class=\"table-success\">\n")
                 .append("<tr>\n");
 
