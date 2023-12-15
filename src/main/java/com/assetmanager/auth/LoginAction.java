@@ -7,6 +7,7 @@ import com.assetmanager.app.model.entity.UserRole;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,9 @@ import java.util.Date;
 public class LoginAction extends BaseAction {
     @EJB
     AuthBeanI authBean;
+
+    @Inject
+    JWTUtil jwtUtil;
 
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
@@ -39,6 +43,12 @@ public class LoginAction extends BaseAction {
         User user = new User();
         serializeForm(user, servletRequest.getParameterMap());
         User authenticatedUser = authBean.authenticate(user);
+
+        String generatedToken = jwtUtil.generateToken(authenticatedUser);
+        System.out.println("Token for: " + authenticatedUser.getUsername() + "Id: " + "---->>> " + generatedToken);
+
+        System.out.println("generatedToken is valid= " + jwtUtil.isTokenValid(generatedToken,authenticatedUser));
+
 
 
         if (authenticatedUser != null && StringUtils.isNotBlank(authenticatedUser.getUsername())) {
