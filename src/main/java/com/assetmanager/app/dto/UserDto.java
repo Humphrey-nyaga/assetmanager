@@ -1,6 +1,17 @@
 package com.assetmanager.app.dto;
 
 import com.assetmanager.app.model.entity.UserRole;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public record UserDto(String username, String email, UserRole role) {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserDto {
+    private String username;
+    private String email;
+    private UserRole role;
 }

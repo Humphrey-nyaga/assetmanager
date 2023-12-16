@@ -41,6 +41,7 @@
                 });
             });
         });
+
         $(document).ready(function () {
             $(document).on("click", ".btn-success", function () {
                 console.log("Update button clicked!");

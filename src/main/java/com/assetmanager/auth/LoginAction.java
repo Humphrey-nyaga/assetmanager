@@ -61,7 +61,7 @@ public class LoginAction extends BaseAction {
             String password = servletRequest.getParameter("password");
 
             String authToken = Base64.getEncoder().encodeToString((username + ":" + password).getBytes(StandardCharsets.UTF_8));
-            servletResponse.setHeader("Authorization", "Basic " + authToken);
+            servletResponse.setHeader("Authorization", "Bearer " + authToken);
 
 
             if (authenticatedUser.getUserRole() == UserRole.ADMIN)

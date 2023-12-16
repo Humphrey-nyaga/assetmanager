@@ -28,7 +28,7 @@ public class updateAssigneeAction extends BaseAction{
 
         Assignee assignee = new Assignee();
         serializeForm(assignee, request.getParameterMap());
-        assignee.setId(Long.valueOf(request.getParameter("assigneeId")));
+        assignee.setId(Long.valueOf(request.getParameter("id")));
         System.out.println("Assignee UPDATED>>>>" + assignee);
         assigneeBean.addOrUpdate(assignee);
         response.sendRedirect("./assignee");

@@ -24,7 +24,7 @@
 <jsp:setProperty name="headerMenu" property="activeUrl" value='${requestScope.activeUrl}'/>
 ${headerMenu.menu}
 
-<c:set var="assetRequest" value="${requestScope.assignee}"/>
+<c:set var="assignee" value="${requestScope.assignee}"/>
 
 <div class="container">
     <div class="row">
@@ -35,7 +35,7 @@ ${headerMenu.menu}
                         <div class="data-form border border-1 p-3 rounded">
                             <h4 class="text-center mb-0 mt-0">Update Assignee</h4>
                                 <div class="row">
-                                    <input type="hidden" id="assigneeId" name="assigneeId" value="${assignee.id}">
+                                    <input type="hidden" id="id" name="id" value="${assignee.id}">
                                         <div class="col-md-4">
                                             <label for="employeeType" class="form-label">Employee Type</label>
                                             <select class="form-select form-select-sm" id="employeeType" name="employeeType">
@@ -92,6 +92,11 @@ ${headerMenu.menu}
                                             <input type="text" class="form-control form-control-sm" id="email"
                                                    name="email" value="${assignee.email}">
                                         </div>
+                                    <div class=" col-md-4">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="text" class="form-control form-control-sm" id="staffNumber"
+                                               name="staffNumber" value="${assignee.staffNumber}">
+                                    </div>
                                     </div>
                                     <div class="row">
                                         <div class=" col-md-4">

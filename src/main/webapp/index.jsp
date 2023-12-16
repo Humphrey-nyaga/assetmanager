@@ -95,42 +95,37 @@
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
 
-                const formData = new URLSearchParams();
-                formData.append('username', username);
-                formData.append('password', password);
+                const formData = {
+                    username: username,
+                    password: password,
+                };
 
-                fetch('./login', {
+                fetch('./api/v1/auth', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
                     },
-                    body: formData.toString(),
-                 })
-                //     .then(response => {
-                //         const authToken = response.headers.get('Authorization');
-                //
-                //         if (authToken) {
-                //             localStorage.setItem('authToken', authToken);
-                //             console.log('Login successful! Token:', authToken);
-                //         } else {
-                //             console.error('No Authorization header found in the response.');
-                //         }
-                //     })
-                    .then(response => response.json())
-                    .then(data => {
-                        const authToken = data.authToken;
+                    body: JSON.stringify(formData),
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        const authToken = response.headers.get("Authorization"); // Changed from response.headers.valueOf
+                        console.log(authToken);
 
                         if (authToken) {
                             localStorage.setItem('authToken', authToken);
                             console.log('Login successful!');
                             window.location.href = './home';
-
                         } else {
                             console.error('No authToken found in the response.');
                         }
                     })
                     .catch(error => console.error('Error:', error));
             });
+
         </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

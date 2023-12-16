@@ -26,61 +26,48 @@ public class AssetAction extends BaseAction {
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
 
-        HttpSession session = servletRequest.getSession();
-        UserRole userRole = (UserRole) session.getAttribute("role");
+        renderPage(servletRequest,
+                servletResponse,
+                "./asset",
+                Asset.class,
+                assetBean.list(new Asset()));
 
-        switch (userRole) {
-            case ADMIN:
-                renderPage(servletRequest,
-                        servletResponse,
-                        "./asset",
-                        Asset.class,
-                        assetBean.list(new Asset()));
-                break;
-            case REGULAR:
-                //renderPageWithoutTables(servletRequest, servletResponse, assetCardRender.renderAssetCards(), "./assets");
-//                renderPage(servletRequest,
-//                        servletResponse,
-//                        "./asset",
-//                        Asset.class,
-//                        assetBean.findAssetsByAssigneeID("SN001"));
-                break;
 
-        }
     }
 
-        public void doPost (HttpServletRequest servletRequest, HttpServletResponse servletResponse)
-            throws ServletException, IOException {
 
-            Asset createAsset = new Asset();
-            serializeForm(createAsset, servletRequest.getParameterMap());
+public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
+        throws ServletException, IOException {
 
-            assetBean.addOrUpdate(createAsset);
-            servletResponse.sendRedirect("./asset");
+    Asset createAsset = new Asset();
+    serializeForm(createAsset, servletRequest.getParameterMap());
+
+    assetBean.addOrUpdate(createAsset);
+    servletResponse.sendRedirect("./asset");
 
 
+}
+
+public void doDelete(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String pathInfo = request.getPathInfo();
+
+    if (pathInfo != null && pathInfo.length() > 1) {
+        String idString = pathInfo.substring(1);
+        try {
+            Long id = Long.parseLong(idString);
+            assetBean.deleteById(Asset.class, id);
+
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+
+        } catch (NumberFormatException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
-
-        public void doDelete (HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-            String pathInfo = request.getPathInfo();
-
-            if (pathInfo != null && pathInfo.length() > 1) {
-                String idString = pathInfo.substring(1);
-                try {
-                    Long id = Long.parseLong(idString);
-                    assetBean.deleteById(Asset.class, id);
-
-                    response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-
-                } catch (NumberFormatException e) {
-                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                }
-            } else {
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                response.getWriter().println("Invalid URL format");
-            }
-        }
+    } else {
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        response.getWriter().println("Invalid URL format");
+    }
+}
 
     }
 

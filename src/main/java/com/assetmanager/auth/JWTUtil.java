@@ -34,9 +34,10 @@ public class JWTUtil {
             Map<String, Object> extraClaims,
             User userDetails
     ) {
-        extraClaims.put("role",userDetails.getUserRole());
+       // extraClaims.put("role",userDetails.getUserRole());
         return Jwts.builder()
                 .setClaims(extraClaims)
+                .claim("role",userDetails.getUserRole())
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() * 1000 * 60 * 24))
@@ -52,7 +53,7 @@ public class JWTUtil {
 
             return username.equals(userDetails.getUsername())
                     && !isTokenExpired(jwtToken)
-                    && role.equals(userDetails.getUserRole().name());
+                    && extractAllClaims(jwtToken).get("role").equals(userDetails.getUserRole().name());
         } catch (JwtException e) {
             return false;
         }

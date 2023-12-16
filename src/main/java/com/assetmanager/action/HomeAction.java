@@ -44,20 +44,14 @@ public class HomeAction extends BaseAction {
         UserRole userRole = (UserRole) session.getAttribute("role");
 
 
-        switch (userRole) {
-            case ADMIN:
-                String summary = getSummary();
+        String summary = getSummary();
 
-                servletRequest.setAttribute("content", summary);
+        servletRequest.setAttribute("content", summary);
 
-                RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("./app/home.jsp");
-                requestDispatcher.forward(servletRequest, servletResponse);
-                break;
-            case REGULAR:
-                RequestDispatcher req = servletRequest.getRequestDispatcher("./asset");
-                req.forward(servletRequest, servletResponse);
+        RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("./app/home.jsp");
+        requestDispatcher.forward(servletRequest, servletResponse);
 
-        }
+
     }
 
     private String getSummary() {

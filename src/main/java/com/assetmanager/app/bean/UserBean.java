@@ -9,15 +9,13 @@ import com.assetmanager.util.EmailValidator;
 import com.assetmanager.util.security.PasswordEncoderI;
 
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.Optional;
 
 @Stateless
 @Remote
@@ -35,10 +33,10 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
     @Override
     public Boolean registerUser(User user) {
         try {
-            if (findUserByUsername(user.getUsername()).isPresent())
+            if (findUserByUsername(user.getUsername())!=null)
                 throw new UserAlreadyExistsException("Failed!!. User with username " + user.getUsername() + " already exists.");
 
-            if (findUserByEmail(user.getEmail()).isPresent())
+            if (findUserByEmail(user.getEmail())!=null)
                 throw new UserAlreadyExistsException("Failed!!. User with email " + user.getEmail() + " already exists.");
 
 //            if (!emailValidator.isValidEmail(user.getEmail()))
@@ -65,18 +63,28 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
     }
 
     @Override
-    public Optional<User> findUserByUsername(String username) {
-        List<User> users = list(new User());
-        return users.stream().filter(user -> user.getUsername().equals(username))
-                .findFirst();
+    public User findUserByUsername(String username) {
+
+        try {
+            return em.createQuery("FROM User a WHERE a.username=:username", User.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println("No user found with the specified username");
+        }
+        return null;
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) {
-        List<User> users = list(new User());
-        return users.stream().filter(user -> user.getEmail().equals(email))
-                .findFirst();
+    public User findUserByEmail(String email) {
+        try {
+            return em.createQuery("FROM User a WHERE a.email=:email", User.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println("No user found with the specified email");
+        }
+        return null;
     }
-
 
 }
