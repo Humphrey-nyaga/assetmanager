@@ -30,10 +30,12 @@ public class AuthApi extends BaseRestApi {
 
     ModelMapper modelMapper = new ModelMapper();
 
+
     @Context
     private HttpServletRequest servletRequest;
 
     @POST
+    @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response authenticate(User loginUser) {
@@ -52,4 +54,5 @@ public class AuthApi extends BaseRestApi {
         }
         return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid User Login!").build();
     }
+
 }

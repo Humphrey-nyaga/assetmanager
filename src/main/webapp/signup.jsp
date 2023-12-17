@@ -38,7 +38,7 @@
 </nav>
 <div class="container h-80">
     <div class="row h-100 justify-content-center align-items-center">
-            <form class=" form-group w-75 justify-content-center" action="./signup" method="POST">
+            <form id="signUpForm" class=" form-group w-75 justify-content-center">
                 <section class="gradient-custom py-5 ">
                     <div class="container py-4">
                         <div class="row d-flex justify-content-center align-items-center">
@@ -84,6 +84,39 @@
             </form>
     </div>
 </div>
+<script>
+    document.getElementById('signUpForm').addEventListener("submit", (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        const formData = {
+            username: username,
+            password: password,
+            email:email,
+            confirmPassword:confirmPassword,
+        };
+
+        fetch('./api/v1/auth/register', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: JSON.stringify(formData),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                } else {
+
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>

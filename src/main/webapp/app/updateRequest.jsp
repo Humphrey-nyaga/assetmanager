@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="assetRequestBean" class="com.assetmanager.app.bean.AssetRequestBean" scope="request" />
+
 <!doctype html>
 <html lang=en">
 <head>
@@ -15,6 +16,7 @@
         <jsp:param name="pageBackground" value="#f5f5f5"/>
         </jsp:include>
     </style>
+    <%@ page import="com.assetmanager.app.model.entity.RequestStatus" %>
 
     <title>Dashboard</title>
 </head>
@@ -31,15 +33,15 @@ ${headerMenu.menu}
         <div class="row justify-content-center">
             <div class="col-md-10 p-2 ml-2">
                 <div class="bg-white asset-container mx-auto" style="">
-                    <form method="POST" action="./updateRequest">
+                    <form id="requestUpdateForm">
                         <div class="data-form border border-1 p-3 rounded">
                             <h4 class="text-center mb-0 mt-0">Edit Asset Request</h4>
                             <div class="row">
-                                    <input type="hidden" id="assetRequestId" name="assetRequestId" value="${assetRequest.id}">
+                                    <input type="hidden" id="id" name="id" value="${assetRequest.id}">
                                 <div class="col-md-4">
                                     <label for="staffId" class="form-label">Staff ID</label>
                                     <input type="text" class="form-control form-control-sm" id="staffId" name="staffId"
-                                           value="${assetRequest.staffId}">
+                                           value="${assetRequest.staffId}" readonly>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="assetName" class="form-label">Asset Name</label>
@@ -61,23 +63,16 @@ ${headerMenu.menu}
                                 <div class="col-md-4">
                                     <label for="quantity" class="form-label">Quantity</label>
                                     <input type="text" class="form-control form-control-sm" id="quantity"
-                                           name="quantity" value="${assetRequest.quantity}">
+                                           name="quantity" min="1" value="${assetRequest.quantity}">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="requestStatus" class="form-label">Request Status</label>
                                     <select class="form-select form-select-sm" id="requestStatus" name="requestStatus">
-                                        <option value="COMPLETED" ${assetRequest.requestStatus eq 'COMPLETED' ? 'selected' : ''}>
-                                            Completed
-                                        </option>
-                                        <option value="PENDING" ${assetRequest.requestStatus eq 'PENDING' ? 'selected' : ''}>
-                                            Pending
-                                        </option>
-                                        <option value="REJECTED" ${assetRequest.requestStatus eq 'REJECTED' ? 'selected' : ''}>
-                                            Rejected
-                                        </option>
-                                        <option value="APPROVED" ${assetRequest.requestStatus eq 'APPROVED' ? 'selected' : ''}>
-                                            Approved
-                                        </option>
+                                        <c:forEach var="requestStatus" items="${RequestStatus.values()}">
+                                            <option value="${requestStatus}" ${assetRequest.requestStatus eq requestStatus ? 'selected' : ''}>
+                                                    ${requestStatus.getName()}
+                                            </option>
+                                        </c:forEach>
                                     </select>
                                 </div>
                             </div>
@@ -91,10 +86,51 @@ ${headerMenu.menu}
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let url = 'http://localhost:8080/assetmanager/api/v1/request/'
+        const authToken = localStorage.getItem('authToken');
+
+        const form = document.getElementById('requestUpdateForm');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const requestUpdateJson = {};
+            formData.forEach(function (value, key) {
+                requestUpdateJson[key] = value;
+            });
+
+            console.log(requestUpdateJson)
+
+            fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'Bearer '.concat(authToken),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestUpdateJson),
+
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Operation Failed');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    window.location.href = './request';
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        });
+    });
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous">
-
 </script>
 </body>
 </html>

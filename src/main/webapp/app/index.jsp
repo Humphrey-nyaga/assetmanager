@@ -7,7 +7,6 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.assetmanager.app.model.entity.UserRole" %>
 <!doctype html>
 <html lang=en">
 <head>

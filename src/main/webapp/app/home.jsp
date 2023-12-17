@@ -22,7 +22,7 @@
     </style>
     <title>Dashboard</title>
 </head>
-<body >
+<body>
 <jsp:useBean id="headerMenu" class="com.assetmanager.app.view.toolbars.Header"/>
 <jsp:setProperty name="headerMenu" property="activeUrl" value='${requestScope.activeUrl}'/>
 ${headerMenu.menu}

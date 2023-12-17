@@ -7,6 +7,7 @@ import com.assetmanager.app.model.entity.computer.Computer;
 import com.assetmanager.app.model.entity.vehicle.Vehicle;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +20,20 @@ public class ComputerAndRelatedAction extends BaseAction {
     ComputerBeanI computerBean;
     public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {
-        renderPage(servletRequest,
-                servletResponse,
-                "./asset",
-                Computer.class,
-                computerBean.list(new Computer()));
+        String action = servletRequest.getParameter("action");
+        if(action!=null && action.equals("update")){
+            String computerId = servletRequest.getParameter("id");
+            Computer computer = computerBean.findById(Computer.class,Long.valueOf(computerId));
+            servletRequest.setAttribute("computer", computer);
+            RequestDispatcher dispatcher = servletRequest.getRequestDispatcher("./app/updateComputer.jsp");
+            dispatcher.forward(servletRequest, servletResponse);
+        }else {
+            renderPage(servletRequest,
+                    servletResponse,
+                    "./asset",
+                    Computer.class,
+                    computerBean.list(new Computer()));
+        }
     }
     public void doPost(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
             throws ServletException, IOException {

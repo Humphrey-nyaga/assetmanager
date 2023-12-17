@@ -21,7 +21,7 @@ import java.time.LocalDate;
 @IdPrefix(prefix = "ASR-")
 @Getter @Setter
 @HtmlForm(url = "./request", label = "Asset Request")
-@HtmlTable(name = "Asset Requests", label = "Asset Request", addUrl = "./request?action=add",url = "./request",updateUrl = "./updateRequest")
+@HtmlTable(name = "Asset Requests", label = "Asset Request", addUrl = "./request?action=add",url = "./request",updateUrl = "./request?action=update")
 public class AssetRequest extends BaseEntity {
 
     @Column(name = "staff_id",nullable = false)

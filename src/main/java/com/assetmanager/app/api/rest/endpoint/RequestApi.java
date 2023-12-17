@@ -1,7 +1,9 @@
 package com.assetmanager.app.api.rest.endpoint;
 
+import com.assetmanager.app.api.rest.auth.JwtSecured;
 import com.assetmanager.app.bean.AssetRequestBeanI;
 import com.assetmanager.app.model.entity.AssetRequest;
+import com.assetmanager.app.model.entity.UserRole;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -10,7 +12,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/request")
-
+@JwtSecured({UserRole.ADMIN,UserRole.SUPER})
 public class RequestApi {
 
     @EJB

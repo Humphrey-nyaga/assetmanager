@@ -72,6 +72,8 @@
                                         <p class="medium mb-2"><a class="text-white" href="#!">Forgot password?</a></p>
                                         <button id="loginButton" class="btn btn-primary btn-lg btn-outline-light px-4 mt-3 mb-3" type="submit">LOGIN
                                         </button>
+                                        <div id = "alert_placeholder"></div>
+
                                         <div>
                                             <p class="mb-0">Don't have an account? <a href="./signup.jsp"
                                                                                       class="text-white fw-bold">Sign
@@ -100,7 +102,7 @@
                     password: password,
                 };
 
-                fetch('./api/v1/auth', {
+                fetch('./api/v1/auth/login', {
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json",
@@ -118,6 +120,7 @@
                         if (authToken) {
                             localStorage.setItem('authToken', authToken);
                             console.log('Login successful!');
+
                             window.location.href = './home';
                         } else {
                             console.error('No authToken found in the response.');

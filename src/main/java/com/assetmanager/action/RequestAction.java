@@ -5,6 +5,7 @@ import com.assetmanager.app.model.entity.AssetRequest;
 import com.assetmanager.exceptions.AssigneeDoesNotExistException;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,12 +15,20 @@ import java.io.IOException;
 @WebServlet("/request/*")
 
 public class RequestAction extends BaseAction {
-   @EJB
-   AssetRequestBeanI assetRequestBean;
-    public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
-            throws ServletException, IOException {
+    @EJB
+    AssetRequestBeanI assetRequestBean;
 
-        renderPage(servletRequest, servletResponse,"./request", AssetRequest.class,assetRequestBean.list(new AssetRequest()));
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if (action != null && action.equals("update")) {
+            String requestId = request.getParameter("id");
+            AssetRequest assetRequest = assetRequestBean.getRequest(Long.valueOf(requestId));
+            request.setAttribute("assetRequest", assetRequest);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("./app/updateRequest.jsp");
+            dispatcher.forward(request, response);
+        }
+        renderPage(request, response, "./request", AssetRequest.class, assetRequestBean.list(new AssetRequest()));
 
     }
 
@@ -40,11 +49,12 @@ public class RequestAction extends BaseAction {
             System.out.println("ASSET REQUEST >>>>>" + assetRequest);
             assetRequestBean.addOrUpdate(assetRequest);
             servletResponse.sendRedirect("./");
-        }catch(AssigneeDoesNotExistException e) {
-            servletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "ERROR" +  e.getMessage());
+        } catch (AssigneeDoesNotExistException e) {
+            servletResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, "ERROR" + e.getMessage());
         }
 
     }
+
     public void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String pathInfo = request.getPathInfo();

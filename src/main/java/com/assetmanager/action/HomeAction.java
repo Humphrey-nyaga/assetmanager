@@ -1,5 +1,6 @@
 package com.assetmanager.action;
 
+import com.assetmanager.app.api.rest.auth.JwtSecured;
 import com.assetmanager.app.bean.AssetBeanI;
 import com.assetmanager.app.bean.AssetRequestBeanI;
 import com.assetmanager.app.bean.AssigneeBeanI;

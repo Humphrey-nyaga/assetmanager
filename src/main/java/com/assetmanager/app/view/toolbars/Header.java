@@ -8,10 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Header implements  Serializable {
-    private final List<MenuLink> links = new ArrayList<>();
-    private String activeUrl;
-    private String menu;
-
+    public  List<MenuLink> links = new ArrayList<>();
 
     {
         links.add(new MenuLink("./home", "Overview", MenuLinkStatus.NOT_ACTIVE));
@@ -20,10 +17,10 @@ public class Header implements  Serializable {
         links.add(new MenuLink("./maintenance", "Maintenance", MenuLinkStatus.NOT_ACTIVE));
         links.add(new MenuLink("./report", "Reports", MenuLinkStatus.NOT_ACTIVE));
         links.add(new MenuLink("./request", "Requests", MenuLinkStatus.NOT_ACTIVE));
-
-        //  links.add(new MenuLink("./valuation", "Valuation", MenuLinkStatus.NOT_ACTIVE));
-
     }
+    private String activeUrl;
+    private String menu;
+
 
     public String getMenu() {
         return """

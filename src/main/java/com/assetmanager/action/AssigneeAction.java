@@ -5,6 +5,7 @@ import com.assetmanager.app.bean.AssigneeBeanI;
 import com.assetmanager.app.model.entity.Assignee;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +17,18 @@ public class AssigneeAction extends BaseAction {
     @EJB
     AssigneeBeanI assigneeBean;
 
-    public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        renderPage(servletRequest, servletResponse,
+        String action = request.getParameter("action");
+        if(action!=null && action.equals("update")) {
+            String assigneeId = request.getParameter("id");
+            Assignee assignee = assigneeBean.findById(Assignee.class, Long.valueOf(assigneeId));
+            request.setAttribute("assignee", assignee);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("./app/updateAssignee.jsp");
+            dispatcher.forward(request, response);
+        }
+        renderPage(request, response,
                 "./assignee", Assignee.class, assigneeBean.list(new Assignee()));
 
     }

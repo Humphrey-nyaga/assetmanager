@@ -16,13 +16,7 @@ import java.io.IOException;
 public class UpdateRequest extends BaseAction {
     @EJB
     AssetRequestBeanI assetRequestBean;
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String requestId = request.getParameter("id");
-        AssetRequest assetRequest = assetRequestBean.getRequest(Long.valueOf(requestId));
-        request.setAttribute("assetRequest", assetRequest);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("./app/updateRequest.jsp");
-        dispatcher.forward(request, response);
-    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String requestId = request.getParameter("id");
 

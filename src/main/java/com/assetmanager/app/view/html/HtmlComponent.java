@@ -105,7 +105,7 @@ public class HtmlComponent implements Serializable {
                 stringBuilder.append("<td>")
                         .append("""
                                 <button type="button" class="btn btn-sm btn-success" onclick="window.location.href='""").append(htmlTableLabel.updateUrl())
-                        .append("?id=").append(id).append("""
+                        .append("&id=").append(id).append("""
                                 '">  Update</button>
                                 """)
 

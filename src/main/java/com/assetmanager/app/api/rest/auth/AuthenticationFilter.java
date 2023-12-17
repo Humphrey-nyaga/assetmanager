@@ -31,7 +31,6 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
     @Context
     private ResourceInfo resourceInfo;
-    private static final String REALM = "example";
     private static final String AUTHENTICATION_SCHEME = "Bearer";
 
     @Inject
@@ -43,9 +42,10 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
         if (!isTokenBasedAuthentication(authorizationHeader)) {
-            abort(requestContext);
+            abort(requestContext, "Authorization Token Is Required");
             return;
         }
+
 
         // Extract the token from the Authorization header
         String token = authorizationHeader
@@ -53,23 +53,23 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         try {
             validateToken(token);
-
         } catch (Exception e) {
-            abort(requestContext);
+            abort(requestContext, "Invalid Token");
         }
 
     }
+
 
     private boolean isTokenBasedAuthentication(String authorizationHeader) {
         return authorizationHeader != null && authorizationHeader.toLowerCase()
                 .startsWith(AUTHENTICATION_SCHEME.toLowerCase() + " ");
     }
 
-    private void abort(ContainerRequestContext requestContext) {
+
+    private void abort(ContainerRequestContext requestContext, String message) {
         requestContext.abortWith(
                 Response.status(Response.Status.UNAUTHORIZED)
-                        .header(HttpHeaders.WWW_AUTHENTICATE,
-                                AUTHENTICATION_SCHEME + " realm=\"" + REALM + "\"")
+                        .entity(message)
                         .build());
     }
 
@@ -82,8 +82,6 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 userAuthenticatedEvent.fire(user);
             }
         }
-
-        //jwtUtil.isTokenValid();
     }
 
 
