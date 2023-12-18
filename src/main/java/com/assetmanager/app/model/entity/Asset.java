@@ -69,6 +69,7 @@ public  class Asset extends BaseEntity implements Serializable {
     @JoinColumn(name = "assignee_id")
     private Assignee assignee;
 
+
     public void setAssignee(Assignee assignee) {
         this.assignee = assignee;
     }

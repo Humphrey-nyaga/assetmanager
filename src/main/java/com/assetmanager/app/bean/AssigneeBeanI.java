@@ -10,4 +10,5 @@ public interface AssigneeBeanI extends GenericBeanI<Assignee>{
 
     @SuppressWarnings("unchecked")
     List<AssigneeDTO> findAssigneeNameAndId();
+
 }

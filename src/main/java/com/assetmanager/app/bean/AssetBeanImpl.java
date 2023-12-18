@@ -18,7 +18,6 @@ import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -65,10 +64,24 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
     // TODO Implement and observer for asset of type vehicle insertion to create a maintenance schedule.
     @Override
     public List<Asset> findAssetsByAssigneeID(Long assigneeID) {
-        String jpql = "FROM Asset a WHERE a.assigneeID=:assigneeID";
-        return em.createQuery(jpql, Asset.class).setParameter("assigneeID", assigneeID)
+        Asset asset = new Asset();
+        String jpql = "FROM " + asset.getClass().getName() + " a  WHERE a.assigneeId = :assigneeID";
+        return em.createQuery(jpql, Asset.class)
+                .setParameter("assigneeID", assigneeID)
                 .getResultList();
     }
+
+
+    @Override
+    public Integer findAssetsCountToAssignee(Long assigneeID) {
+        return findAssetsByAssigneeID(assigneeID).size();
+    }
+
+    @Override
+    public Map<String, Long> findAssetsCountByCategoryForAssignee(Long assigneeID) {
+        return assetsValuation.countAssetsByCategory(findAssetsByAssigneeID(assigneeID));
+    }
+
 
     @Override
     public Map<String, String> assetsValueByCategory() {

@@ -86,4 +86,21 @@ public class AssetApi {
         List<Asset> assetList = assetBean.vehicleAndMachineryOnlyList(new Asset());
         return Response.status(Response.Status.OK).entity(assetList).build();
     }
+
+    @Path("/assignee/{assigneeId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAssetsByAssigneeId(@PathParam("assigneeId") Long assigneeId) {
+        List<Asset> assetList = assetBean.findAssetsByAssigneeID(assigneeId);
+        return Response.status(Response.Status.OK).entity(assetList).build();
+    }
+    @Path("/statistics/{assigneeId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response assetsByAssigneeStats(@PathParam("assigneeId")Long assigneeId) {
+        Map<Object, Object> statistics = new HashMap<>();
+        statistics.put("assetsByCategory",assetBean.findAssetsCountByCategoryForAssignee(assigneeId));
+        statistics.put("totalAssets",assetBean.findAssetsCountToAssignee(assigneeId));
+        return Response.status(Response.Status.OK).entity(statistics).build();
+    }
 }

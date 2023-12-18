@@ -14,6 +14,10 @@ public interface AssetBeanI extends GenericBeanI<Asset> {
 
     List<Asset> findAssetsByAssigneeID(Long assigneeID);
 
+    Integer findAssetsCountToAssignee(Long assigneeID);
+
+    Map<String, Long> findAssetsCountByCategoryForAssignee(Long assigneeID);
+
     Map<String, String> assetsValueByCategory();
 
     void deleteBySerialNumber(Object entity, String serialNumber);

@@ -41,6 +41,7 @@ public class AssigneeAction extends BaseAction {
         servletResponse.sendRedirect("./assignee");
     }
 
+
     public void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
