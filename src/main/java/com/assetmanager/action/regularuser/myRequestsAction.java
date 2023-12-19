@@ -13,7 +13,7 @@ import java.io.IOException;
 public class myRequestsAction extends BaseAction{
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("./app/myrequests.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("./app/regularuser/myrequests.jsp");
         dispatcher.forward(request, response);
     }
 }

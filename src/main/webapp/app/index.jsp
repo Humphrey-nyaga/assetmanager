@@ -9,6 +9,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang=en">
+<c:choose>
+<c:when test="${'ADMIN' eq sessionScope.role or 'SUPER' eq sessionScope.role}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -123,4 +126,9 @@
     </script>
 <%--</c:when>--%>
 </body>
+</c:when>
+<c:when test="${'REGULAR' eq sessionScope.role}">
+    <c:redirect url="../myHome"/>
+</c:when>
+</c:choose>
 </html>

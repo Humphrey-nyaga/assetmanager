@@ -6,6 +6,7 @@ import com.assetmanager.app.model.entity.AssetRequest;
 import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.app.observer.AssetRequestEvent;
 import com.assetmanager.app.observer.Created;
+import com.assetmanager.app.service.RequestsService;
 import com.assetmanager.util.SerialIDGenerator.SerialIDGenerator;
 
 import javax.ejb.EJB;
@@ -16,6 +17,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
+import java.util.Map;
 
 @Stateless
 @Remote
@@ -37,6 +40,9 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
     private SerialIDGenerator serialIDGenerator;
 
     @Inject
+    private RequestsService requestsService;
+
+    @Inject
     @Created
     private Event<AssetRequestEvent> assetRequestEvent;
 
@@ -47,6 +53,7 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
             Assignee assignee = assigneeBean.getAssigneeByStaffId(assetRequest.getStaffId());
             if (assignee!= null) {
                 assetRequest.setAssetRequestSerialNumber(serialIDGenerator.generate());
+                assetRequest.setAssignee(assignee);
                getDao().addOrUpdate(assetRequest);
                 assetRequestEvent.fire(new AssetRequestEvent(assetRequest, assignee));
             }
@@ -59,5 +66,16 @@ public class AssetRequestBean extends GenericBean<AssetRequest> implements Asset
     @Override
     public AssetRequest getRequest(Long id) {
         return em.find(AssetRequest.class, id);
+    }
+
+    @Override
+    public List<AssetRequest> getAssigneeAssetRequests(Long assigneeId){
+        return em.createQuery("FROM AssetRequest a WHERE a.assigneeId=:assigneeId",AssetRequest.class)
+                .setParameter("assigneeId", assigneeId).getResultList();
+    }
+
+    @Override
+    public Map<String, Long> countAssigneeRequestsByCategory(Long assigneeId) {
+        return requestsService.countByCategory(getAssigneeAssetRequests(assigneeId));
     }
 }

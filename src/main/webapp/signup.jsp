@@ -85,7 +85,7 @@
     </div>
 </div>
 <script>
-    document.getElementById('signUpForm').addEventListener("submit", (e) => {
+    document.getElementById('signUpForm').addEventListener("submit", async (e) => {
         e.preventDefault();
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
@@ -95,26 +95,29 @@
         const formData = {
             username: username,
             password: password,
-            email:email,
-            confirmPassword:confirmPassword,
+            email: email,
+            confirmPassword: confirmPassword,
         };
 
-        fetch('./api/v1/auth/register', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
-            body: JSON.stringify(formData),
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                } else {
+        try {
+            const response = await fetch('./api/v1/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
 
-                }
-            })
-            .catch(error => console.error('Error:', error));
+            if (response.status === 201) {
+                window.location.href = "./home";
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+
     });
 </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

@@ -1,6 +1,7 @@
 package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.User;
+import com.assetmanager.app.model.entity.UserRole;
 import com.assetmanager.app.observer.Created;
 import com.assetmanager.exceptions.InvalidEmailFormatException;
 import com.assetmanager.exceptions.UserAlreadyExistsException;
@@ -9,7 +10,9 @@ import com.assetmanager.util.EmailValidator;
 import com.assetmanager.util.security.PasswordEncoderI;
 
 
+import javax.ejb.EJB;
 import javax.ejb.Remote;
+import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
@@ -19,10 +22,15 @@ import java.security.NoSuchAlgorithmException;
 
 @Stateless
 @Remote
+@Startup
 public class UserBean extends GenericBean<User> implements UserBeanI, Serializable {
 
     @Inject
     PasswordEncoderI passwordEncoder;
+
+    @EJB
+    AssigneeBeanI assigneeBean;
+
     @Inject
     EmailValidator emailValidator;
     @Inject
@@ -39,11 +47,11 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
             if (findUserByEmail(user.getEmail())!=null)
                 throw new UserAlreadyExistsException("Failed!!. User with email " + user.getEmail() + " already exists.");
 
-//            if (!emailValidator.isValidEmail(user.getEmail()))
-//                throw new InvalidEmailFormatException("Failed!!. Invalid Email Format");
-
             if (user.getPassword().equals(user.getConfirmPassword())) {
                 user.setPassword(passwordEncoder.encodePassword(user.getPassword()));
+
+                if(assigneeBean.getAssigneeByEmail(user.getEmail())!=null)
+                    user.setUserRole(UserRole.REGULAR);
 
                 getDao().addOrUpdate(user);
 

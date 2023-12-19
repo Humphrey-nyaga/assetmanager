@@ -43,8 +43,7 @@ public class HomeAction extends BaseAction {
 
         HttpSession session = servletRequest.getSession();
         UserRole userRole = (UserRole) session.getAttribute("role");
-
-
+        System.out.println("userRole = " + userRole);
         String summary = getSummary();
 
         servletRequest.setAttribute("content", summary);

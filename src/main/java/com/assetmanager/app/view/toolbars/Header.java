@@ -15,7 +15,7 @@ public class Header implements  Serializable {
         links.add(new MenuLink("./asset", "Assets", MenuLinkStatus.NOT_ACTIVE));
         links.add(new MenuLink("./assignee", "Assignees", MenuLinkStatus.NOT_ACTIVE));
         links.add(new MenuLink("./maintenance", "Maintenance", MenuLinkStatus.NOT_ACTIVE));
-        links.add(new MenuLink("./report", "Reports", MenuLinkStatus.NOT_ACTIVE));
+       // links.add(new MenuLink("./report", "Reports", MenuLinkStatus.NOT_ACTIVE));
         links.add(new MenuLink("./request", "Requests", MenuLinkStatus.NOT_ACTIVE));
     }
     private String activeUrl;

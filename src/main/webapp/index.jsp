@@ -114,7 +114,18 @@
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
                         }
-                        const authToken = response.headers.get("Authorization"); // Changed from response.headers.valueOf
+
+                        let data = response.json();
+                        const id = data.id;
+                        if(id){
+                            localStorage.setItem('id', id);
+                            console.log('Id set successfully!');
+
+                        }else {
+                            console.error('No id was found in the response.');
+                        }
+
+                        const authToken = response.headers.get("Authorization");
                         console.log(authToken);
 
                         if (authToken) {

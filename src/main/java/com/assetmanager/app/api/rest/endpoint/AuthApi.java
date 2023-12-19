@@ -1,7 +1,11 @@
 package com.assetmanager.app.api.rest.endpoint;
 
+import com.assetmanager.app.bean.AssigneeBeanI;
 import com.assetmanager.app.bean.AuthBeanI;
+import com.assetmanager.app.bean.UserBean;
+import com.assetmanager.app.bean.UserBeanI;
 import com.assetmanager.app.dto.UserDto;
+import com.assetmanager.app.model.entity.Assignee;
 import com.assetmanager.app.model.entity.User;
 import com.assetmanager.auth.JWTUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +29,12 @@ public class AuthApi extends BaseRestApi {
     @EJB
     AuthBeanI authBean;
 
+    @EJB
+    UserBeanI userBean;
+
+
+    @EJB
+    AssigneeBeanI assigneeBean;
     @Inject
     JWTUtil jwtUtil;
 
@@ -44,15 +54,34 @@ public class AuthApi extends BaseRestApi {
             String token = jwtUtil.generateToken(authUser);
             UserDto user = modelMapper.map(authUser, UserDto.class);
 
+
+            //Some data to work with APIs
+            Assignee assignee = assigneeBean.getAssigneeByEmail(authUser.getEmail());
+            if (assignee != null)
+                user.setAssigneeId(assignee.getId());
+
+
             // to help migrate pages using servlets
             HttpSession httpSession = servletRequest.getSession(true);
             httpSession.setAttribute("loggedInId", new Date().getTime() + "");
-            httpSession.setAttribute("username", loginUser.getUsername());
-            httpSession.setAttribute("role", loginUser.getUserRole());
+            httpSession.setAttribute("username", user.getUsername());
+            httpSession.setAttribute("role", user.getRole());
 
             return Response.ok(user).header("Authorization", token).build();
         }
         return Response.status(Response.Status.UNAUTHORIZED).entity("Invalid User Login!").build();
+    }
+
+    @POST
+    @Path("/register")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response register(User signUpUser) {
+        Boolean newUserCreated = userBean.registerUser(signUpUser);
+        if (newUserCreated) {
+            return Response.status(Response.Status.CREATED).build();
+        }
+        return Response.status(404).entity("Invalid User Details!").build();
     }
 
 }

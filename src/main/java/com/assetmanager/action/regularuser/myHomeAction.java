@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/myHome/*")
+@WebServlet("/myHome")
 public class myHomeAction extends BaseAction {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("./app/myhome.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("./app/regularuser/myhome.jsp");
             dispatcher.forward(request, response);
         }
     }

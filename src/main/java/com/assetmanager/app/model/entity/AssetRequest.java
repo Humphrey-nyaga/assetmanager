@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Formula;
@@ -78,7 +79,12 @@ public class AssetRequest extends BaseEntity {
 
 
     @ManyToOne
+    @JoinColumn(name = "assignee_id")
+    @Getter(AccessLevel.NONE)
     private Assignee assignee;
+
+    @Formula("(assignee_id)")
+    private Long assigneeId;
 
     public AssetRequest() {
     }
