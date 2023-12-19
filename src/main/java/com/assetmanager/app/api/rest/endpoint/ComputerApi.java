@@ -1,7 +1,9 @@
 package com.assetmanager.app.api.rest.endpoint;
 
+import com.assetmanager.app.api.rest.auth.JwtSecured;
 import com.assetmanager.app.bean.ComputerBeanI;
 import com.assetmanager.app.model.entity.Assignee;
+import com.assetmanager.app.model.entity.UserRole;
 import com.assetmanager.app.model.entity.computer.Computer;
 
 import javax.ejb.EJB;
@@ -11,6 +13,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/computer")
+@JwtSecured({UserRole.ADMIN,UserRole.SUPER})
 public class ComputerApi {
 
     @EJB

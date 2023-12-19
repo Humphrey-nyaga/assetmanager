@@ -27,7 +27,7 @@ import java.util.List;
 @Entity
 @Table(name = "assignee")
 @HtmlForm(label = "Assignee", url = "./assignee")
-@HtmlTable(name = "Assignee Table", label = "Assignee", addUrl = "./assignee?action=add", updateUrl = "./updateAssignee", url = "./assignee")
+@HtmlTable(name = "Assignee Table", label = "Assignee", addUrl = "./assignee?action=add", updateUrl = "./assignee?action=update", url = "./assignee")
 @NamedQuery(
         name = Assignee.AssigneeNameAndId,
         query = "SELECT a.id, concat(a.firstName, ' ', a.lastName) FROM Assignee a"

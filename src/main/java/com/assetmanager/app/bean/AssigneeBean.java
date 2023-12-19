@@ -10,10 +10,7 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,5 +58,17 @@ public class AssigneeBean extends GenericBean<Assignee> implements AssigneeBeanI
                 .map(result -> new AssigneeDTO((Long) result[0], (String) result[1]))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Assignee getAssigneeByEmail(String email) {
+        try {
+            TypedQuery<Assignee> query = em.createQuery("FROM Assignee a WHERE a.email = :email", Assignee.class)
+                    .setParameter("email", email);
+            return query.getSingleResult();
+        } catch (NoResultException | NullPointerException e) {
+            return null;
+        }
+    }
+
 
 }

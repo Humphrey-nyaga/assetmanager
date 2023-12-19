@@ -1,5 +1,6 @@
 package com.assetmanager.action;
 
+import com.assetmanager.app.api.rest.auth.JwtSecured;
 import com.assetmanager.app.bean.AssetBeanI;
 import com.assetmanager.app.bean.AssetRequestBeanI;
 import com.assetmanager.app.bean.AssigneeBeanI;
@@ -42,22 +43,15 @@ public class HomeAction extends BaseAction {
 
         HttpSession session = servletRequest.getSession();
         UserRole userRole = (UserRole) session.getAttribute("role");
+        System.out.println("userRole = " + userRole);
+        String summary = getSummary();
+
+        servletRequest.setAttribute("content", summary);
+
+        RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("./app/home.jsp");
+        requestDispatcher.forward(servletRequest, servletResponse);
 
 
-        switch (userRole) {
-            case ADMIN:
-                String summary = getSummary();
-
-                servletRequest.setAttribute("content", summary);
-
-                RequestDispatcher requestDispatcher = servletRequest.getRequestDispatcher("./app/home.jsp");
-                requestDispatcher.forward(servletRequest, servletResponse);
-                break;
-            case REGULAR:
-                RequestDispatcher req = servletRequest.getRequestDispatcher("./asset");
-                req.forward(servletRequest, servletResponse);
-
-        }
     }
 
     private String getSummary() {

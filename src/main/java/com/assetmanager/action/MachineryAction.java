@@ -4,8 +4,10 @@ package com.assetmanager.action;
 import com.assetmanager.app.bean.MachineryBeanI;
 import com.assetmanager.app.model.entity.Machinery.Machinery;
 import com.assetmanager.app.model.entity.vehicle.Vehicle;
+import org.junit.platform.commons.util.StringUtils;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +18,19 @@ import java.io.IOException;
 public class MachineryAction extends BaseAction {
     @EJB
     MachineryBeanI machineryBean;
-    public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        renderPage(servletRequest,
-                servletResponse,
+
+        String action = request.getParameter("action");
+        if(action!=null && action.equals("update")){
+            String machineryId = request.getParameter("id");
+            Machinery machinery = machineryBean.findById(Machinery.class,Long.valueOf(machineryId));
+            request.setAttribute("machinery", machinery);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("./app/updateMachinery.jsp");
+            dispatcher.forward(request, response);
+        }
+        renderPage(request,
+                response,
                 "./asset",
                 Machinery.class,
                 machineryBean.list(new Machinery()));

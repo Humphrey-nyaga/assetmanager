@@ -26,7 +26,7 @@ import java.util.List;
 @HtmlForm(label = "Vehicle", url = "./vehicle")
 @Table(name = "vehicle")
 @AssetCreationCard(label = "Vehicle", servletUrl = "./vehicle")
-@HtmlTable(name = "Vehicles Table", label = "Vehicle", url = "./vehicle", addUrl = "./vehicle?action=add")
+@HtmlTable(name = "Vehicles Table", label = "Vehicle", url = "./vehicle",updateUrl = "./vehicle?action=update", addUrl = "./vehicle?action=add")
 public class Vehicle extends Asset {
 
     @Enumerated(EnumType.STRING)

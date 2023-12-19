@@ -73,7 +73,7 @@ public class Maintenance extends BaseEntity implements Serializable {
 
     @Column(name = "maintenance_period")
     @Enumerated(value = EnumType.STRING)
-    @HtmlFormField(label = "Maintenance Period")
+    //@HtmlFormField(label = "Maintenance Period")
     private MaintenanceFrequency maintenanceFrequency;
 
     @ManyToOne

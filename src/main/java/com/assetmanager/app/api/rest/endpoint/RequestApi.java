@@ -1,16 +1,20 @@
 package com.assetmanager.app.api.rest.endpoint;
 
+import com.assetmanager.app.api.rest.auth.JwtSecured;
 import com.assetmanager.app.bean.AssetRequestBeanI;
 import com.assetmanager.app.model.entity.AssetRequest;
+import com.assetmanager.app.model.entity.UserRole;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Path("/request")
-
+@JwtSecured({UserRole.ADMIN,UserRole.SUPER})
 public class RequestApi {
 
     @EJB
@@ -62,5 +66,20 @@ public class RequestApi {
         AssetRequest updatedAssetRequest = assetRequestBean.addOrUpdate(assetRequest);
         return Response.status(Response.Status.CREATED).entity(updatedAssetRequest).build();
     }
-
+    @Path("/assignee/{assigneeId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @JwtSecured({UserRole.ADMIN,UserRole.REGULAR})
+    public Response getAssigneeRequests(@PathParam("assigneeId") Long assigneeId) {
+        List<AssetRequest> requestList = assetRequestBean.getAssigneeAssetRequests(assigneeId);
+        return Response.status(Response.Status.OK).entity(requestList).build();
+    }
+    @Path("/statistics/{assigneeId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @JwtSecured({UserRole.ADMIN,UserRole.REGULAR})
+    public Response asserRequestsByAssigneeStats(@PathParam("assigneeId")Long assigneeId) {
+        Map<String, Long> statistics = assetRequestBean.countAssigneeRequestsByCategory(assigneeId);
+        return Response.status(Response.Status.OK).entity(statistics).build();
+    }
 }

@@ -25,7 +25,7 @@
                 let response = await fetch(url, {
                     method: 'GET',
                     headers: {
-                        'Authorization': 'Basic '.concat(authToken),
+                        'Authorization': 'Bearer '.concat(authToken),
                         'Content-Type': 'application/json'
                     }
                 });
@@ -50,7 +50,7 @@
                 let response = await fetch(url, {
                     method: 'GET',
                     headers: {
-                        'Authorization': 'Basic '.concat(authToken),
+                        'Authorization': 'Bearer '.concat(authToken),
                         'Content-Type': 'application/json'
                     }
                 });

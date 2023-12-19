@@ -15,20 +15,13 @@ import java.io.IOException;
 public class updateAssigneeAction extends BaseAction{
     @EJB
     AssigneeBeanI assigneeBean;
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String assigneeId = request.getParameter("id");
-        Assignee  assignee = assigneeBean.findById(Assignee.class,Long.valueOf(assigneeId));
-        request.setAttribute("assignee", assignee);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("./app/updateAssignee.jsp");
-        dispatcher.forward(request, response);
-    }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String requestId = request.getParameter("id");
 
         Assignee assignee = new Assignee();
         serializeForm(assignee, request.getParameterMap());
-        assignee.setId(Long.valueOf(request.getParameter("assigneeId")));
+        assignee.setId(Long.valueOf(request.getParameter("id")));
         System.out.println("Assignee UPDATED>>>>" + assignee);
         assigneeBean.addOrUpdate(assignee);
         response.sendRedirect("./assignee");

@@ -1,8 +1,10 @@
 package com.assetmanager.app.api.rest.endpoint;
 
+import com.assetmanager.app.api.rest.auth.JwtSecured;
 import com.assetmanager.app.bean.AssigneeBeanI;
 import com.assetmanager.app.dto.AssigneeDTO;
 import com.assetmanager.app.model.entity.Assignee;
+import com.assetmanager.app.model.entity.UserRole;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -12,6 +14,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/assignee")
+@JwtSecured({UserRole.ADMIN,UserRole.REGULAR,})
 public class AssigneeApi {
 
 
@@ -30,6 +33,7 @@ public class AssigneeApi {
 
     @Path("/")
     @GET
+    @JwtSecured({UserRole.ADMIN,UserRole.SUPER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAssignees() {
         List<Assignee> assignees = assigneeBean.list(new Assignee());
@@ -38,6 +42,7 @@ public class AssigneeApi {
 
     @Path("/assignee-name-and-id")
     @GET
+    @JwtSecured({UserRole.ADMIN,UserRole.SUPER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAssigneeNameAndID() {
         List<AssigneeDTO> assignees = assigneeBean.findAssigneeNameAndId();

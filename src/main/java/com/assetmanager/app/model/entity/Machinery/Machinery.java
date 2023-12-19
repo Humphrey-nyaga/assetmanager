@@ -14,6 +14,8 @@ import com.fasterxml.jackson.datatype.jsr310.deser.YearDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.YearSerializer;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -30,8 +32,9 @@ import java.util.List;
 @AssetCreationCard(label = "Machinery", servletUrl = "./machinery")
 @HtmlForm(label = "Machinery", url = "./machinery")
 @IdPrefix(prefix = "ASN-MCH000")
-@HtmlTable(name = "Machinery Table", label = "Machinery", url = "./machinery", addUrl = "./machinery?action=add")
-
+@HtmlTable(name = "Machinery Table", label = "Machinery", url = "./machinery",updateUrl = "./machinery?action=update", addUrl = "./machinery?action=add")
+@DynamicUpdate
+@DynamicInsert
 public class Machinery  extends Asset {
 
 
@@ -103,6 +106,7 @@ public class Machinery  extends Asset {
         return "Machinery{" +
                 "yearOfProduction=" + yearOfProduction +
                 ", model='" + model + '\'' +
+                super.toString()+
                 ", manufacturer='" + manufacturer + '\'' +
                 ", maxLoadCapacity=" + maxLoadCapacity +
                 ", power=" + power +

@@ -72,6 +72,8 @@
                                         <p class="medium mb-2"><a class="text-white" href="#!">Forgot password?</a></p>
                                         <button id="loginButton" class="btn btn-primary btn-lg btn-outline-light px-4 mt-3 mb-3" type="submit">LOGIN
                                         </button>
+                                        <div id = "alert_placeholder"></div>
+
                                         <div>
                                             <p class="mb-0">Don't have an account? <a href="./signup.jsp"
                                                                                       class="text-white fw-bold">Sign
@@ -90,47 +92,57 @@
     </div>
 </div>
         <script>
-            document.getElementById('loginForm').addEventListener("submit", (e) => {
+            document.getElementById('loginForm').addEventListener("submit", async (e) => {
                 e.preventDefault();
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
 
-                const formData = new URLSearchParams();
-                formData.append('username', username);
-                formData.append('password', password);
+                const formData = {
+                    username: username,
+                    password: password,
+                };
 
-                fetch('./login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: formData.toString(),
-                 })
-                //     .then(response => {
-                //         const authToken = response.headers.get('Authorization');
-                //
-                //         if (authToken) {
-                //             localStorage.setItem('authToken', authToken);
-                //             console.log('Login successful! Token:', authToken);
-                //         } else {
-                //             console.error('No Authorization header found in the response.');
-                //         }
-                //     })
-                    .then(response => response.json())
-                    .then(data => {
-                        const authToken = data.authToken;
+                try {
+                    const response = await fetch('./api/v1/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Accept: 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    });
 
-                        if (authToken) {
-                            localStorage.setItem('authToken', authToken);
-                            console.log('Login successful!');
-                            window.location.href = './home';
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
 
-                        } else {
-                            console.error('No authToken found in the response.');
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
+                    const data = await response.json();
+                    const id = data.assigneeId;
+                    console.log(response);
+
+                    if (id) {
+                        localStorage.setItem('id', id);
+                        console.log('Id set successfully!');
+                    } else {
+                        console.error('No id was found in the response.');
+                    }
+
+                    const authToken = response.headers.get('Authorization');
+                    console.log(authToken);
+
+                    if (authToken) {
+                        localStorage.setItem('authToken', authToken);
+                        console.log('Login successful!');
+                        window.location.href = './home';
+                    } else {
+                        console.error('No authToken found in the response.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+
             });
+
         </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

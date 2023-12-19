@@ -1,8 +1,10 @@
 package com.assetmanager.app.api.rest.endpoint;
 
+import com.assetmanager.app.api.rest.auth.JwtSecured;
 import com.assetmanager.app.bean.AssetBeanI;
 import com.assetmanager.app.dto.AssetDTO;
 import com.assetmanager.app.model.entity.Asset;
+import com.assetmanager.app.model.entity.UserRole;
 import com.assetmanager.app.service.AssetsValuationI;
 
 import javax.annotation.security.RolesAllowed;
@@ -29,7 +31,7 @@ public class AssetApi {
 
     @Path("/")
     @GET
-    @RolesAllowed("ADMIN")
+    @JwtSecured({UserRole.ADMIN,UserRole.SUPER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAssets() {
         List<Asset> assetList = assetBean.list(new Asset());
@@ -37,7 +39,7 @@ public class AssetApi {
     }
 
     @GET
-    @RolesAllowed("ADMIN")
+    @JwtSecured({UserRole.ADMIN,UserRole.SUPER})
     @Path("/assets-name-and-serial-no")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllAssetsNameAndSerialNo() {
@@ -55,6 +57,7 @@ public class AssetApi {
     }
     @Path("/statistics/")
     @GET
+    @JwtSecured({UserRole.ADMIN,UserRole.SUPER})
     @Produces(MediaType.APPLICATION_JSON)
     public Response assetsValueByCount() {
         Map<Object, Object> statistics = new HashMap<>();
@@ -66,7 +69,6 @@ public class AssetApi {
     }
 
     @DELETE
-    @RolesAllowed("ADMIN")
     @Path("/serialNo/{serialNo}")
     public Response delete(@PathParam("serialNo") String serialNo) {
         try {
@@ -83,5 +85,22 @@ public class AssetApi {
     public Response getVehiclesAndMachinery() {
         List<Asset> assetList = assetBean.vehicleAndMachineryOnlyList(new Asset());
         return Response.status(Response.Status.OK).entity(assetList).build();
+    }
+
+    @Path("/assignee/{assigneeId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAssetsByAssigneeId(@PathParam("assigneeId") Long assigneeId) {
+        List<Asset> assetList = assetBean.findAssetsByAssigneeID(assigneeId);
+        return Response.status(Response.Status.OK).entity(assetList).build();
+    }
+    @Path("/statistics/{assigneeId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response assetsByAssigneeStats(@PathParam("assigneeId")Long assigneeId) {
+        Map<Object, Object> statistics = new HashMap<>();
+        statistics.put("assetsByCategory",assetBean.findAssetsCountByCategoryForAssignee(assigneeId));
+        statistics.put("totalAssets",assetBean.findAssetsCountToAssignee(assigneeId));
+        return Response.status(Response.Status.OK).entity(statistics).build();
     }
 }

@@ -1,6 +1,7 @@
 package com.assetmanager.app.bean;
 
 import com.assetmanager.app.model.entity.User;
+import com.assetmanager.app.model.entity.UserRole;
 import com.assetmanager.app.observer.Created;
 import com.assetmanager.exceptions.InvalidEmailFormatException;
 import com.assetmanager.exceptions.UserAlreadyExistsException;
@@ -9,22 +10,27 @@ import com.assetmanager.util.EmailValidator;
 import com.assetmanager.util.security.PasswordEncoderI;
 
 
-import javax.ejb.Local;
+import javax.ejb.EJB;
 import javax.ejb.Remote;
+import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.Optional;
 
 @Stateless
 @Remote
+@Startup
 public class UserBean extends GenericBean<User> implements UserBeanI, Serializable {
 
     @Inject
     PasswordEncoderI passwordEncoder;
+
+    @EJB
+    AssigneeBeanI assigneeBean;
+
     @Inject
     EmailValidator emailValidator;
     @Inject
@@ -35,17 +41,17 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
     @Override
     public Boolean registerUser(User user) {
         try {
-            if (findUserByUsername(user.getUsername()).isPresent())
+            if (findUserByUsername(user.getUsername())!=null)
                 throw new UserAlreadyExistsException("Failed!!. User with username " + user.getUsername() + " already exists.");
 
-            if (findUserByEmail(user.getEmail()).isPresent())
+            if (findUserByEmail(user.getEmail())!=null)
                 throw new UserAlreadyExistsException("Failed!!. User with email " + user.getEmail() + " already exists.");
-
-//            if (!emailValidator.isValidEmail(user.getEmail()))
-//                throw new InvalidEmailFormatException("Failed!!. Invalid Email Format");
 
             if (user.getPassword().equals(user.getConfirmPassword())) {
                 user.setPassword(passwordEncoder.encodePassword(user.getPassword()));
+
+                if(assigneeBean.getAssigneeByEmail(user.getEmail())!=null)
+                    user.setUserRole(UserRole.REGULAR);
 
                 getDao().addOrUpdate(user);
 
@@ -65,18 +71,28 @@ public class UserBean extends GenericBean<User> implements UserBeanI, Serializab
     }
 
     @Override
-    public Optional<User> findUserByUsername(String username) {
-        List<User> users = list(new User());
-        return users.stream().filter(user -> user.getUsername().equals(username))
-                .findFirst();
+    public User findUserByUsername(String username) {
+
+        try {
+            return em.createQuery("FROM User a WHERE a.username=:username", User.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println("No user found with the specified username");
+        }
+        return null;
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) {
-        List<User> users = list(new User());
-        return users.stream().filter(user -> user.getEmail().equals(email))
-                .findFirst();
+    public User findUserByEmail(String email) {
+        try {
+            return em.createQuery("FROM User a WHERE a.email=:email", User.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println("No user found with the specified email");
+        }
+        return null;
     }
-
 
 }

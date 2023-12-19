@@ -2,6 +2,7 @@ package com.assetmanager.action;
 
 import com.assetmanager.app.bean.VehicleBeanI;
 import com.assetmanager.app.model.entity.AssetRequest;
+import com.assetmanager.app.model.entity.Machinery.Machinery;
 import com.assetmanager.app.model.entity.computer.Computer;
 import com.assetmanager.app.model.entity.vehicle.Vehicle;
 
@@ -17,11 +18,20 @@ import java.io.IOException;
 public class VehicleAction extends BaseAction {
     @EJB
     VehicleBeanI vehicleBean;
-    public void doGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println(">>>>>>>>>>>vehicle " + vehicleBean.list(new Vehicle()));
-        renderPage(servletRequest,
-                servletResponse,
+
+        String action = request.getParameter("action");
+        if(action!=null && action.equals("update")){
+            String vehicleId = request.getParameter("id");
+            Vehicle vehicle = vehicleBean.findById(Vehicle.class,Long.valueOf(vehicleId));
+            request.setAttribute("vehicle", vehicle);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("./app/updateVehicle.jsp");
+            dispatcher.forward(request, response);
+        }
+        
+        renderPage(request,
+                response,
                 "./vehicle",
                 Vehicle.class,
                vehicleBean.list(new Vehicle()));
