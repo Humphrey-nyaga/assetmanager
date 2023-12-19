@@ -8,9 +8,11 @@ import com.assetmanager.app.model.entity.Asset;
 import com.assetmanager.app.model.entity.AssetAssignmentLog;
 import com.assetmanager.app.model.entity.Assignee;
 
+import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
+import javax.enterprise.event.ObservesAsync;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,7 +29,7 @@ public class AssetAssigmentEventHandler {
     @Inject
     MailFormatter mailFormatter;
 
-    public void afterAssetAssignedSendEmail(@Observes @Assigned AssetAssignmentEvent assetAssignmentEvent) {
+    public void afterAssetAssignedSendEmail(@ObservesAsync @Assigned AssetAssignmentEvent assetAssignmentEvent) {
         Asset asset = assetAssignmentEvent.asset();
         Assignee assignee = assetAssignmentEvent.assignee();
 
@@ -78,7 +80,8 @@ public class AssetAssigmentEventHandler {
         System.out.println("Asset Assignment Logged into the Database!!");
     }
 
-    public void afterAssetUnAssignmentSendEmail(@Observes @UnAssigned AssetAssignmentEvent ase) {
+
+    public void afterAssetUnAssignmentSendEmail(@ObservesAsync @UnAssigned AssetAssignmentEvent ase) {
         Asset asset = ase.asset();
         Assignee assignee = ase.assignee();
 

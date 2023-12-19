@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/assignee")
-//@JwtSecured({UserRole.ADMIN,UserRole.SUPER})
+@JwtSecured({UserRole.ADMIN,UserRole.REGULAR,})
 public class AssigneeApi {
 
 

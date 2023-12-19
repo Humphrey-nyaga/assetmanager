@@ -128,7 +128,7 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
                 getDao().addOrUpdate(asset);
 
                 AssetAssignmentEvent assetAssignmentEvent = new AssetAssignmentEvent(asset, assignee, assignAssetDTO.getAssignaction());
-                unassignAssetEvent.fire(assetAssignmentEvent);
+                unassignAssetEvent.fireAsync(assetAssignmentEvent);
             }
 
             if (!isAssetAssigned(asset)) {
@@ -137,7 +137,7 @@ public class AssetBeanImpl extends GenericBean<Asset> implements AssetBeanI {
                     getDao().addOrUpdate(asset);
 
                     AssetAssignmentEvent assetAssignmentEvent = new AssetAssignmentEvent(asset, assignee, assignAssetDTO.getAssignaction());
-                    assignAssetEvent.fire(assetAssignmentEvent);
+                    assignAssetEvent.fireAsync(assetAssignmentEvent);
                 }
             }
 

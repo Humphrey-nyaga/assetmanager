@@ -92,7 +92,7 @@
     </div>
 </div>
         <script>
-            document.getElementById('loginForm').addEventListener("submit", (e) => {
+            document.getElementById('loginForm').addEventListener("submit", async (e) => {
                 e.preventDefault();
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
@@ -102,42 +102,45 @@
                     password: password,
                 };
 
-                fetch('./api/v1/auth/login', {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json",
-                        Accept: "application/json",
-                    },
-                    body: JSON.stringify(formData),
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
+                try {
+                    const response = await fetch('./api/v1/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Accept: 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    });
 
-                        let data = response.json();
-                        const id = data.id;
-                        if(id){
-                            localStorage.setItem('id', id);
-                            console.log('Id set successfully!');
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
 
-                        }else {
-                            console.error('No id was found in the response.');
-                        }
+                    const data = await response.json();
+                    const id = data.assigneeId;
+                    console.log(response);
 
-                        const authToken = response.headers.get("Authorization");
-                        console.log(authToken);
+                    if (id) {
+                        localStorage.setItem('id', id);
+                        console.log('Id set successfully!');
+                    } else {
+                        console.error('No id was found in the response.');
+                    }
 
-                        if (authToken) {
-                            localStorage.setItem('authToken', authToken);
-                            console.log('Login successful!');
+                    const authToken = response.headers.get('Authorization');
+                    console.log(authToken);
 
-                            window.location.href = './home';
-                        } else {
-                            console.error('No authToken found in the response.');
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
+                    if (authToken) {
+                        localStorage.setItem('authToken', authToken);
+                        console.log('Login successful!');
+                        window.location.href = './home';
+                    } else {
+                        console.error('No authToken found in the response.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+
             });
 
         </script>

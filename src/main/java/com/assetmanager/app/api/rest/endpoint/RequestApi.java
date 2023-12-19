@@ -69,6 +69,7 @@ public class RequestApi {
     @Path("/assignee/{assigneeId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @JwtSecured({UserRole.ADMIN,UserRole.REGULAR})
     public Response getAssigneeRequests(@PathParam("assigneeId") Long assigneeId) {
         List<AssetRequest> requestList = assetRequestBean.getAssigneeAssetRequests(assigneeId);
         return Response.status(Response.Status.OK).entity(requestList).build();
@@ -76,6 +77,7 @@ public class RequestApi {
     @Path("/statistics/{assigneeId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @JwtSecured({UserRole.ADMIN,UserRole.REGULAR})
     public Response asserRequestsByAssigneeStats(@PathParam("assigneeId")Long assigneeId) {
         Map<String, Long> statistics = assetRequestBean.countAssigneeRequestsByCategory(assigneeId);
         return Response.status(Response.Status.OK).entity(statistics).build();
